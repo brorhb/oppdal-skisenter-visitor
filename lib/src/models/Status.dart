@@ -1,0 +1,1 @@
+enum Status { CLOSED, OPEN, MAINTAINANCE }

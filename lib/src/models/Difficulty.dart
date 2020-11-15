@@ -1,0 +1,8 @@
+enum Difficulty {
+  INTERMEDIATE,
+  BEGINNER,
+  TERRAINPARK,
+  EXPERT,
+  NOT_RATED,
+  ADVANCED
+}
