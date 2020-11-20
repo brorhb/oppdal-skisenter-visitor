@@ -11,18 +11,20 @@
   let liftsStore = makeLiftsStore()
   let tracks = []
   $: trackGroups = tracks.reduce((acc, curr) => {
-    if (!acc) acc = []
-    if (acc.includes(curr.difficulty)) return acc
-    acc.push(curr.difficulty)
+    const difficulty = curr.difficulty
+    if (!acc) acc = {}
+    if (acc[difficulty]) acc[difficulty] = [...acc[difficulty], curr]
+    else acc[difficulty] = [curr]
     return acc
-  }, [])
+  }, {})
   let lifts = []
-  $: liftGroups = liftGroups = lifts.reduce((acc, curr) => {
-    if (!acc) acc = []
-    if (acc.includes(curr.type)) return acc
-    acc.push(curr.type)
+  $: liftGroups = lifts.reduce((acc, curr) => {
+    const type = curr.type
+    if (!acc) acc = {}
+    if (acc[type]) acc[type] = [...acc[type], curr]
+    else acc[type] = [curr]
     return acc
-  }, [])
+  }, {})
   let innerWidth
 
 
@@ -47,7 +49,7 @@
   }
 </script>
 <svelte:window bind:innerWidth={innerWidth} />
-<div class="flex flex-wrap w-100 h-100">
+<div class={`flex ${innerWidth < 800 ? "flex-column" : "flex-row"} w-100 h-100`}>
   {#if innerWidth >= 800}
     <Large {trackGroups} {tracks} {liftGroups} {lifts} {selectedTrack} />
   {:else}

@@ -1,5 +1,5 @@
 <script>
-  import {createEventDispatcher, onMount} from 'svelte'
+  import {createEventDispatcher} from 'svelte'
   const dispatch = createEventDispatcher();
   export let items = []
   let innerWidth
@@ -7,10 +7,6 @@
   function clicked(item) {
     dispatch('select', item)
   }
-
-  onMount(() => {
-    console.log(items)
-  })
 
 </script>
 <svelte:window bind:innerWidth={innerWidth} />
