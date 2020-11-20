@@ -1,0 +1,56 @@
+<script>
+  import { makeTracksStore } from '../../stores/TrackStore'
+  import { makeLiftsStore } from '../../stores/LiftsStore'
+  import { navigateTo } from 'svelte-router-spa'
+  import { onDestroy, onMount } from 'svelte'
+  import Large from "./large.svelte"
+  import Small from "./small.svelte"
+
+  let unsubscribe
+  let tracksStore = makeTracksStore()
+  let liftsStore = makeLiftsStore()
+  let tracks = []
+  $: trackGroups = tracks.reduce((acc, curr) => {
+    if (!acc) acc = []
+    if (acc.includes(curr.difficulty)) return acc
+    acc.push(curr.difficulty)
+    return acc
+  }, [])
+  let lifts = []
+  $: liftGroups = liftGroups = lifts.reduce((acc, curr) => {
+    if (!acc) acc = []
+    if (acc.includes(curr.type)) return acc
+    acc.push(curr.type)
+    return acc
+  }, [])
+  let innerWidth
+
+
+  onDestroy(() => {
+    if(unsubscribe) {
+      unsubscribe()
+      unsubscribe = null
+    }
+	});
+	
+	onMount(async () => {
+		tracksStore.subscribe((data) => {
+      tracks = data
+    })
+    liftsStore.subscribe((data) => {
+      lifts = data
+		})
+  })
+  
+  function selectedTrack(obj) {
+    navigateTo(`/tracks/${obj.detail.id}`)
+  }
+</script>
+<svelte:window bind:innerWidth={innerWidth} />
+<div class="flex flex-wrap w-100 h-100">
+  {#if innerWidth >= 800}
+    <Large {trackGroups} {tracks} {liftGroups} {lifts} {selectedTrack} />
+  {:else}
+    <Small {trackGroups} {tracks} {liftGroups} {lifts} {selectedTrack} />
+  {/if}
+</div>

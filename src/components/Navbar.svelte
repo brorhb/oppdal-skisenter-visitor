@@ -3,10 +3,7 @@
   import { onMount } from "svelte"
 
   // List of navigation items
-  const navItems = [
-    { label: "Løyper", route: "/" },
-    { label: "Heiser", route: "/lifts" },
-  ]
+  const navItems = []
 </script>
 <nav class="pa3 pa4-ns">
   <a class="link dim black b f6 f5-ns dib mr3" href="/">Løypekart</a>
