@@ -129,9 +129,9 @@
             {group}
           </div>
           <div class="flex flex-row">
-            <span>{lifts.lifts.filter((lift) => lift.type === group && lift.status === "open").length}</span>
+            <span>{lifts.filter((lift) => lift.type === group && lift.status === "open").length}</span>
             <span class="ph1">/</span>
-            <span>{lifts.lifts.filter((lift) => lift.type === group).length}</span>
+            <span>{lifts.filter((lift) => lift.type === group).length}</span>
           </div>
         </div>
       {/each}
