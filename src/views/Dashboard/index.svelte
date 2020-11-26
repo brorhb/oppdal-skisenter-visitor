@@ -5,6 +5,7 @@
   import { onDestroy, onMount } from 'svelte'
   import Large from "./large.svelte"
   import Small from "./small.svelte"
+import AvalancheBanner from '../../components/AvalancheBanner.svelte'
 
   let unsubscribe
   let tracksStore = makeTracksStore()
@@ -49,10 +50,13 @@
   }
 </script>
 <svelte:window bind:innerWidth={innerWidth} />
-<div class={`flex ${innerWidth < 800 ? "flex-column" : "flex-row"} w-100 h-100`}>
-  {#if innerWidth >= 800}
-    <Large {trackGroups} {tracks} {liftGroups} {lifts} {selectedTrack} />
-  {:else}
-    <Small {trackGroups} {tracks} {liftGroups} {lifts} {selectedTrack} />
-  {/if}
+<div class="flex flex-column w-100">
+  <AvalancheBanner />
+  <div class={`flex ${innerWidth < 800 ? "flex-column" : "flex-row"} w-100 h-100`}>
+    {#if innerWidth >= 800}
+      <Large {trackGroups} {tracks} {liftGroups} {lifts} {selectedTrack} />
+    {:else}
+      <Small {trackGroups} {tracks} {liftGroups} {lifts} {selectedTrack} />
+    {/if}
+  </div>
 </div>

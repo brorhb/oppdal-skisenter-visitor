@@ -1,5 +1,6 @@
 <script>
   import Map from "../../components/Map.svelte"
+  import { ChevronDownIcon, ChevronUpIcon } from 'svelte-feather-icons'
   export let trackGroups = []
   export let tracks = []
   export let liftGroups = []
@@ -11,18 +12,25 @@
   <Map items={tracks} on:select={selectedTrack} />
 </div>
 <div class="w-20 flex flex-column h-100 overflow-auto">
-  <div class="pa2 bg-light-gray">
+  <div class="bg-light-gray ph1">
+    <h2>Løyper</h2>
+  </div>
+  <div class="bg-white">
     {#each Object.keys(trackGroups) as group}
       <div class="flex flex-column">
-        <div class="flex flex-row justify-between f4 fw5 pointer" on:click={activeGroup === group ? () => activeGroup = undefined : () => activeGroup = group}>
+        <div class="flex flex-row justify-between f4 fw5 pointer bg-dark-gray white mb1 pa1" on:click={activeGroup === group ? () => activeGroup = undefined : () => activeGroup = group}>
           <div>
             {group}
           </div>
-          <div class="flex flex-row">
+          <div class="flex flex-row items-center">
             <span>{tracks.filter((track) => track.difficulty === group && track.status === "open").length}</span>
             <span class="ph1">/</span>
             <span>{tracks.filter((track) => track.difficulty === group).length}</span>
-            <span class="ph1">{activeGroup === group ? "🙈" : "👀"}</span>
+            {#if activeGroup !== group}
+            <ChevronDownIcon size="20" />
+            {:else}
+            <ChevronUpIcon size="20" />
+            {/if}
           </div>
         </div>
         {#if activeGroup === group}
@@ -49,18 +57,25 @@
       </div>
     {/each}
   </div>
-  <div class="pa2 bg-light-gray mt1">
+  <div class="bg-light-gray ph1">
+    <h2>Heiser</h2>
+  </div>
+  <div class="bg-white">
     {#each Object.keys(liftGroups) as group}
       <div class="flex flex-column">
-        <div class="flex flex-row justify-between f4 fw5 pointer" on:click={activeGroup === group ? () => activeGroup = undefined : () => activeGroup = group}>
+        <div class="flex flex-row justify-between f4 fw5 pointer bg-dark-gray white mb1 pa1" on:click={activeGroup === group ? () => activeGroup = undefined : () => activeGroup = group}>
           <div>
             {group}
           </div>
-          <div class="flex flex-row">
+          <div class="flex flex-row items-center">
             <span>{lifts.filter((lift) => lift.type === group && lift.status === "open").length}</span>
             <span class="ph1">/</span>
             <span>{lifts.filter((lift) => lift.type === group).length}</span>
-            <span class="ph1">{activeGroup === group ? "🙈" : "👀"}</span>
+            {#if activeGroup !== group}
+            <ChevronDownIcon size="20" />
+            {:else}
+            <ChevronUpIcon size="20" />
+            {/if}
           </div>
         </div>
         {#if activeGroup === group}
