@@ -2,7 +2,7 @@
   "name": "svelte-app",
   "version": "1.0.0",
   "scripts": {
-    "build": "sirv public -s",
+    "build": "rollup -c -s",
     "dev": "rollup -c -w -s",
     "start": "sirv public -s"
   },
