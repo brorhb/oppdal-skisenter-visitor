@@ -21,8 +21,18 @@
 		})
   })
   
-  function selectedTrack(event) {
-    navigateTo(`/tracks/${event.detail.id}`)
+  function editHandler(val) {
+    console.log(val.detail)
+  }
+
+  function deleteHandler(val) {
+    console.log(val.detail)
   }
 </script>
-<List items={tracks} headers={['id', 'name', 'status']} headerLabels={['id', 'Name', 'Status']} />
+<List
+  items={tracks}
+  columns={['id', 'name', 'status']}
+  columnLabels={['id', 'Name', 'Status']}
+  on:edit={editHandler}
+  on:delete={deleteHandler}
+/>
