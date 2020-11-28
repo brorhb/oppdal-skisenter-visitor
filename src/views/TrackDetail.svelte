@@ -4,6 +4,7 @@
   import { onDestroy, onMount } from 'svelte'
   let unsubscribe
   let tracksStore = makeTracksStore()
+  $: trackId = currentRoute.name.split("/")[currentRoute.name.split("/").length -1]
   let track = {}
 
 
@@ -16,7 +17,7 @@
 	
 	onMount(async () => {
 		tracksStore.subscribe((data) => {
-			track = data.find((item) => item.id == currentRoute.namedParams.id)
+			track = data.find((item) => item.id == trackId)
 		})
   })
 </script>

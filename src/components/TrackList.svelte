@@ -16,7 +16,7 @@
               cy="8"
               fill={`${track.status === "closed" ? "red" : "green"}`}
               r="8"
-            >
+            />
           </svg>
         </div>
       </div>
