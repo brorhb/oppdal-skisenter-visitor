@@ -7,6 +7,7 @@ import AdminLayout from './components/AdminLayout.svelte'
 import Login from './views/admin/Login.svelte'
 import AdminIndex from './views/admin/index.svelte'
 import AdminTracks from "./views/admin/Tracks.svelte"
+import Cameras from './views/Cameras.svelte'
 
 function userIsAdmin() {
   const user = localStorage.getItem("user")
@@ -30,6 +31,11 @@ export const routes = [
         layout: Layout
       }
     ]
+  },
+  {
+    name: "/cameras",
+    layout: Layout,
+    component: Cameras
   },
   {
     name: "/map",
