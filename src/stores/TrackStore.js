@@ -17,6 +17,9 @@ export const makeTracksStore = () => {
     const response = await fetchData()
     cache = response
     store.set(response)
+    setTimeout(() => {
+      load()
+    }, 300000)
   }
 
   load()
