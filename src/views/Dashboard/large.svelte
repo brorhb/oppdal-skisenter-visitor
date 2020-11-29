@@ -6,12 +6,28 @@
   export let liftGroups = []
   export let lifts = []
   export let selectedTrack
+  export let weatherStations = []
   let activeGroup
 </script>
 <div class="w-80">
   <Map items={tracks} on:select={selectedTrack} />
 </div>
 <div class="w-20 flex flex-column h-100 overflow-auto">
+  {#if weatherStations.length}
+  <div class="pa2 bg-light-gray flex flex-row justify-between">
+    {#each weatherStations as station}
+      <div class="flex flex-column w-100">
+        <div class="f4 fw5">{station.stationName.split(" ")[0].replace("_", "")}</div>
+        <div class={`${parseInt(station.temperature) < 0 ? 'blue' : 'red'}`}>
+          {station.temperature}
+        </div>
+        <div>
+          {station.wind.speed}{station.wind.unit}
+        </div>
+      </div>
+    {/each}
+  </div>
+  {/if}
   <div class="bg-light-gray ph1">
     <h2>Løyper</h2>
   </div>

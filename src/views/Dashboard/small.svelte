@@ -7,6 +7,7 @@
   export let liftGroups = {}
   export let lifts = []
   export let selectedTrack
+  export let weatherStations = []
   let activeGroup
   function getTracksForGroup(group) {
     return trackGroups[group]
@@ -16,6 +17,21 @@
   <div class="pa2 bg-light-gray flex flex-column items-end">
     <Map />
     <a href="/map">Se stort kart</a>
+  </div>
+</DashboardTile>
+<DashboardTile>
+  <div class="pa2 bg-light-gray flex flex-row justify-between">
+    {#each weatherStations as station}
+      <div class="flex flex-column w-100">
+        <div class="f4 fw5">{station.stationName.split(" ")[0].replace("_", "")}</div>
+        <div class={`${parseInt(station.temperature) < 0 ? 'blue' : 'red'}`}>
+          {station.temperature}
+        </div>
+        <div>
+          {station.wind.speed}{station.wind.unit}
+        </div>
+      </div>
+    {/each}
   </div>
 </DashboardTile>
 <DashboardTile>
