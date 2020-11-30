@@ -1,6 +1,7 @@
 <script>
   import { UserIcon, LockIcon } from 'svelte-feather-icons'
   import { navigateTo } from 'svelte-router-spa'
+  import config from '../../helpers/config';
   import OFetch from '../../helpers/fetch'
   let showPassword = false
   let error
@@ -18,7 +19,7 @@
     }
     try {
       let response = await OFetch(
-        "https://oppdal-skisenter.herokuapp.com/v1/admin/login",
+        `${config.BASE_URL}/admin/login`,
         "POST",
         body
       )

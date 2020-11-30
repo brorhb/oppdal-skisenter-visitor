@@ -12,6 +12,12 @@
   function getTracksForGroup(group) {
     return trackGroups[group]
   }
+
+  function getTempColor(val) {
+    const str = `${val}`
+    if (str.includes("-")) return "blue"
+    else return "red"
+  }
 </script>
 <DashboardTile>
   <div class="pa2 bg-light-gray flex flex-column items-end">
@@ -24,7 +30,7 @@
     {#each weatherStations as station}
       <div class="flex flex-column w-100">
         <div class="f4 fw5">{station.stationName.split(" ")[0].replace("_", "")}</div>
-        <div class={`${parseInt(station.temperature) < 0 ? 'blue' : 'red'}`}>
+        <div class={getTempColor(station.temperature)}>
           {station.temperature}
         </div>
         <div>

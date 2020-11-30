@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import config from '../helpers/config';
 
 let cache
 const store = writable([])
@@ -27,7 +28,7 @@ export const makeAvalancheStore = () => {
 
 const fetchData = async (data, set) => {
   try {
-    const response = await fetch('https://oppdal-skisenter.herokuapp.com/v1/avalanche-warnings')
+    const response = await fetch(`${config.BASE_URL}/avalanche-warnings`)
     if(response.ok) {
       return await response.json()
       

@@ -4,14 +4,18 @@ export default async function OFetch(url, method, body) {
       let token = ""
       const user = JSON.parse(localStorage.getItem("user"))
       if (user) token = user.token
+      let headers = {}
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`
+      }
+      if (body) {
+        headers['Content-Type'] = 'application/json'
+      }
       let response = await fetch(
         url,
         {
           "method": method,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token ? `Bearer ${token}` : token
-          },
+          "headers": headers,
           "body": JSON.stringify(body)
         }
       )

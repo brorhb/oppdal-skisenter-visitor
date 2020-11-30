@@ -8,6 +8,7 @@ import Login from './views/admin/Login.svelte'
 import AdminIndex from './views/admin/index.svelte'
 import AdminTracks from "./views/admin/Tracks.svelte"
 import Cameras from './views/Cameras.svelte'
+import EditItem from './views/admin/EditItem.svelte'
 
 function userIsAdmin() {
   const user = localStorage.getItem("user")
@@ -27,8 +28,7 @@ export const routes = [
       { name: 'index', component: Tracks },
       {
         name: '/:id',
-        component: TrackDetail,
-        layout: Layout
+        component: TrackDetail
       }
     ]
   },
@@ -50,7 +50,16 @@ export const routes = [
       { name: 'index', component: AdminIndex },
       {
         name: "/tracks",
-        component: AdminTracks
+        nestedRoutes: [
+          {
+            name: "index",
+            component: AdminTracks
+          },
+          {
+            name: "/:id",
+            component: EditItem
+          }
+        ]
       }
     ]
   },

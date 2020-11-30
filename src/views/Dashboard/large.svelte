@@ -8,6 +8,12 @@
   export let selectedTrack
   export let weatherStations = []
   let activeGroup
+
+  function getTempColor(val) {
+    const str = `${val}`
+    if (str.includes("-")) return "blue"
+    else return "red"
+  }
 </script>
 <div class="w-80">
   <Map items={tracks} on:select={selectedTrack} />
@@ -18,7 +24,7 @@
     {#each weatherStations as station}
       <div class="flex flex-column w-100">
         <div class="f4 fw5">{station.stationName.split(" ")[0].replace("_", "")}</div>
-        <div class={`${parseInt(station.temperature) < 0 ? 'blue' : 'red'}`}>
+        <div class={getTempColor(station.temperature)}>
           {station.temperature}
         </div>
         <div>
