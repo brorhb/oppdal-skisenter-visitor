@@ -5,6 +5,9 @@
   export const params = {}
 </script>
 <div class="h-100 flex flex-column">
+  <div class="flex w-100 justify-center pa2 items-center bg-red white fw5">
+    <div>BETA</div>
+  </div>
   <Navbar />
   <section class="flex h-100">
     <Route {currentRoute}  {params} />
