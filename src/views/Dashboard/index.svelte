@@ -56,7 +56,7 @@
   }
 </script>
 <svelte:window bind:innerWidth={innerWidth} />
-<div class="flex flex-column w-100">
+<div class="flex flex-column w-100 h-100">
   <AvalancheBanner />
   <div class={`flex ${innerWidth < 800 ? "flex-column" : "flex-row"} w-100 h-100`}>
     {#if innerWidth >= 800}

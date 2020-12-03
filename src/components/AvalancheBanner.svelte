@@ -1,10 +1,11 @@
 <script>
   import { makeAvalancheStore } from '../stores/AvalancheStore'
   import { onDestroy, onMount } from 'svelte'
+  import { parse, format } from 'fecha';
   let unsubscribe
   let avalancheStore = makeAvalancheStore()
   let warnings = []
-  $: warning = warnings[warnings.length]
+  $: warning = warnings[warnings.length-1]
 
 
   onDestroy(() => {
@@ -19,11 +20,18 @@
 			warnings = data
 		})
   })
+
+  const levels = {
+    "none": "Ingen",
+    "low": "Lav",
+    "medium": "Middels",
+    "high": "Høy"
+  }
 </script>
 
-{#if warnings.length}
+{#if warning}
 <div class="flex flex-row bg-yellow pa2 justify-between">
-  <div>Skredfare: {warning?.level ?? "ingen"}</div>
-  <div>{warning?.timestamp ?? new Date()}</div>
+  <div>Skredfare: <span class="fw6">{levels[warning.level.value]}</span></div>
+  <div>{format(parse(warning.timestamp, 'isoDateTime'), "mediumDate")}</div>
 </div>
 {/if}

@@ -33,5 +33,5 @@
   }
 </script>
 <div class="flex h-100 w-100">
-  <Map {items} on:select={selectedTrack} />
+  <Map items={[...tracks, ...lifts]} on:select={selectedTrack} />
 </div>
