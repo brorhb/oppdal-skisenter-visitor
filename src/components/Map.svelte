@@ -21,13 +21,19 @@
             class="pointer"
             cx={parseInt(item.coords.x) + 7}
             cy={parseInt(item.coords.y) + 7}
-            opacity="1"
+            opacity="0"
             fill={`${item.status === "closed" ? "red" : "green"}`}
             r="14"
             on:click={() => clicked(item)}
           >
-          <div>hello</div>
         </circle>
+        <circle
+            cx={parseInt(item.coords.x)}
+            cy={parseInt(item.coords.y)}
+            opacity="1"
+            fill={`${item.status === "closed" ? "red" : "green"}`}
+            r="5"
+          ></circle>
         </g>
       {/if}
     {/each}
