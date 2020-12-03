@@ -1,6 +1,7 @@
 <script>
   import Map from "../../components/Map.svelte"
   import { ChevronDownIcon, ChevronUpIcon } from 'svelte-feather-icons'
+  import Difficulty from '../../helpers/difficulty'
   export let trackGroups = []
   export let tracks = []
   export let liftGroups = []
@@ -45,7 +46,7 @@
       <div class="flex flex-column">
         <div class="flex flex-row justify-between f4 fw5 pointer bg-dark-gray white mb1 pa1" on:click={activeGroup === group ? () => activeGroup = undefined : () => activeGroup = group}>
           <div>
-            {group}
+            {Difficulty[group]}
           </div>
           <div class="flex flex-row items-center">
             <span>{tracks.filter((track) => track.difficulty === group && track.status === "open").length}</span>
