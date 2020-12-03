@@ -2,6 +2,7 @@
   import Map from "../../components/Map.svelte"
   import { ChevronDownIcon, ChevronUpIcon } from 'svelte-feather-icons'
   import Difficulty from '../../helpers/difficulty'
+  import Lifts from '../../helpers/lifts'
   export let trackGroups = []
   export let tracks = []
   export let liftGroups = []
@@ -65,7 +66,6 @@
             <div class="flex flex-row justify-between items-center pointer" on:click={() => selectedTrack({detail: track})}>
               <div class="flex flex-column pv2">
                 <div class="b">{track.id} {track.name}</div>
-                <div>{track.difficulty}</div>
               </div>
               <svg height="16" width="16" viewBox="0 0 16 16">
                 <circle
@@ -91,7 +91,7 @@
       <div class="flex flex-column">
         <div class="flex flex-row justify-between f4 fw5 pointer bg-dark-gray white mb1 pa1" on:click={activeGroup === group ? () => activeGroup = undefined : () => activeGroup = group}>
           <div>
-            {group}
+            {Lifts[group]}
           </div>
           <div class="flex flex-row items-center">
             <span>{lifts.filter((lift) => lift.type === group && lift.status === "open").length}</span>
