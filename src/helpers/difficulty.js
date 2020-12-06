@@ -1,4 +1,4 @@
-const difficulty = {
+export const difficulty = {
   "intermediate": "Lett",
   "beginner": "Veldig lett",
   "advanced": "Middels",
@@ -7,4 +7,11 @@ const difficulty = {
   "not rated": "Upreparert"
 }
 
-export default difficulty
+export const difficultyToInt = {
+  "intermediate": 2,
+  "beginner": 1,
+  "advanced": 3,
+  "expert": 4,
+  "terrainpark": 7,
+  "not rated": 6
+}

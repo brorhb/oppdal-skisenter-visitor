@@ -1,7 +1,7 @@
 <script>
   import Map from "../../components/Map.svelte"
   import { ChevronDownIcon, ChevronUpIcon } from 'svelte-feather-icons'
-  import Difficulty from '../../helpers/difficulty'
+  import {difficulty} from '../../helpers/difficulty'
   import Lifts from '../../helpers/lifts'
 import AvalancheBanner from "../../components/AvalancheBanner.svelte"
   export let trackGroups = []

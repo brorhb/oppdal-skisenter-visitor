@@ -2,7 +2,7 @@
   import Map from "../../components/Map.svelte"
   import DashboardTile from "../../components/DashboardTile.svelte"
   import { ChevronDownIcon, ChevronUpIcon } from 'svelte-feather-icons'
-  import Difficulty from '../../helpers/difficulty'
+  import {difficulty} from '../../helpers/difficulty'
   import Lifts from '../../helpers/lifts'
   export let trackGroups = {}
   export let tracks = []

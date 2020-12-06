@@ -1,3 +1,5 @@
+import {navigateTo} from "svelte-router-spa"
+
 export default async function OFetch(url, method, body) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -19,9 +21,15 @@ export default async function OFetch(url, method, body) {
           "body": JSON.stringify(body)
         }
       )
+      if (response.status === 403) {
+        throw "unauthorized"
+      }
       response = await response.json()
       resolve(response)
     } catch(err) {
+      if (err === "unauthorized") {
+        navigateTo("/login")
+      }
       reject(err)
     }
   })
