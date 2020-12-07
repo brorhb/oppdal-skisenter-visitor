@@ -1,6 +1,7 @@
 <script>
   export let currentRoute
-  import { makeTracksStore } from '../../stores/TrackStore'
+  import { navigateTo } from 'svelte-router-spa'
+  import { makeTracksStore, updateTracks } from '../../stores/TrackStore'
   import { makeLiftsStore } from '../../stores/LiftsStore'
   import { makeZoneStore } from "../../stores/ZoneStore"
   import { makeDifficultyStore } from "../../stores/DifficultyStore"
@@ -12,6 +13,7 @@
 
   $: itemType = currentRoute.name.split("/")[currentRoute.name.split("/").length -2]
   $: itemId = currentRoute.name.split("/")[currentRoute.name.split("/").length -1]
+  let saving = false
   let zones
   let item
   let store
@@ -38,78 +40,6 @@
         break
     }*/
   }
-  $: {
-    if (tracks) {
-      if (itemType === "tracks") {
-        item = tracks.find((i) => i.id == itemId)
-        if (item && item.season) {
-          item.season = {value: item.season, label: item.season === 1 ? "summer" : "winter"}
-        }
-      }
-      if (item && item.connected_tracks) {
-        item.connected_tracks = item.connected_tracks.map((track) => {
-          return {
-            value: track.id,
-            label: tracks.find((t) => t.id == track.id).name
-          }
-        })
-      }
-      if (item && item.connected_lifts && lifts) {
-        item.lifts = item.lifts.map(l => ({
-          "value": l.id,
-          "label": tracks.find(x => x.id === l.id).name
-        }))
-      }
-      if (item && item.status) {
-        item.status = {
-          value: item.status === "open" ? 2 : 1,
-          label: item.status
-        }
-      }
-      if (item && item.lifts) {
-        item.lifts = item.lifts.map(l => ({
-          value: l.id,
-          label: l.name
-        }))
-      }
-      if (item && item.zone) {
-        item.zone = {
-          value: item.zone,
-          label: zones.find(zone => zone.id == item.zone).name
-        }
-      }
-      if (item && item.difficulty) {
-        item.difficulty = {
-          value: difficultyToInt[item.difficulty],
-          label: difficulty[item.difficulty]
-        }
-      }
-    }
-  }
-
-  $: {
-    if (lifts) {
-      if (itemType === "lifts") {
-        item = lifts.find((i) => i.id == itemId)
-        if (item && item.season) {
-          item.season = {value: item.season, label: item.season === 1 ? "summer" : "winter"}
-        }
-        if (item && item.status) {
-          item.status = {
-            value: item.status === "open" ? 2 : 1,
-            label: item.status
-          }
-        }
-        if (item && item.zone && zones) {
-          console.log(zones)
-          /*item.zone = {
-            value: item.zone,
-            label: zones.find(zone => zone.id == item.zone).name
-          }*/
-        }
-      }
-    }
-  }
 
 
 
@@ -119,7 +49,7 @@
         item = data.find((i) => i.id == itemId)
         if (item && item.status) {
           selectedStatus = {
-            value: item.status === "open" ? 2 : 1,
+            value: item.status === "open" ? 1 : 2,
             label: item.status
           }
         }
@@ -128,6 +58,7 @@
   }
 
   onMount(() => {
+    setup()
     difficultyStore.subscribe((data) => {
       difficulties = data
     })
@@ -142,7 +73,84 @@
     })
   })
 
+  function setup() {
+    if (!lifts || !tracks || !zones || !difficulties) {
+      setTimeout(setup, 500)
+      return
+    }
+    if (itemType === "tracks") {
+      const t = tracks.find((i) => i.id == itemId)
+      if (t) {
+        item = JSON.parse(JSON.stringify(t))
+      }
+      if (item && item.season) {
+        item.season = {value: item.season, label: item.season === 1 ? "summer" : "winter"}
+      }
+      if (item && item.connected_tracks) {
+        item.connected_tracks = item.connected_tracks.map((track) => {
+          if (track.id && tracks.find((t) => t.id == track.id)) return {
+            value: track.id,
+            label: tracks.find((t) => t.id == track.id).name
+          }
+        })
+      }
+      if (item && item.connected_lifts && lifts) {
+        item.lifts = item.lifts.map(l => {
+          if (tracks.find(x => x.id === l.id)) return {
+            "value": l.id,
+            "label": tracks.find(x => x.id === l.id).name
+          }
+        })
+      }
+      if (item && item.status) {
+        item.status = {
+          value: item.status === "open" ? 1 : 2,
+          label: item.status
+        }
+      }
+      if (item && item.lifts) {
+        item.lifts = item.lifts.map(l => ({
+          value: l.id,
+          label: l.name
+        }))
+      }
+      if (item && item.zone && zones) {
+        if (zones.find(zone => zone.id == item.zone)) item.zone = {
+          value: item.zone,
+          label: zones.find(zone => zone.id == item.zone).name
+        }
+      }
+      if (item && item.difficulty) {
+        item.difficulty = {
+          value: difficultyToInt[item.difficulty],
+          label: difficulty[item.difficulty]
+        }
+      }
+    }
+
+    if (itemType === "lifts") {
+      item = lifts.find((i) => i.id == itemId)
+      if (item && item.season) {
+        item.season = {value: item.season, label: item.season === 1 ? "summer" : "winter"}
+      }
+      if (item && item.status) {
+        item.status = {
+          value: item.status === "open" ? 1 : 2,
+          label: item.status
+        }
+      }
+      if (item && item.zone && zones) {
+        console.log(zones)
+        /*item.zone = {
+          value: item.zone,
+          label: zones.find(zone => zone.id == item.zone).name
+        }*/
+      }
+    }
+  }
+
   async function save() {
+    saving = true
     let endpoint
     switch (itemType) {
       case "tracks":
@@ -161,36 +169,38 @@
     if (item.zone) body.zone = item.zone.value
     if (item.coords.x && item.coords.y) body.coords = `${item.coords.x}, ${item.coords.y}`
     if (item.difficulty) body.difficulty = item.difficulty.value
-    console.log(JSON.stringify(body))
-    let res = await OFetch(
+    await OFetch(
       `${config.BASE_URL}/admin/${endpoint}/${item.id}`,
       "PATCH",
       body
     )
-    console.log(res)
+    await updateTracks()
+    saving = false
+    navigateTo("/admin/tracks")
   }
 </script>
 
 <div class="w-80">
+  {JSON.stringify(item)}
   {#if item}
   <form class="measure center">
     <fieldset class="ba b--transparent ph0 mh0">
       <div class="flex flex-row w-100 justify-between items-center">
         <legend class="f4 fw6 ph0 mh0">{item.name}</legend>
-        <div class="f6 link dim br3 ph3 pv2 mb2 dib white bg-dark-blue pointer" on:click={save}>Save</div>
+        <div class={`f6 link dim br3 ph3 pv2 mb2 dib white ${saving ? "gray" : "bg-dark-blue"} pointer`} on:click={!saving ? save : null}>Save</div>
       </div>
       {#each Object.keys(item) as key}
         {#if key !== "id"}
-          {#if key === "connected_tracks"}
+          {#if key === "connected_tracks" && item.connected_tracks}
             <div class="mt3">
-              <label class="db fw6 lh-copy f6" for={key}>{key}</label>
+            <label class="db fw6 lh-copy f6" for={key}>{key}</label>
               <Select
                 isMulti={true}
                 items={tracks.map((t) => ({value: t.id, label: t.name}))}
                 bind:selectedValue={item.connected_tracks}
               ></Select>
             </div>
-          {:else if key === "lifts"}
+          {:else if key === "lifts" && item.lifts}
             <div class="mt3">
               <label class="db fw6 lh-copy f6" for={key}>{key}</label>
               <Select
@@ -199,7 +209,7 @@
                 bind:selectedValue={item.lifts}
               ></Select>
             </div>
-          {:else if key === "season"}
+          {:else if key === "season" && item.season}
             <div class="mt3">
               <label class="db fw6 lh-copy f6" for={key}>{key}</label>
               <Select
@@ -207,15 +217,15 @@
                 bind:selectedValue={item.season}
               ></Select>
             </div>
-            {:else if key === "status"}
+            {:else if key === "status" && item.status}
               <div class="mt3">
                 <label class="db fw6 lh-copy f6" for={key}>{key}</label>
                 <Select
-                  items={[{value: 2, label: "open"}, {value: 1, label: "closed"}]}
+                  items={[{value: 1, label: "open"}, {value: 2, label: "closed"}]}
                   bind:selectedValue={item.status}
                 ></Select>
               </div>
-            {:else if key === "zone"}
+            {:else if key === "zone" && item.zone}
             <div class="mt3">
               <label class="db fw6 lh-copy f6" for={key}>{key}</label>
               <Select
@@ -223,7 +233,7 @@
                 bind:selectedValue={item.zone}
               ></Select>
             </div>
-            {:else if key == "coords"}
+            {:else if key == "coords" && item.coords}
             <div>
               <label class="db fw6 lh-copy f6" for={key}>{key}</label>
               <div>
@@ -235,7 +245,7 @@
                 <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="ycord" bind:value={item.coords.y}>
               </div>
             </div>
-            {:else if key === "difficulty"}
+            {:else if key === "difficulty" && item.difficulty}
               <div class="mt3">
                 <label class="db fw6 lh-copy f6" for={key}>{key}</label>
                 <Select
