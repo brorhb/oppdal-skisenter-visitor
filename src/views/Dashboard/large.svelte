@@ -48,7 +48,7 @@ import AvalancheBanner from "../../components/AvalancheBanner.svelte"
       <div class="flex flex-column">
         <div class="flex flex-row justify-between f4 fw5 pointer bg-dark-gray white mb1 pa1" on:click={activeGroup === group ? () => activeGroup = undefined : () => activeGroup = group}>
           <div>
-            {Difficulty[group]}
+            {difficulty[group]}
           </div>
           <div class="flex flex-row items-center">
             <span>{tracks.filter((track) => track.difficulty === group && track.status === "open").length}</span>
