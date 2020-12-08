@@ -7,6 +7,7 @@ import AdminLayout from './components/AdminLayout.svelte'
 import Login from './views/admin/Login.svelte'
 import AdminIndex from './views/admin/index.svelte'
 import AdminTracks from "./views/admin/Tracks.svelte"
+import AdminLifts from "./views/admin/Lifts.svelte"
 import Cameras from './views/Cameras.svelte'
 import EditItem from './views/admin/EditItem.svelte'
 
@@ -54,6 +55,19 @@ export const routes = [
           {
             name: "index",
             component: AdminTracks
+          },
+          {
+            name: "/:id",
+            component: EditItem
+          }
+        ]
+      },
+      {
+        name: "/lifts",
+        nestedRoutes: [
+          {
+            name: "index",
+            component: AdminLifts
           },
           {
             name: "/:id",
