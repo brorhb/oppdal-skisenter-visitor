@@ -8,6 +8,7 @@
   let unsubscribe
   let tracksStore = makeTracksStore()
   let tracks = []
+  let creating = false
 
 
   onDestroy(() => {
@@ -34,17 +35,48 @@
           `${config.BASE_URL}/admin/track/${val.detail.id}`,
           "DELETE"
         )
-        updateTracks()
+        await updateTracks()
+        alert(`Slettet løype: ${val.detail.name}`)
       } catch(err) {
         console.warn(err)
       }
     }
   }
+
+  async function createTrack() {
+    if (confirm("Sikker på at du vil lage en ny løype?")) {
+      try {
+        const res = await OFetch(
+          `${config.BASE_URL}/admin/track/add`,
+          "POST",
+          {
+            "name": "Navn",
+            "connected_tracks": [],
+            "season": 2,
+            "status": 2,
+            "length": 1500,
+            "difficulty": 1,
+            "lifts": [],
+            "coords": null,
+            "zone": 1
+          }
+        )
+        const id = res.message.id
+        await updateTracks()
+        navigateTo(`/admin/tracks/${id}`)
+      } catch(err) {
+
+      }
+    }
+  }
 </script>
-<List
-  items={tracks}
-  columns={['id', 'name', 'status']}
-  columnLabels={['id', 'Name', 'Status']}
-  on:edit={editHandler}
-  on:delete={deleteHandler}
-/>
+<div class="flex flex-column w-100 h-100 items-center">
+  <div class={`w-100 mw8 f6 link dim br3 ph3 pv2 mb2 white ${creating ? "gray" : "bg-dark-blue"} pointer`} on:click={!creating ? createTrack : null}>Ny løype</div>
+  <List
+    items={tracks}
+    columns={['id', 'name', 'status']}
+    columnLabels={['id', 'Name', 'Status']}
+    on:edit={editHandler}
+    on:delete={deleteHandler}
+  />
+</div>

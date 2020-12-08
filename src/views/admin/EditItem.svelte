@@ -86,6 +86,12 @@
       if (item && item.season) {
         item.season = {value: item.season, label: item.season === 1 ? "summer" : "winter"}
       }
+      if (item && !item.coords) {
+        item.coords = {
+          x: null,
+          y: null
+        }
+      }
       if (item && item.connected_tracks) {
         item.connected_tracks = item.connected_tracks.map((track) => {
           if (track.id && tracks.find((t) => t.id == track.id)) return {
@@ -233,7 +239,7 @@
                 bind:selectedValue={item.zone}
               ></Select>
             </div>
-            {:else if key == "coords" && item.coords}
+            {:else if key == "coords"}
             <div>
               <label class="db fw6 lh-copy f6" for={key}>{key}</label>
               <div>
