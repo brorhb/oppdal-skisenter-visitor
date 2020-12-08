@@ -2,10 +2,11 @@
   export let currentRoute
   import { navigateTo } from 'svelte-router-spa'
   import { makeTracksStore, updateTracks } from '../../stores/TrackStore'
-  import { makeLiftsStore } from '../../stores/LiftsStore'
+  import { makeLiftsStore, updateLifts } from '../../stores/LiftsStore'
   import { makeZoneStore } from "../../stores/ZoneStore"
   import { makeDifficultyStore } from "../../stores/DifficultyStore"
   import { difficultyToInt, difficulty } from "../../helpers/difficulty"
+  import Lifts, {liftTypeToInt} from "../../helpers/lifts"
   import OFetch from "../../helpers/fetch"
   import Select from 'svelte-select';
   import { onMount } from 'svelte'
@@ -20,6 +21,7 @@
   let lifts
   let tracks
   let difficulties
+  let liftTypes
   let trackStore = makeTracksStore()
   let liftsStore = makeLiftsStore()
   let zoneStore = makeZoneStore()
@@ -73,7 +75,7 @@
     })
   })
 
-  function setup() {
+  async function setup() {
     if (!lifts || !tracks || !zones || !difficulties) {
       setTimeout(setup, 500)
       return
@@ -135,6 +137,13 @@
     }
 
     if (itemType === "lifts") {
+      const liftTypesResult = await OFetch(
+        `${config.BASE_URL}/lift-types`,
+      )
+      liftTypes = liftTypesResult.map((item) => ({
+        value: item.id,
+        label: Lifts[item.type]
+      }))
       item = lifts.find((i) => i.id == itemId)
       if (item && item.season) {
         item.season = {value: item.season, label: item.season === 1 ? "summer" : "winter"}
@@ -145,12 +154,23 @@
           label: item.status
         }
       }
+      if (item && item.type) {
+        item.type = {
+          value: liftTypeToInt[item.type],
+          label: Lifts[item.type]
+        }
+      }
+      if (item && !item.coords) {
+        item.coords = {
+          "x": null,
+          "y": null
+        }
+      }
       if (item && item.zone && zones) {
-        console.log(zones)
-        /*item.zone = {
+        if (zones.find(zone => zone.id == item.zone)) item.zone = {
           value: item.zone,
           label: zones.find(zone => zone.id == item.zone).name
-        }*/
+        }
       }
     }
   }
@@ -167,22 +187,31 @@
         break;
     }
     let body = item
-    console.log(item.lifts)
+    console.log(item.coords.x)
     if (item.lifts) body.lifts = item.lifts.map((item) => item.value)
     if (item.connected_tracks) body.connected_tracks = item.connected_tracks.map((item) => item.value)
     if (item.season) body.season = item.season.value
     if (item.status) body.status = item.status.value
     if (item.zone) body.zone = item.zone.value
-    if (item.coords.x && item.coords.y) body.coords = `${item.coords.x}, ${item.coords.y}`
+    if (item.coords.x && item.coords.y) {
+      body.coords = `${item.coords.x}, ${item.coords.y}`
+    } else {
+      body.coords = null
+    }
     if (item.difficulty) body.difficulty = item.difficulty.value
-    await OFetch(
+    if (item.type) body.type = item.type.value
+    console.log(body)
+    const res = await OFetch(
       `${config.BASE_URL}/admin/${endpoint}/${item.id}`,
       "PATCH",
       body
     )
     await updateTracks()
+    await updateLifts()
     saving = false
-    navigateTo("/admin/tracks")
+    if (res.success) {
+      navigateTo(`/admin/${itemType}`)
+    }
   }
 </script>
 
@@ -215,6 +244,14 @@
                 bind:selectedValue={item.lifts}
               ></Select>
             </div>
+          {:else if key === "type"}
+            <div class="mt3">
+              <label class="db fw6 lh-copy f6" for={key}>{key}</label>
+              <Select
+                items={liftTypes}
+                bind:selectedValue={item.type}
+              ></Select>
+            </div>
           {:else if key === "season" && item.season}
             <div class="mt3">
               <label class="db fw6 lh-copy f6" for={key}>{key}</label>
@@ -231,7 +268,7 @@
                   bind:selectedValue={item.status}
                 ></Select>
               </div>
-            {:else if key === "zone" && item.zone}
+            {:else if key === "zone"}
             <div class="mt3">
               <label class="db fw6 lh-copy f6" for={key}>{key}</label>
               <Select
