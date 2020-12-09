@@ -235,7 +235,7 @@
                 bind:selectedValue={item.connected_tracks}
               ></Select>
             </div>
-          {:else if key === "lifts" && item.lifts}
+          {:else if key === "lifts"}
             <div class="mt3">
               <label class="db fw6 lh-copy f6" for={key}>{key}</label>
               <Select
@@ -252,7 +252,7 @@
                 bind:selectedValue={item.type}
               ></Select>
             </div>
-          {:else if key === "season" && item.season}
+          {:else if key === "season"}
             <div class="mt3">
               <label class="db fw6 lh-copy f6" for={key}>{key}</label>
               <Select
@@ -260,7 +260,7 @@
                 bind:selectedValue={item.season}
               ></Select>
             </div>
-            {:else if key === "status" && item.status}
+            {:else if key === "status"}
               <div class="mt3">
                 <label class="db fw6 lh-copy f6" for={key}>{key}</label>
                 <Select
@@ -288,7 +288,7 @@
                 <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="ycord" bind:value={item.coords.y}>
               </div>
             </div>
-            {:else if key === "difficulty" && item.difficulty}
+            {:else if key === "difficulty"}
               <div class="mt3">
                 <label class="db fw6 lh-copy f6" for={key}>{key}</label>
                 <Select
