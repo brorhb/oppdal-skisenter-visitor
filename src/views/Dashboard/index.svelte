@@ -52,7 +52,11 @@
   })
   
   function selectedTrack(obj) {
-    navigateTo(`/tracks/${obj.detail.id}`)
+    if (obj.detail.type) {
+      navigateTo(`/lifts/${obj.detail.id}`)
+    } else {
+      navigateTo(`/tracks/${obj.detail.id}`)
+    }
   }
 </script>
 <svelte:window bind:innerWidth={innerWidth} />

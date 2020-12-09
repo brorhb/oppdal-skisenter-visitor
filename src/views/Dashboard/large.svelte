@@ -3,7 +3,7 @@
   import { ChevronDownIcon, ChevronUpIcon } from 'svelte-feather-icons'
   import {difficulty} from '../../helpers/difficulty'
   import Lifts from '../../helpers/lifts'
-import AvalancheBanner from "../../components/AvalancheBanner.svelte"
+  import AvalancheBanner from "../../components/AvalancheBanner.svelte"
   export let trackGroups = []
   export let tracks = []
   export let liftGroups = []
@@ -19,7 +19,7 @@ import AvalancheBanner from "../../components/AvalancheBanner.svelte"
   }
 </script>
 <div class="w-80">
-  <Map items={[...tracks, ...lifts]} on:select={selectedTrack} />
+  <Map items={[...tracks, ...lifts]} />
 </div>
 <div class="w-20 flex flex-column h-100 overflow-auto">
   {#if weatherStations.length}
