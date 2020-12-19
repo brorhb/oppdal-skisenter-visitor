@@ -80,17 +80,17 @@
   }
 </script>
 <svelte:window bind:innerWidth={innerWidth} />
-<div class="flex flex-column w-100 h-100 pv1">
+<div class="flex flex-column w-100 h-100">
   <div class="flex flex-wrap justify-center items-center mb1">
     <div
-      class={`pa2 tc ${!activeZone ? "bg-black-30 white" : "bg-black-05"} mh1 fw5 pointer`}
+      class={`pa2 tc ${!activeZone ? "bg-black-30 white" : "bg-black-05"} mh1 fw5 pointer mt1`}
       on:click={() => activeZone = false}
     >
       Alle
     </div>
     {#each zones as zone}
       <div
-        class={`pa2 tc ${activeZone === zone.id ? "bg-black-30 white" : "bg-black-05"} mh1 fw5 pointer`}
+        class={`pa2 tc ${activeZone === zone.id ? "bg-black-30 white" : "bg-black-05"} mh1 fw5 pointer mt1`}
         on:click={() => activeZone = zone.id}
       >
         {zone.name}
