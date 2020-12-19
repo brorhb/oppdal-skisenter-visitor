@@ -26,7 +26,7 @@
   <div class="bg-light-gray flex flex-row justify-between">
     {#each weatherStations as station}
       <div class="flex flex-column w-100 pa2">
-        <div class="flex flex-row items-end justify-between">
+        <div class="flex flex-wrap items-end justify-between">
           <div class="f4 fw5">{station.stationName.split(" ")[0].replace("_", "")}</div>
           <div class="fw2 gray">{station.dateTime.split(" ")[1].substring(0, station.dateTime.split(" ")[1].length - 3)}</div>
         </div>
