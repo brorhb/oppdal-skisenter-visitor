@@ -18,114 +18,118 @@
     else return "red"
   }
 </script>
-<div class="w-80">
-  <Map items={[...tracks, ...lifts]} />
-</div>
-<div class="w-20 flex flex-column h-100 overflow-auto">
-  {#if weatherStations.length}
-  <div class="bg-light-gray flex flex-row justify-between">
-    {#each weatherStations as station}
-      <div class="flex flex-column w-100 pa2">
-        <div class="flex flex-wrap items-end justify-between">
-          <div class="f4 fw5">{station.stationName.split(" ")[0].replace("_", "")}</div>
-          <div class="fw2 gray">{station.dateTime.split(" ")[1].substring(0, station.dateTime.split(" ")[1].length - 3)}</div>
-        </div>
-        <div class={getTempColor(station.temperature)}>
-          {station.temperature}
-        </div>
-        <div>
-          {station.wind.speed}{station.wind.unit}
-        </div>
-      </div>
-    {/each}
+<div class="w-100 h-100 flex flex-row">
+  <div class="w-80">
+    <Map items={[...tracks, ...lifts]} />
   </div>
-  {/if}
-  <div class="bg-light-gray ph1">
-    <h2>Løyper</h2>
-  </div>
-  <div class="bg-white">
-    {#each Object.keys(trackGroups) as group}
-      <div class="flex flex-column">
-        <div class="flex flex-row justify-between f4 fw5 pointer bg-dark-gray white mb1 pa1" on:click={activeGroup === group ? () => activeGroup = undefined : () => activeGroup = group}>
-          <div>
-            {difficulty[group]}
-          </div>
-          <div class="flex flex-row items-center">
-            <span>{tracks.filter((track) => track.difficulty === group && track.status === "open").length}</span>
-            <span class="ph1">/</span>
-            <span>{tracks.filter((track) => track.difficulty === group).length}</span>
-            {#if activeGroup !== group}
-            <ChevronDownIcon size="20" />
-            {:else}
-            <ChevronUpIcon size="20" />
-            {/if}
-          </div>
-        </div>
-        {#if activeGroup === group}
-        <div class="pa2 w-100">
-          {#each trackGroups[group] as track}
-            <div class="flex flex-row justify-between items-center pointer" on:click={() => selectedTrack({detail: track})}>
-              <div class="flex flex-column pv2">
-                <div class="b">{track.id} {track.name}</div>
-              </div>
-              <svg height="16" width="16" viewBox="0 0 16 16">
-                <circle
-                  opacity="1.0"
-                  cx="8"
-                  cy="8"
-                  fill={`${track.status === "closed" ? "red" : "green"}`}
-                  r="8"
-                >
-              </svg>
+  <div class="w-20 flex flex-column overflow-auto h-100">
+    {#if weatherStations.length}
+      <div class="bg-light-gray flex flex-row justify-between">
+        {#each weatherStations as station}
+          <div class="flex flex-column w-100 pa2">
+            <div class="flex flex-wrap items-end justify-between">
+              <div class="f4 fw5">{station.stationName.split(" ")[0].replace("_", "")}</div>
+              <div class="fw2 gray">{station.dateTime.split(" ")[1].substring(0, station.dateTime.split(" ")[1].length - 3)}</div>
             </div>
-          {/each}
-        </div>
-        {/if}
-      </div>
-    {/each}
-  </div>
-  <div class="bg-light-gray ph1">
-    <h2>Heiser</h2>
-  </div>
-  <div class="bg-white">
-    {#each Object.keys(liftGroups) as group}
-      <div class="flex flex-column">
-        <div class="flex flex-row justify-between f4 fw5 pointer bg-dark-gray white mb1 pa1" on:click={activeGroup === group ? () => activeGroup = undefined : () => activeGroup = group}>
-          <div>
-            {Lifts[group]}
+            <div class={getTempColor(station.temperature)}>
+              {station.temperature}
+            </div>
+            <div>
+              {station.wind.speed}{station.wind.unit}
+            </div>
           </div>
-          <div class="flex flex-row items-center">
-            <span>{lifts.filter((lift) => lift.type === group && lift.status === "open").length}</span>
-            <span class="ph1">/</span>
-            <span>{lifts.filter((lift) => lift.type === group).length}</span>
-            {#if activeGroup !== group}
-            <ChevronDownIcon size="20" />
-            {:else}
-            <ChevronUpIcon size="20" />
+        {/each}
+      </div>
+    {/if}
+    <div class="bg-light-gray ph1">
+      <h2>Løyper</h2>
+    </div>
+    <div class="bg-white">
+      {#each Object.keys(trackGroups) as group}
+        <div class="flex flex-column">
+          <div class="flex flex-row justify-between f4 fw5 pointer bg-dark-gray white mb1 pa1" on:click={activeGroup === group ? () => activeGroup = undefined : () => activeGroup = group}>
+            <div>
+              {difficulty[group]}
+            </div>
+            <div class="flex flex-row items-center">
+              <span>{tracks.filter((track) => track.difficulty === group && track.status === "open").length}</span>
+              <span class="ph1">/</span>
+              <span>{tracks.filter((track) => track.difficulty === group).length}</span>
+              {#if activeGroup !== group}
+                <ChevronDownIcon size="20" />
+              {:else}
+                <ChevronUpIcon size="20" />
+              {/if}
+            </div>
+          </div>
+          {#if activeGroup === group}
+            <div class="pa2 w-100">
+              {#each trackGroups[group] as track}
+                <div class="flex flex-row justify-between items-center pointer" on:click={() => selectedTrack({detail: track})}>
+                  <div class="flex flex-column pv2">
+                    <div class="b">{track.id} {track.name}</div>
+                  </div>
+                  <svg height="16" width="16" viewBox="0 0 16 16">
+                    <circle
+                      opacity="1.0"
+                      cx="8"
+                      cy="8"
+                      fill={`${track.status === "closed" ? "red" : "green"}`}
+                      r="8"
+                    />
+                  </svg>
+                </div>
+              {/each}
+            </div>
+          {/if}
+        </div>
+      {/each}
+    </div>
+    {#if lifts.length}
+      <div class="bg-light-gray ph1">
+        <h2>Heiser</h2>
+      </div>
+      <div class="bg-white">
+        {#each Object.keys(liftGroups) as group}
+          <div class="flex flex-column">
+            <div class="flex flex-row justify-between f4 fw5 pointer bg-dark-gray white mb1 pa1" on:click={activeGroup === group ? () => activeGroup = undefined : () => activeGroup = group}>
+              <div>
+                {Lifts[group]}
+              </div>
+              <div class="flex flex-row items-center">
+                <span>{lifts.filter((lift) => lift.type === group && lift.status === "open").length}</span>
+                <span class="ph1">/</span>
+                <span>{lifts.filter((lift) => lift.type === group).length}</span>
+                {#if activeGroup !== group}
+                <ChevronDownIcon size="20" />
+                {:else}
+                <ChevronUpIcon size="20" />
+                {/if}
+              </div>
+            </div>
+            {#if activeGroup === group}
+              <div class="pa2 w-100">
+                {#each liftGroups[group] as lift}
+                  <div class="flex flex-row justify-between items-center">
+                    <div class="flex flex-column pv2">
+                      <div class="b">{lift.map_name.toUpperCase()} {lift.name}</div>
+                    </div>
+                    <svg height="16" width="16" viewBox="0 0 16 16">
+                      <circle
+                        opacity="1.0"
+                        cx="8"
+                        cy="8"
+                        fill={`${lift.status === "closed" ? "red" : "green"}`}
+                        r="8"
+                      />
+                    </svg>
+                  </div>
+                {/each}
+              </div>
             {/if}
           </div>
-        </div>
-        {#if activeGroup === group}
-          <div class="pa2 w-100">
-            {#each liftGroups[group] as lift}
-              <div class="flex flex-row justify-between items-center">
-                <div class="flex flex-column pv2">
-                  <div class="b">{lift.map_name.toUpperCase()} {lift.name}</div>
-                </div>
-                <svg height="16" width="16" viewBox="0 0 16 16">
-                  <circle
-                    opacity="1.0"
-                    cx="8"
-                    cy="8"
-                    fill={`${lift.status === "closed" ? "red" : "green"}`}
-                    r="8"
-                  >
-                </svg>
-              </div>
-            {/each}
-          </div>
-          {/if}
+        {/each}
       </div>
-    {/each}
+    {/if}
   </div>
 </div>

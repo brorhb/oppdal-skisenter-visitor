@@ -7,7 +7,6 @@
   import { onDestroy, onMount } from 'svelte'
   import Large from "./large.svelte"
   import Small from "./small.svelte"
-  import AvalancheBanner from '../../components/AvalancheBanner.svelte'
 
   let unsubscribe
   let tracksStore = makeTracksStore()
@@ -81,8 +80,7 @@
   }
 </script>
 <svelte:window bind:innerWidth={innerWidth} />
-<div class="flex flex-column w-100 h-100">
-  <AvalancheBanner />
+<div class="flex flex-column w-100 h-100 pv1">
   <div class="flex flex-wrap justify-center items-center mb1">
     <div
       class={`pa2 tc ${!activeZone ? "bg-black-30 white" : "bg-black-05"} mh1 fw5 pointer`}

@@ -78,7 +78,7 @@
                   cy="8"
                   fill={`${track.status === "closed" ? "red" : "green"}`}
                   r="8"
-                >
+                />
               </svg>
             </div>
           {/each}
@@ -88,46 +88,48 @@
     {/each}
   </div>
 </DashboardTile>
-<DashboardTile>
-  <div class="pa2 bg-white">
-    {#each Object.keys(liftGroups) as group}
-      <div class="flex flex-column">
-        <div class="flex flex-row justify-between f4 fw5 pointer bg-dark-gray white ma1 pa1" on:click={activeGroup === group ? () => activeGroup = undefined : () => activeGroup = group}>
-          <div>
-            {Lifts[group]}
+{#if lifts.length}
+  <DashboardTile>
+    <div class="pa2 bg-white">
+      {#each Object.keys(liftGroups) as group}
+        <div class="flex flex-column">
+          <div class="flex flex-row justify-between f4 fw5 pointer bg-dark-gray white ma1 pa1" on:click={activeGroup === group ? () => activeGroup = undefined : () => activeGroup = group}>
+            <div>
+              {Lifts[group]}
+            </div>
+            <div class="flex flex-row items-center">
+              <span>{lifts.filter((lift) => lift.type === group && lift.status === "open").length}</span>
+              <span class="ph1">/</span>
+              <span>{lifts.filter((lift) => lift.type === group).length}</span>
+              {#if activeGroup !== group}
+              <ChevronDownIcon size="20" />
+              {:else}
+              <ChevronUpIcon size="20" />
+              {/if}
+            </div>
           </div>
-          <div class="flex flex-row items-center">
-            <span>{lifts.filter((lift) => lift.type === group && lift.status === "open").length}</span>
-            <span class="ph1">/</span>
-            <span>{lifts.filter((lift) => lift.type === group).length}</span>
-            {#if activeGroup !== group}
-            <ChevronDownIcon size="20" />
-            {:else}
-            <ChevronUpIcon size="20" />
-            {/if}
-          </div>
-        </div>
-        {#if activeGroup === group}
-          <div class="pa2 w-100">
-            {#each liftGroups[group] as lift}
-              <div class="flex flex-row justify-between items-center">
-                <div class="flex flex-column pv2">
-                  <div class="b">{lift.map_name.toUpperCase()} {lift.name}</div>
+          {#if activeGroup === group}
+            <div class="pa2 w-100">
+              {#each liftGroups[group] as lift}
+                <div class="flex flex-row justify-between items-center">
+                  <div class="flex flex-column pv2">
+                    <div class="b">{lift.map_name.toUpperCase()} {lift.name}</div>
+                  </div>
+                  <svg height="16" width="16" viewBox="0 0 16 16">
+                    <circle
+                      opacity="1.0"
+                      cx="8"
+                      cy="8"
+                      fill={`${lift.status === "closed" ? "red" : "green"}`}
+                      r="8"
+                    />
+                  </svg>
                 </div>
-                <svg height="16" width="16" viewBox="0 0 16 16">
-                  <circle
-                    opacity="1.0"
-                    cx="8"
-                    cy="8"
-                    fill={`${lift.status === "closed" ? "red" : "green"}`}
-                    r="8"
-                  >
-                </svg>
-              </div>
-            {/each}
-          </div>
-          {/if}
-      </div>
-    {/each}
-  </div>
-</DashboardTile>
+              {/each}
+            </div>
+            {/if}
+        </div>
+      {/each}
+    </div>
+  </DashboardTile>
+{/if}
