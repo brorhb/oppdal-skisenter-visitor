@@ -6,13 +6,20 @@
 	<link rel="icon" sizes="192x192" href="https://static.wixstatic.com/media/ca12ce_88e2b3ebd1e9464d9737dd719d8c9499%7Emv2.png/v1/fill/w_32%2Ch_32%2Clg_1%2Cusm_0.66_1.00_0.01/ca12ce_88e2b3ebd1e9464d9737dd719d8c9499%7Emv2.png">
 	<title>Oppdal Skisenter - Løypetavle</title>
 
-	<link rel='icon' type='image/png' href='/favicon.png'>
+	<link rel='icon' type='image/png' href='./favicon.png'>
 	<link rel="stylesheet" href="./global.css" />
 	<link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"/>
 
-	<script defer src='/build/bundle.js'></script>
+	<link rel="manifest" href="./manifest.json">
+
+	<script defer src='./build/bundle.js'></script>
 </head>
 
 <body class="helvetica">
+	<script>
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.register("/service-worker.js")
+		}
+	</script>
 </body>
 </html>
