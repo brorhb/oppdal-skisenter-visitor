@@ -23,11 +23,11 @@
 </script>
 <div class="flex flex-column ph2">
   {#if track}
-    id: {track?.id}
+    id: {track.id}
     <br>
-    name: {track?.name}
+    name: {track.name}
     <br>
-    <span>status: <span class={`${track?.status === 'closed' ? 'red' : 'green'}`}>{track?.status}</span></span>
+    <span>status: <span class={`${track.status === 'closed' ? 'red' : 'green'}`}>{track.status}</span></span>
     {:else}
     <div>
       loading

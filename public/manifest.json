@@ -14,12 +14,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"
-    },
-    {
-      "src": "/assets/apple-icon-180.png",
-      "sizes": "180x180",
-      "type": "image/png",
-      "purpose": "maskable any"
     }
   ],
   "theme_color": "#333333",
