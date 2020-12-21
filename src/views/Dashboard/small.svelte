@@ -4,13 +4,12 @@
   import { ChevronDownIcon, ChevronUpIcon } from 'svelte-feather-icons'
   import {difficulty} from '../../helpers/difficulty'
   import Lifts from '../../helpers/lifts'
-import LiftItem from "../../components/LiftItem.svelte"
-import TrackItem from "../../components/TrackItem.svelte"
+  import LiftItem from "../../components/LiftItem.svelte"
+  import TrackItem from "../../components/TrackItem.svelte"
   export let trackGroups = {}
   export let tracks = []
   export let liftGroups = {}
   export let lifts = []
-  export let selectedTrack
   export let weatherStations = []
   let activeGroup
   function getTracksForGroup(group) {
@@ -25,7 +24,13 @@ import TrackItem from "../../components/TrackItem.svelte"
 </script>
 <DashboardTile>
   <div class="pa2 bg-light-gray flex flex-column items-end">
-    <Map />
+    {#if navigator.userAgent.includes("Android")}
+    <div class="h-100">
+      <img height="width: 100%" src="../../assets/map.png" alt="Løypekart" />
+    </div>
+    {:else}
+      <Map />
+    {/if}
     <a href="/map">Se stort kart</a>
   </div>
 </DashboardTile>
