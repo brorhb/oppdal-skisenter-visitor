@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 import config from '../helpers/config';
 
 let cache
-const store = writable([])
+const store = writable({})
 
 export const makeAvalancheStore = () => {
   const load = async () => {
@@ -28,10 +28,9 @@ export const makeAvalancheStore = () => {
 
 const fetchData = async (data, set) => {
   try {
-    const response = await fetch(`${config.BASE_URL}/avalanche-warnings`)
+    const response = await fetch(`${config.BASE_URL}/avalanche-warning`)
     if(response.ok) {
       return await response.json()
-      
     } else {
       const text = response.text()
       throw new Error(text);
