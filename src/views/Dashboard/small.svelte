@@ -6,6 +6,7 @@
   import Lifts from '../../helpers/lifts'
   import LiftItem from "../../components/LiftItem.svelte"
   import TrackItem from "../../components/TrackItem.svelte"
+  import WeatherStations from "../../components/Weatherstations.svelte"
   export let trackGroups = {}
   export let tracks = []
   export let liftGroups = {}
@@ -37,18 +38,7 @@
 <DashboardTile>
   <div class="bg-light-gray flex flex-row justify-between">
     {#each weatherStations as station}
-      <div class="flex flex-column w-100 pa2">
-        <div class="flex flex-row items-end justify-between">
-          <div class="f4 fw5">{station.stationName.split(" ")[0].replace("_", "")}</div>
-          <div class="fw2 gray">{station.dateTime.split(" ")[1].substring(0, station.dateTime.split(" ")[1].length - 3)}</div>
-        </div>
-        <div class={getTempColor(station.temperature)}>
-          {station.temperature}
-        </div>
-        <div>
-          {station.wind.speed}{station.wind.unit}
-        </div>
-      </div>
+      <WeatherStations weatherStations={weatherStations}></WeatherStations>
     {/each}
   </div>
 </DashboardTile>
