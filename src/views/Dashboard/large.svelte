@@ -4,21 +4,15 @@
   import {difficulty} from '../../helpers/difficulty'
   import Lifts from '../../helpers/lifts'
   import AvalancheBanner from "../../components/AvalancheBanner.svelte"
-import LiftItem from "../../components/LiftItem.svelte"
-import TrackItem from "../../components/TrackItem.svelte"
+  import LiftItem from "../../components/LiftItem.svelte"
+  import TrackItem from "../../components/TrackItem.svelte"
+  import WeatherStations from "../../components/Weatherstations.svelte"
   export let trackGroups = []
   export let tracks = []
   export let liftGroups = []
   export let lifts = []
-  export let selectedTrack
   export let weatherStations = []
   let activeGroup
-
-  function getTempColor(val) {
-    const str = `${val}`
-    if (str.includes("-")) return "blue"
-    else return "red"
-  }
 </script>
 <div class="w-100 h-100 flex flex-row">
   <div class="w-80">
@@ -26,22 +20,7 @@ import TrackItem from "../../components/TrackItem.svelte"
   </div>
   <div class="w-20 flex flex-column">
     {#if weatherStations.length}
-      <div class="bg-light-gray flex flex-row justify-between">
-        {#each weatherStations as station}
-          <div class="flex flex-column w-100 pa2">
-            <div class="flex flex-wrap items-end justify-between">
-              <div class="f4 fw5">{station.stationName.split(" ")[0].replace("_", "")}</div>
-              <div class="fw2 gray">{station.dateTime.split(" ")[1].substring(0, station.dateTime.split(" ")[1].length - 3)}</div>
-            </div>
-            <div class={getTempColor(station.temperature)}>
-              {station.temperature}
-            </div>
-            <div>
-              {station.wind.speed}{station.wind.unit}
-            </div>
-          </div>
-        {/each}
-      </div>
+      <WeatherStations weatherStations={weatherStations}></WeatherStations>
     {/if}
     <div class="h-100 flex flex-column overflow-auto">
       {#if lifts.length}
