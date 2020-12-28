@@ -70,14 +70,24 @@
       }
     }
   }
+
+  async function statusHandler(val) {
+    const item = val.detail
+    await OFetch(
+      `${config.BASE_URL}/admin/toggle-status/lifts/${item.item}/${item.status}`,
+      "PATCH"
+    )
+    await updateTracks()
+  }
 </script>
 <div class="flex flex-column w-100 h-100 items-center">
   <div class={`w-100 mw8 f6 link dim br3 ph3 pv2 mb2 white ${creating ? "gray" : "bg-dark-blue"} pointer`} on:click={!creating ? createTrack : null}>Ny heis</div>
   <List
     items={lifts}
-    columns={['map_name', 'name', 'status']}
-    columnLabels={['id', 'Name', 'Status']}
+    columns={['map_name', 'name']}
+    columnLabels={['id', 'Name']}
     on:edit={editHandler}
     on:delete={deleteHandler}
+    on:toggleStatus={statusHandler}
   />
 </div>

@@ -12,9 +12,6 @@
     else return "black"
   }
 </script>
-{#if items.length}
-{typeof items[0].status}
-{/if}
 <table class="f6 w-100 mw8 center">
   <thead>
     <tr class="stripe-dark">
