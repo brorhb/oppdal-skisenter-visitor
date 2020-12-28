@@ -22,7 +22,7 @@
     {#if weatherStations.length}
       <WeatherStations weatherStations={weatherStations}></WeatherStations>
     {/if}
-    <div class="h-100 flex flex-column overflow-auto">
+    <div class="flex flex-column overflow-auto">
       {#if lifts.length}
         <div class="bg-light-gray ph1">
           <h2>Heiser</h2>

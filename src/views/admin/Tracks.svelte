@@ -43,6 +43,15 @@
     }
   }
 
+  async function statusHandler(val) {
+    const item = val.detail
+    await OFetch(
+      `${config.BASE_URL}/admin/toggle-status/tracks/${item.item}/${item.status}`,
+      "PATCH"
+    )
+    await updateTracks()
+  }
+
   async function createTrack() {
     if (confirm("Sikker på at du vil lage en ny løype?")) {
       try {
@@ -74,9 +83,10 @@
   <div class={`w-100 mw8 f6 link dim br3 ph3 pv2 mb2 white ${creating ? "gray" : "bg-dark-blue"} pointer`} on:click={!creating ? createTrack : null}>Ny løype</div>
   <List
     items={tracks}
-    columns={['id', 'name', 'status']}
-    columnLabels={['id', 'Name', 'Status']}
+    columns={['id', 'name']}
+    columnLabels={['id', 'Name']}
     on:edit={editHandler}
     on:delete={deleteHandler}
+    on:toggleStatus={statusHandler}
   />
 </div>

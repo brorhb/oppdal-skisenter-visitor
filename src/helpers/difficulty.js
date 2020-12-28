@@ -15,3 +15,12 @@ export const difficultyToInt = {
   "terrainpark": 7,
   "not rated": 6
 }
+
+export const difficultyIntToColor = {
+  1: "green",
+  2: "blue",
+  3: "red",
+  4: "black",
+  6: "black",
+  7: "orange"
+}
