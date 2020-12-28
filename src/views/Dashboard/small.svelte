@@ -37,12 +37,21 @@
 </DashboardTile>
 <DashboardTile>
   <div class="bg-light-gray flex flex-row justify-between">
-    {#each weatherStations as station}
-      <WeatherStations weatherStations={weatherStations}></WeatherStations>
-    {/each}
+    <WeatherStations weatherStations={weatherStations}></WeatherStations>
   </div>
 </DashboardTile>
 {#if lifts.length}
+<DashboardTile>
+  <div class="pa2 bg-white">
+    <h2>Heiser</h2>
+    <ul class="list pl0">
+      {#each lifts as lift}
+        <LiftItem {lift}></LiftItem>
+      {/each}
+    </ul>
+  </div>
+</DashboardTile>
+<!--
   <DashboardTile>
     <div class="pa2 bg-white">
       {#each Object.keys(liftGroups) as group}
@@ -78,7 +87,20 @@
       {/each}
     </div>
   </DashboardTile>
+-->
 {/if}
+
+<DashboardTile>
+  <div class="pa2 bg-white">
+    <h2>Løyper</h2>
+    <ul class="list pl0">
+      {#each tracks as track}
+        <TrackItem {track}></TrackItem>
+      {/each}
+    </ul>
+  </div>
+</DashboardTile>
+<!--
 <DashboardTile>
   <div class="pa2 bg-white">
     {#each Object.keys(trackGroups) as group}
@@ -109,3 +131,4 @@
     {/each}
   </div>
 </DashboardTile>
+-->
