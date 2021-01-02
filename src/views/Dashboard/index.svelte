@@ -101,7 +101,7 @@
     {#if innerWidth >= 800}
       <Large {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={weatherStations} />
     {:else}
-      <Small {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={weatherStations} />
+      <Small {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={weatherStations} activeZone={activeZone} />
     {/if}
   </div>
 </div>

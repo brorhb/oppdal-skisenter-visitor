@@ -7,7 +7,7 @@
     else return "red"
   }
 </script>
-<div class="bg-light-gray flex flex-row justify-between w-100">
+<div class="bg-white flex flex-row justify-between w-100">
   {#each weatherStations as station}
     {#if !station.error}
     <div class="flex flex-column w-100 pa2">
