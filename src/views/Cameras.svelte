@@ -16,7 +16,7 @@ $: activeCameras = activeZone ? cameras
   .filter((cam) => cam.zone === activeZone)
   .map((cam) => {
     if (cam.url.includes("${PARENT}")) {
-      cam.url.replace("${parent}", window.location.host)
+      cam.url = cam.url.replace("${PARENT}", window.location.host)
     }
     return cam
   }) : cameras
