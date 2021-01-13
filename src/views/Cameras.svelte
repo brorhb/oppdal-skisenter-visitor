@@ -12,14 +12,14 @@ let activeZone = false
 
 let unsubscribe
 
-$: activeCameras = activeZone ? cameras
-  .filter((cam) => cam.zone === activeZone)
-  .map((cam) => {
+$: activeCameras = (activeZone ? cameras
+    .filter((cam) => cam.zone === activeZone)
+  : cameras).map((cam) => {
     if (cam.url.includes("${PARENT}")) {
       cam.url = cam.url.replace("${PARENT}", window.location.host)
     }
     return cam
-  }) : cameras
+  })
 
 $: zonesWithCamera = cameras.reduce((acc, curr) => {
   const exists = acc.find((item) => item?.id === curr.zone)
