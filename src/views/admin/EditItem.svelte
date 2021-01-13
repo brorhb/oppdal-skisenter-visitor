@@ -11,6 +11,7 @@
   import Select from 'svelte-select';
   import { onMount } from 'svelte'
   import config from "../../helpers/config"
+import { intros } from 'svelte/internal';
 
   $: itemType = currentRoute.name.split("/")[currentRoute.name.split("/").length -2]
   $: itemId = currentRoute.name.split("/")[currentRoute.name.split("/").length -1]
@@ -194,7 +195,9 @@
     if (item.status) body.status = item.status.value
     if (item.zone) body.zone = item.zone.value
     if (item.coords.x && item.coords.y) {
-      body.coords = `${item.coords.x}, ${item.coords.y}`
+      let x = parseInt(item.coords.x)
+      let y = parseInt(item.coords.y)
+      body.coords = `${x}, ${y}`
     } else {
       body.coords = null
     }
