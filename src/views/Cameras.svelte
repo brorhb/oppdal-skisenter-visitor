@@ -66,9 +66,9 @@ onDestroy(() => {
       {/each}
     </div>
   {/if}
-  <div class="flex flex-wrap w-100 h-100">
+  <div class="flex flex-wrap w-100 h-100 overflow-auto">
     {#each activeCameras as camera}
-      <div class={`w-100-s w-100-m ${activeCameras.length > 1 ? "w-50-ns" : "w-100"}`}>
+      <div class={`w-100 ${activeCameras.length > 1 ? "w-50-ns" : ""}`}>
         <iframe
           title={camera.title}
           src={camera.url}
