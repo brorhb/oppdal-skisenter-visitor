@@ -3,7 +3,6 @@
   import { ChevronDownIcon, ChevronUpIcon } from 'svelte-feather-icons'
   import {difficulty} from '../../helpers/difficulty'
   import Lifts from '../../helpers/lifts'
-  import AvalancheBanner from "../../components/AvalancheBanner.svelte"
   import LiftItem from "../../components/LiftItem.svelte"
   import TrackItem from "../../components/TrackItem.svelte"
   import WeatherStations from "../../components/Weatherstations.svelte"
