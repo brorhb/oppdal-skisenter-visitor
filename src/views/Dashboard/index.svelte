@@ -18,6 +18,7 @@
   let activeZone = false
   let weatherStations = []
   let lifts = []
+  $: visibleWeatherStations = activeZone ? weatherStations.filter((station) => station.zone === activeZone) : weatherStations
   $: trackGroups = tracksInZone.reduce((acc, curr) => {
     const difficulty = curr.difficulty
     if (!acc) acc = {}
@@ -99,9 +100,9 @@
   </div>
   <div class={`flex ${innerWidth < 800 ? "flex-column" : "flex-row"} w-100 h-100`}>
     {#if innerWidth >= 800}
-      <Large {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={weatherStations} />
+      <Large {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={visibleWeatherStations} />
     {:else}
-      <Small {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={weatherStations} activeZone={activeZone} />
+      <Small {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={visibleWeatherStations} activeZone={activeZone} />
     {/if}
   </div>
 </div>
