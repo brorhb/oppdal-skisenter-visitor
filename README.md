@@ -1,3 +1,15 @@
+# README
+## Setup
+- Installer node (node.js)
+- `git clone git@github.com:brorhb/oppdal-skisenter-visitor.git`
+- `cd oppdal-skisenter-visitor`
+- `npm install`
+- `npm start`
+
+Kos deg 🤘🎉
+
+# Svelte doc ⬇️
+
 *Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
 
 ---
