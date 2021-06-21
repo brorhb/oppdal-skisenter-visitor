@@ -82,16 +82,16 @@
 </script>
 <svelte:window bind:innerWidth={innerWidth} />
 <div class="flex flex-column w-100 h-100">
-  <div class="flex flex-wrap justify-center items-center mb1">
+  <div class="zones">
     <div
-      class={`pa2 tc ${!activeZone ? "bg-black-30 white" : "bg-black-05"} mh1 fw5 pointer mt1`}
+      class={`nav-item ${!activeZone ? "active-item" : ""}`}
       on:click={() => activeZone = false}
     >
       Alle
     </div>
     {#each zones as zone}
       <div
-        class={`pa2 tc ${activeZone === zone.id ? "bg-black-30 white" : "bg-black-05"} mh1 fw5 pointer mt1`}
+        class={`nav-item ${activeZone === zone.id ? "active-item" : ""} `}
         on:click={() => activeZone = zone.id}
       >
         {zone.name}
@@ -106,3 +106,23 @@
     {/if}
   </div>
 </div>
+
+<style>
+  .zones {
+    display: flex;
+    justify-content: center;
+    
+  }
+  .nav-item {
+    color: #004A7C;
+    cursor: pointer;
+    margin: 20px;
+    font-size: 32px;
+  }
+  .nav-item:hover {
+    border-bottom: 1px solid #004A7C;
+  }
+  .active-item {
+    border-bottom: 1px solid #004A7C;
+  }
+</style>
