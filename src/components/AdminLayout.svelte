@@ -1,28 +1,39 @@
 <script>
   import { Route } from 'svelte-router-spa'
-  import Navbar from './Navbar.svelte'
   export let currentRoute
-  export const params = {}
+  export const params = {} 
+  import { navigateTo } from 'svelte-router-spa'
 
-  const navItems = [
-    {
-      route: "/tracks",
-      label: "Tracks"
-    },
-    {
-      route: "/lifts",
-      label: "Lifts"
-    }
-  ]
+  function logout() {
+    localStorage.removeItem('user');
+    navigateTo(`/login`)
+  }
 </script>
-<div class="h-100 flex flex-column">
-  <nav class="pa3 pa4-ns">
-    <a class="link dim black b f6 f5-ns dib mr3" href="/admin/tracks">Admin</a>
-    {#each navItems as item}
-      <a class="link dim gray f6 f5-ns dib mr3" href={"/admin" + item.route}>{item.label}</a>
-    {/each}
-  </nav>
-  <section class="flex h-100 pa2">
+
+<div class="h-100">
+  <div class="nav">
+    <h1 on:click={() => navigateTo('/admin')}>Oppdal Skisenter Admin</h1>
+    <button on:click={logout}>Logg av</button>
+  </div>
+
+  <section>
     <Route {currentRoute}  {params} />
   </section>
 </div>
+
+
+<style>
+  .nav {
+    width: 100%;
+    background-color: #393E46;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .nav > h1 {
+    cursor: pointer;
+  }
+</style>

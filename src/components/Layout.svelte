@@ -11,7 +11,7 @@
   </div>
   <AvalancheBanner />
   <Navbar />
-  <section class="flex h-100">
+  <section>
     <Route {currentRoute}  {params} />
   </section>
 </div>
