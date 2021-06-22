@@ -3,21 +3,25 @@
   import { makeLiftsStore } from '../../stores/LiftsStore'
   import { makeZoneStore } from '../../stores/ZoneStore'
   import { makeWeatherStore } from '../../stores/WeatherStore'
+  import { makeImportantMessageStore } from '../../stores/ImportantMessageStore'
   import { navigateTo } from 'svelte-router-spa'
   import { onDestroy, onMount } from 'svelte'
   import Large from "./large.svelte"
   import Small from "./small.svelte"
+import ImportantMessage from '../../components/ImportantMessage.svelte'
 
   let unsubscribe
   let tracksStore = makeTracksStore()
   let liftsStore = makeLiftsStore()
   let weatherStore = makeWeatherStore()
   let zoneStore = makeZoneStore()
+  let importantMessageStore = makeImportantMessageStore();
   let tracks = []
   let zones = []
   let activeZone = false
   let weatherStations = []
   let lifts = []
+  let importantMessage = {}
   $: visibleWeatherStations = activeZone ? weatherStations.filter((station) => station.zone === activeZone) : weatherStations
   $: trackGroups = tracksInZone.reduce((acc, curr) => {
     const difficulty = curr.difficulty
@@ -70,6 +74,9 @@
     zoneStore.subscribe((data) => {
       zones = data
     })
+    importantMessageStore.subscribe((data) => {
+      importantMessage = data
+    })
   })
   
   function selectedTrack(obj) {
@@ -81,28 +88,60 @@
   }
 </script>
 <svelte:window bind:innerWidth={innerWidth} />
-<div class="flex flex-column w-100 h-100">
-  <div class="flex flex-wrap justify-center items-center mb1">
-    <div
-      class={`pa2 tc ${!activeZone ? "bg-black-30 white" : "bg-black-05"} mh1 fw5 pointer mt1`}
-      on:click={() => activeZone = false}
-    >
-      Alle
-    </div>
-    {#each zones as zone}
+<div class="wrapper">
+  <ImportantMessage importantMessage={importantMessage}/>
+  <div>
+    <div class="zones">
       <div
-        class={`pa2 tc ${activeZone === zone.id ? "bg-black-30 white" : "bg-black-05"} mh1 fw5 pointer mt1`}
-        on:click={() => activeZone = zone.id}
+        class={`nav-item ${!activeZone ? "active-item" : ""}`}
+        on:click={() => activeZone = false}
       >
-        {zone.name}
+        Alle
       </div>
-    {/each}
-  </div>
-  <div class={`flex ${innerWidth < 800 ? "flex-column" : "flex-row"} w-100 h-100`}>
-    {#if innerWidth >= 800}
-      <Large {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={visibleWeatherStations} />
-    {:else}
-      <Small {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={visibleWeatherStations} activeZone={activeZone} />
-    {/if}
+      {#each zones as zone}
+        <div
+          class={`nav-item ${activeZone === zone.id ? "active-item" : ""} `}
+          on:click={() => activeZone = zone.id}
+        >
+          {zone.name}
+        </div>
+      {/each}
+    </div>
+    <div class={`flex ${innerWidth < 800 ? "flex-column" : "flex-row"} w-100 h-100`}>
+      {#if innerWidth >= 800}
+        <Large {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={visibleWeatherStations} />
+      {:else}
+        <Small {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={visibleWeatherStations} activeZone={activeZone} />
+      {/if}
+    </div>
   </div>
 </div>
+
+
+<style>
+  .wrapper {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+  .box-shadow {
+    box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+  }
+  
+  .zones {
+    display: flex;
+    justify-content: center;
+    
+  }
+  .nav-item {
+    color: #004A7C;
+    cursor: pointer;
+    margin: 20px;
+    font-size: 32px;
+  }
+  .nav-item:hover {
+    border-bottom: 1px solid #004A7C;
+  }
+  .active-item {
+    border-bottom: 1px solid #004A7C;
+  }
+</style>

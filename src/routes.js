@@ -10,7 +10,7 @@ import AdminTracks from "./views/admin/Tracks.svelte"
 import AdminLifts from "./views/admin/Lifts.svelte"
 import Cameras from './views/Cameras.svelte'
 import EditItem from './views/admin/EditItem.svelte'
-
+import AdminMessages from './views/admin/Messages.svelte'
 function userIsAdmin() {
   const user = localStorage.getItem("user")
   return user
@@ -44,11 +44,12 @@ export const routes = [
     layout: Layout
   },
   {
-    name: "/admin",
+    name: "admin",
     layout: AdminLayout,
     onlyIf: { guard: userIsAdmin, redirect: '/login' },
     nestedRoutes: [
       { name: 'index', component: AdminIndex },
+      { name: '/meldinger', component: AdminMessages },
       {
         name: "/tracks",
         nestedRoutes: [
@@ -76,6 +77,10 @@ export const routes = [
         ]
       }
     ]
+  },
+  {
+    name: "test-test",
+    component: AdminMessages
   },
   {
     name: "/login",
