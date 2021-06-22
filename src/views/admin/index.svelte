@@ -5,6 +5,7 @@
 <div class="admin-index">
   <div class="nav-item" on:click={() => navigateTo('/admin/meldinger')}>
     <div class="nav-icon">
+      <i class="fas fa-info-circle"></i>
     </div>
     <div class="nav-title">
         Viktige meldinger
@@ -13,14 +14,16 @@
 
   <div class="nav-item" on:click={() => navigateTo('/admin/tracks')}>
     <div class="nav-icon">
+      <i class="fas fa-route"></i>
     </div>
     <div class="nav-title">
         Løyper
     </div>
   </div>
 
-  <div class="nav-item" >
+  <div class="nav-item" on:click={() => navigateTo('/admin/lifts')}>
     <div class="nav-icon">
+      <i class="fas fa-skiing"></i>
     </div>
     <div class="nav-title">
         Heiser
@@ -48,20 +51,29 @@
   .admin-index {
     display: flex;
     flex-wrap: wrap;
-    align-content: flex-start;
+    justify-content: space-evenly; 
+    
   }
   .nav-item {
-    width: 300px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     cursor: pointer;
-    margin: 40px;
     border-radius: 12px;
+    margin-top: 30px;
+    
   }
   .nav-item:hover {
     background-color: rgb(231, 231, 231);
   }
+  .nav-icon {
+    font-size: 56px;
+    margin-bottom: 20px;
+  }
+
+
 </style>

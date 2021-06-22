@@ -15,7 +15,6 @@
   let tracks = []
   let lifts = []
   let zones = []
-  let toggleMap = false
   let name = ''
   let length = null
   let newTrackDifficulty = ''
@@ -96,9 +95,6 @@
       }
     }
   }
-  function clickMap(event) {
-    console.log(event);
-  }
 </script>
 <div>
   <List
@@ -150,14 +146,6 @@
         {/each}
       </select>
     </div>
-    <button on:click="{() => toggleMap = !toggleMap}" class="oppdal-button">Plasser løype på kart</button>
-    {#if toggleMap}
-      <div class="list">
-        <svg class='h-100 w-100' viewBox="0 0 1209 767" preserveAspectRatio="xMinYMin meet">
-          <image on:click="{clickMap}" height="100%" href="../../assets/map.svg" alt="Løypekart"></image>
-        </svg>
-      </div>
-    {/if}
     <button on:click="{createTrack}" class="oppdal-button">Lagre</button>
   </div>
 </div>
