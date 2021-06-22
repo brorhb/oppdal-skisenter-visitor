@@ -1,5 +1,8 @@
 <script>
   import { navigateTo } from 'svelte-router-spa'
+  import { Route } from 'svelte-router-spa'
+  export let currentRoute
+  export const params = {} 
 </script>
 
 <div class="admin-index">
@@ -45,6 +48,10 @@
         Informasjon
     </div>
   </div>
+  <section>
+    <Route {currentRoute}  {params} />
+  </section>
+
 </div>
 
 <style>

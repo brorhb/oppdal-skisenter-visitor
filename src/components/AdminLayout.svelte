@@ -12,7 +12,7 @@
 
 <div>
   <div class="nav">
-    <h1 on:click={() => navigateTo('/admin')}>Oppdal Skisenter Admin</h1>
+    <h1 class="oppdal-title" on:click={() => navigateTo('/admin')}>Oppdal Skisenter Admin</h1>
     <button on:click={logout}>Logg av</button>
   </div>
 
@@ -34,6 +34,9 @@
   }
   .nav > h1 {
     cursor: pointer;
+  }
+  .nav > h1:hover {
+    color: rgb(231, 231, 231);
   }
   .nav > button {
     cursor: pointer;

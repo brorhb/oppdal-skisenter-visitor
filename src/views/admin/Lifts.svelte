@@ -48,7 +48,7 @@
           "DELETE"
         )
         await updateLifts()
-        alert(`Slettet løype: ${val.detail.name}`)
+        alert(`Slettet heis: ${val.detail.name}`)
       } catch(err) {
         console.warn(err)
       }
@@ -89,7 +89,7 @@
       `${config.BASE_URL}/admin/toggle-status/lifts/${item.item}/${item.status}`,
       "PATCH"
     )
-    await updateTracks()
+    await updateLifts()
   }
 </script>
 <div>
