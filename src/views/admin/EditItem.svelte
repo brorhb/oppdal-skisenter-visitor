@@ -17,7 +17,6 @@
   let saving = false
   let zones
   let item
-  let store
   let lifts
   let tracks
   let difficulties
@@ -26,38 +25,6 @@
   let liftsStore = makeLiftsStore()
   let zoneStore = makeZoneStore()
   let difficultyStore = makeDifficultyStore()
-  /*
-  let connectedTracks = []
-  let connectedLifts = []
-  let selectedSeason
-  let selectedStatus
-  let selectedZone
-  */
-  $: {
-    /*switch (itemType) {
-      case "tracks":
-        break
-      case "lifts":
-        store = makeLiftsStore()
-        break
-    }*/
-  }
-
-
-/*
-  $: if (store) {
-    if (item.itemType !== "tracks" || item.itemType !== "lifts") {
-      store.subscribe((data) => {
-        item = data.find((i) => i.id == itemId)
-        if (item && item.status) {
-          selectedStatus = {
-            value: item.status === "open" ? 1 : 2,
-            label: item.status
-          }
-        }
-      })
-    }
-  }*/
 
   onMount(() => {
     setup()
@@ -175,7 +142,6 @@
         break;
     }
     let body = item
-    console.log(item.coords.x)
     if (item.lifts) body.lifts = item.lifts.map((item) => item.value)
     if (item.connected_tracks) body.connected_tracks = item.connected_tracks.map((item) => item.value)
     if (item.season) body.season = item.season.value
@@ -190,7 +156,6 @@
     }
     if (item.difficulty) body.difficulty = item.difficulty.value
     if (item.type) body.type = item.type.value
-    console.log(body)
     const res = await OFetch(
       `${config.BASE_URL}/admin/${endpoint}/${item.id}`,
       "PATCH",
@@ -199,7 +164,6 @@
     await updateTracks()
     await updateLifts()
     saving = false
-
     if (res.success) {
       navigateTo(`/admin/${itemType}`)
     }
@@ -207,7 +171,6 @@
 </script>
 
 <div>
-  {JSON.stringify(item)}
   {#if item}
   <div class="measure center">
     <fieldset class="ba b--transparent ph0 mh0">
