@@ -79,10 +79,6 @@ export const routes = [
     ]
   },
   {
-    name: "test-test",
-    component: AdminMessages
-  },
-  {
     name: "/login",
     component: Login
   }

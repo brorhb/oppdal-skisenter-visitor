@@ -1,9 +1,9 @@
 <script>
     import { makeImportantMessageStore, updateMessage } from '../../stores/ImportantMessageStore'
     import { onDestroy, onMount } from 'svelte'
-import OFetch from '../../helpers/fetch';
-import config from '../../helpers/config';
-import ImportantMessage from '../../components/ImportantMessage.svelte';
+    import OFetch from '../../helpers/fetch';
+    import config from '../../helpers/config';
+    import ImportantMessage from '../../components/ImportantMessage.svelte';
 
     let unsubscribe;
     let importantMessageStore = makeImportantMessageStore();
@@ -28,7 +28,6 @@ import ImportantMessage from '../../components/ImportantMessage.svelte';
                 `${config.BASE_URL}/admin/important-message/${importantMessage.id}`,
                 "PATCH", importantMessage
             );
-            console.log(result);
             await updateMessage();
         } catch (error) {
             console.warn(error);

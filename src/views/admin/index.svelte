@@ -33,7 +33,7 @@
     <div class="nav-icon">
     </div>
     <div class="nav-title">
-        Meldinger
+        Viktige meldinger
     </div>
   </div>
 
@@ -41,7 +41,7 @@
     <div class="nav-icon">
     </div>
     <div class="nav-title">
-        Meldinger
+        Heiser
     </div>
   </div>
 
@@ -49,7 +49,7 @@
     <div class="nav-icon">
     </div>
     <div class="nav-title">
-        Meldinger
+        Løyper
     </div>
   </div>
 
@@ -57,7 +57,7 @@
     <div class="nav-icon">
     </div>
     <div class="nav-title">
-        Meldinger
+        Snøforhold
     </div>
   </div>
 
@@ -65,7 +65,7 @@
     <div class="nav-icon">
     </div>
     <div class="nav-title">
-        Meldinger
+        Informasjon
     </div>
   </div>
 </div>
