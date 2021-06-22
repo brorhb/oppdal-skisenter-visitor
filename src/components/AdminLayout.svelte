@@ -10,7 +10,7 @@
   }
 </script>
 
-<div class="h-100">
+<div>
   <div class="nav">
     <h1 on:click={() => navigateTo('/admin')}>Oppdal Skisenter Admin</h1>
     <button on:click={logout}>Logg av</button>
@@ -20,7 +20,6 @@
     <Route {currentRoute}  {params} />
   </section>
 </div>
-
 
 <style>
   .nav {
@@ -35,5 +34,21 @@
   }
   .nav > h1 {
     cursor: pointer;
+  }
+  .nav > button {
+    cursor: pointer;
+    width: 100px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .nav {
+      flex-direction: column;
+    }
+    .nav > h1 {
+      text-align: center;
+    }
+    .nav > button {
+      margin-bottom: 20px;
+    }
   }
 </style>
