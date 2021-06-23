@@ -3,3 +3,23 @@ html, body {
 	width: 100%;
 	height: 100%;
 }
+
+.oppdal-input {
+	min-width: 300px;
+	min-height: 25px;
+	margin: 5px;
+}
+.oppdal-select {
+	min-width: 300px;
+	min-height: 25px;
+	margin: 5px;
+}
+.oppdal-button {
+	min-width: 300px;
+	min-height: 25px;
+	margin: 5px;
+	cursor: pointer;
+}
+.oppdal-title {
+	font-size: 26px;
+}

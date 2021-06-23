@@ -1,118 +1,103 @@
 <script>
-  import { makeLiftsStore, updateLifts } from '../../stores/LiftsStore'
-  import { makeTracksStore, updateTracks } from '../../stores/TrackStore'
-  import { onDestroy, onMount } from 'svelte'
   import { navigateTo } from 'svelte-router-spa'
+  import { Route } from 'svelte-router-spa'
+  export let currentRoute
+  export const params = {} 
 
-  let unsubscribe
-  let liftsStore = makeLiftsStore()
-  let lifts = []
-  let tracksStore = makeTracksStore()
-  let tracks = []
-  
-  onDestroy(() => {
-    if(unsubscribe) {
-      unsubscribe()
-      unsubscribe = null
-    }
-	});
-	
-	onMount(async () => {
-		liftsStore.subscribe((data) => {
-			lifts = data
-    })
-    tracksStore.subscribe((data) => {
-      tracks = data
-    })
-  })
-
+  function logout() {
+    localStorage.removeItem('user');
+    navigateTo(`/login`)
+  }
 </script>
 
 <div class="admin-index">
-  <div class="nav-item" on:click={() => navigateTo('/admin/meldinger')}>
+  <div class="nav-item" on:click={() => navigateTo('/admin/alerts')}>
     <div class="nav-icon">
+      <i class="fas fa-info-circle"></i>
     </div>
     <div class="nav-title">
-        Meldinger
+        Viktige meldinger
     </div>
   </div>
 
-  <div class="nav-item" >
+  <div class="nav-item" on:click={() => navigateTo('/admin/tracks')}>
     <div class="nav-icon">
+      <i class="fas fa-route"></i>
     </div>
     <div class="nav-title">
-        Meldinger
+        Løyper
     </div>
   </div>
 
-  <div class="nav-item" >
+  <div class="nav-item" on:click={() => navigateTo('/admin/lifts')}>
     <div class="nav-icon">
+      <i class="fas fa-skiing"></i>
     </div>
     <div class="nav-title">
-        Meldinger
+        Heiser
     </div>
   </div>
 
-  <div class="nav-item" >
+  <div class="nav-item" on:click={() => navigateTo('/admin/webcamera')}>
     <div class="nav-icon">
+      <i class="fas fa-video"></i>
     </div>
     <div class="nav-title">
-        Meldinger
+        Webkamera
     </div>
   </div>
 
-  <div class="nav-item" >
+  <div class="nav-item" on:click={logout}>
     <div class="nav-icon">
+      <i class="fas fa-sign-out-alt"></i>
     </div>
     <div class="nav-title">
-        Meldinger
+        Logg av
     </div>
   </div>
+  <section>
+    <Route {currentRoute}  {params} />
+  </section>
+
 </div>
-
-
-<!--     
-<div class="flex flex-row w-100 h-100 items-center justify-center">
-  {#if lifts.length}
-    <div class="w-100 mw4 bg-light-gray pa2 ma1">
-      <h2>Heiser</h2>
-      <div>
-        <h3>{lifts.filter(lift => lift.status === "open").length}/{lifts.length}</h3>
-        åpne
-      </div>
-    </div>
-  {/if}
-  {#if tracks.length}
-    <div class="w-100 mw4 bg-light-gray pa2 ma1">
-      <h2>Løyper</h2>
-      <div>
-        <h3>{tracks.filter(track => track.status === "open").length}/{tracks.length}</h3>
-        åpne
-      </div>
-    </div>
-  {/if}
-</div>
--->
-
 
 <style>
   .admin-index {
     display: flex;
     flex-wrap: wrap;
-    align-content: flex-start;
+    justify-content: center; 
+    
   }
   .nav-item {
-    width: 300px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     cursor: pointer;
-    margin: 40px;
     border-radius: 12px;
+    margin-top: 30px;
+    margin: 30px;
+    
   }
   .nav-item:hover {
     background-color: rgb(231, 231, 231);
   }
+  .nav-icon {
+    font-size: 56px;
+    margin-bottom: 20px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .admin-index {
+      justify-content: space-evenly;
+    }
+    .nav-item {
+      margin: 0;
+      margin-top: 30px;
+    }
+  }
+
 </style>

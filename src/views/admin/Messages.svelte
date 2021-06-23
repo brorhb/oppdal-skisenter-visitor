@@ -1,9 +1,9 @@
 <script>
     import { makeImportantMessageStore, updateMessage } from '../../stores/ImportantMessageStore'
     import { onDestroy, onMount } from 'svelte'
-import OFetch from '../../helpers/fetch';
-import config from '../../helpers/config';
-import ImportantMessage from '../../components/ImportantMessage.svelte';
+    import OFetch from '../../helpers/fetch';
+    import config from '../../helpers/config';
+    import ImportantMessage from '../../components/ImportantMessage.svelte';
 
     let unsubscribe;
     let importantMessageStore = makeImportantMessageStore();
@@ -28,7 +28,6 @@ import ImportantMessage from '../../components/ImportantMessage.svelte';
                 `${config.BASE_URL}/admin/important-message/${importantMessage.id}`,
                 "PATCH", importantMessage
             );
-            console.log(result);
             await updateMessage();
         } catch (error) {
             console.warn(error);
@@ -51,20 +50,20 @@ import ImportantMessage from '../../components/ImportantMessage.svelte';
 
 <div class="admin-messages">
     {#if importantMessage.is_live}
-        <div class="current-message">
+        <div>
             Akkurat nå vises denne meldingen til brukerne: <br/>
-            <ImportantMessage importantMessage={importantMessage}/>
+            <div class="highlight">
+                {importantMessage.message}
+            </div>
         </div>
-        <button on:click={removeMessage}>Fjern melding</button>
+        <button class="oppdal-button" on:click={removeMessage}>Fjern melding</button>
     {:else}
         Det er ingen aktive meldinger.
     {/if}
 
-    <div>
-        <p>Opprett ny melding:</p>
-        <input type="text" name="message" bind:value={newMessage} />
-        <button on:click={createMessage}>Legg ut ny melding</button>
-    </div>
+    <label for="message">Opprett ny melding</label>
+    <input class="oppdal-input" type="text" name="message" bind:value={newMessage} />
+    <button class="oppdal-button" on:click={createMessage}>Legg ut ny melding</button>
 </div>
 
 <style>
@@ -72,12 +71,15 @@ import ImportantMessage from '../../components/ImportantMessage.svelte';
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-content: flex-start;
-        align-items: flex-start;
+        align-content: center;
+        align-items: center;
         margin: 20px;
     }
-    .current-message {
-        font-size: 24px;
-        text-align: center;
+    .highlight {
+        border: 1px solid black;
+        padding: 10px;
+        border-radius: 8px;
+        margin-top: 15px;
+        margin-bottom: 15px;
     }
 </style>

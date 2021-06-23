@@ -11,14 +11,12 @@
   import Select from 'svelte-select';
   import { onMount } from 'svelte'
   import config from "../../helpers/config"
-import { intros } from 'svelte/internal';
 
   $: itemType = currentRoute.name.split("/")[currentRoute.name.split("/").length -2]
   $: itemId = currentRoute.name.split("/")[currentRoute.name.split("/").length -1]
   let saving = false
   let zones
   let item
-  let store
   let lifts
   let tracks
   let difficulties
@@ -27,38 +25,6 @@ import { intros } from 'svelte/internal';
   let liftsStore = makeLiftsStore()
   let zoneStore = makeZoneStore()
   let difficultyStore = makeDifficultyStore()
-  /*
-  let connectedTracks = []
-  let connectedLifts = []
-  let selectedSeason
-  let selectedStatus
-  let selectedZone
-  */
-  $: {
-    /*switch (itemType) {
-      case "tracks":
-        break
-      case "lifts":
-        store = makeLiftsStore()
-        break
-    }*/
-  }
-
-
-
-  $: if (store) {
-    if (item.itemType !== "tracks" || item.itemType !== "lifts") {
-      store.subscribe((data) => {
-        item = data.find((i) => i.id == itemId)
-        if (item && item.status) {
-          selectedStatus = {
-            value: item.status === "open" ? 1 : 2,
-            label: item.status
-          }
-        }
-      })
-    }
-  }
 
   onMount(() => {
     setup()
@@ -86,91 +52,79 @@ import { intros } from 'svelte/internal';
       if (t) {
         item = JSON.parse(JSON.stringify(t))
       }
-      if (item && item.season) {
-        item.season = {value: item.season, label: item.season === 1 ? "summer" : "winter"}
-      }
-      if (item && !item.coords) {
-        item.coords = {
-          x: null,
-          y: null
+      if(item) {
+        if(item.season) item.season = {value: item.season, label: item.season === 1 ? "summer" : "winter"}
+        if(!item.coords) item.coords = { x: null, y: null}
+        if(item.connected_tracks) {
+          item.connected_tracks = item.connected_tracks.map((track) => {
+            if (track.id && tracks.find((t) => t.id == track.id)) return {
+              value: track.id,
+              label: tracks.find((t) => t.id == track.id).name
+            }
+          })
         }
-      }
-      if (item && item.connected_tracks) {
-        item.connected_tracks = item.connected_tracks.map((track) => {
-          if (track.id && tracks.find((t) => t.id == track.id)) return {
-            value: track.id,
-            label: tracks.find((t) => t.id == track.id).name
+        if(item.connected_lifts && lifts) {
+          item.lifts = item.lifts.map(l => {
+            if (tracks.find(x => x.id === l.id)) return {
+              "value": l.id,
+              "label": tracks.find(x => x.id === l.id).name
+            }
+          })
+        }
+        if(item.status) {
+          item.status = {
+            value: item.status === "open" ? 1 : 2,
+            label: item.status
           }
-        })
-      }
-      if (item && item.connected_lifts && lifts) {
-        item.lifts = item.lifts.map(l => {
-          if (tracks.find(x => x.id === l.id)) return {
-            "value": l.id,
-            "label": tracks.find(x => x.id === l.id).name
+        }
+        if (item.lifts) {
+          item.lifts = item.lifts.map(l => ({
+            value: l.id,
+            label: l.name
+          }))
+        }
+        if (item.zone && zones) {
+          if (zones.find(zone => zone.id == item.zone)) item.zone = {
+            value: item.zone,
+            label: zones.find(zone => zone.id == item.zone).name
           }
-        })
-      }
-      if (item && item.status) {
-        item.status = {
-          value: item.status === "open" ? 1 : 2,
-          label: item.status
         }
-      }
-      if (item && item.lifts) {
-        item.lifts = item.lifts.map(l => ({
-          value: l.id,
-          label: l.name
-        }))
-      }
-      if (item && item.zone && zones) {
-        if (zones.find(zone => zone.id == item.zone)) item.zone = {
-          value: item.zone,
-          label: zones.find(zone => zone.id == item.zone).name
-        }
-      }
-      if (item && item.difficulty) {
-        item.difficulty = {
-          value: difficultyToInt[item.difficulty],
-          label: difficulty[item.difficulty]
+        if (item.difficulty) {
+          item.difficulty = {
+            value: difficultyToInt[item.difficulty],
+            label: difficulty[item.difficulty]
+          }
         }
       }
     }
 
     if (itemType === "lifts") {
-      const liftTypesResult = await OFetch(
-        `${config.BASE_URL}/lift-types`,
-      )
+      const liftTypesResult = await OFetch(`${config.BASE_URL}/lift-types`,)
       liftTypes = liftTypesResult.map((item) => ({
         value: item.id,
         label: Lifts[item.type]
       }))
       item = lifts.find((i) => i.id == itemId)
-      if (item && item.season) {
-        item.season = {value: item.season, label: item.season === 1 ? "summer" : "winter"}
-      }
-      if (item && item.status) {
-        item.status = {
-          value: item.status === "open" ? 1 : 2,
-          label: item.status
+      if(item) {
+        if(item.season) item.season = {value: item.season, label: item.season === 1 ? "summer" : "winter"}
+        if(item.coords) item.coords = {"x": null, "y": null}
+        if(item.status) {
+          item.status = {
+            value: item.status === "open" ? 1 : 2,
+            label: item.status
+          }
         }
-      }
-      if (item && item.type) {
-        item.type = {
-          value: liftTypeToInt[item.type],
-          label: Lifts[item.type]
+        if(item.type) {
+          item.type = {
+            value: liftTypeToInt[item.type],
+            label: Lifts[item.type]
+          }
         }
-      }
-      if (item && !item.coords) {
-        item.coords = {
-          "x": null,
-          "y": null
-        }
-      }
-      if (item && item.zone && zones) {
-        if (zones.find(zone => zone.id == item.zone)) item.zone = {
-          value: item.zone,
-          label: zones.find(zone => zone.id == item.zone).name
+        if(item.zone && zones) {
+          if (zones.find(zone => zone.id == item.zone)) item.zone = {
+            value: item.zone,
+            label: zones.find(zone => zone.id == item.zone).name
+          }
         }
       }
     }
@@ -188,7 +142,6 @@ import { intros } from 'svelte/internal';
         break;
     }
     let body = item
-    console.log(item.coords.x)
     if (item.lifts) body.lifts = item.lifts.map((item) => item.value)
     if (item.connected_tracks) body.connected_tracks = item.connected_tracks.map((item) => item.value)
     if (item.season) body.season = item.season.value
@@ -203,7 +156,6 @@ import { intros } from 'svelte/internal';
     }
     if (item.difficulty) body.difficulty = item.difficulty.value
     if (item.type) body.type = item.type.value
-    console.log(body)
     const res = await OFetch(
       `${config.BASE_URL}/admin/${endpoint}/${item.id}`,
       "PATCH",
@@ -218,15 +170,11 @@ import { intros } from 'svelte/internal';
   }
 </script>
 
-<div class="w-80">
-  {JSON.stringify(item)}
+<div>
   {#if item}
-  <form class="measure center">
+  <div class="measure center">
     <fieldset class="ba b--transparent ph0 mh0">
-      <div class="flex flex-row w-100 justify-between items-center">
-        <legend class="f4 fw6 ph0 mh0">{item.name}</legend>
-        <div class={`f6 link dim br3 ph3 pv2 mb2 dib white ${saving ? "gray" : "bg-dark-blue"} pointer`} on:click={!saving ? save : null}>Save</div>
-      </div>
+      <legend class="oppdal-title">{item.name}</legend>
       {#each Object.keys(item) as key}
         {#if key !== "id"}
           {#if key === "connected_tracks" && item.connected_tracks}
@@ -307,7 +255,8 @@ import { intros } from 'svelte/internal';
           {/if}
         {/if}
       {/each}
+      <button on:click={!saving ? save : null} class="oppdal-button">Lagre</button>
     </fieldset>
-  </form>
+  </div>
   {/if}
 </div>

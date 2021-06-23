@@ -1,26 +1,27 @@
 <script>
-  import { Route } from 'svelte-router-spa'
+  import { Route, navigateTo } from 'svelte-router-spa'
   export let currentRoute
   export const params = {} 
-  import { navigateTo } from 'svelte-router-spa'
-
-  function logout() {
-    localStorage.removeItem('user');
-    navigateTo(`/login`)
+  function back(){
+    console.log(currentRoute.name);
+    console.log(currentRoute);
+    if(currentRoute.path !== "/admin") navigateTo("/admin")
   }
+  
 </script>
 
-<div class="h-100">
+<div>
   <div class="nav">
-    <h1 on:click={() => navigateTo('/admin')}>Oppdal Skisenter Admin</h1>
-    <button on:click={logout}>Logg av</button>
+    <h1 class="oppdal-title" on:click={() => navigateTo('/admin')}>Oppdal Skisenter Admin</h1>
+    {#if currentRoute.path !== "/admin"}
+    <button on:click={back}>Tilbake</button>
+    {/if}
   </div>
 
   <section>
     <Route {currentRoute}  {params} />
   </section>
 </div>
-
 
 <style>
   .nav {
@@ -35,5 +36,24 @@
   }
   .nav > h1 {
     cursor: pointer;
+  }
+  .nav > h1:hover {
+    color: rgb(231, 231, 231);
+  }
+  .nav > button {
+    cursor: pointer;
+    width: 100px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .nav {
+      flex-direction: column;
+    }
+    .nav > h1 {
+      text-align: center;
+    }
+    .nav > button {
+      margin-bottom: 20px;
+    }
   }
 </style>
