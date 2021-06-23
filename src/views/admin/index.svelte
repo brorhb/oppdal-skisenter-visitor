@@ -6,7 +6,7 @@
 </script>
 
 <div class="admin-index">
-  <div class="nav-item" on:click={() => navigateTo('/admin/meldinger')}>
+  <div class="nav-item" on:click={() => navigateTo('/admin/alerts')}>
     <div class="nav-icon">
       <i class="fas fa-info-circle"></i>
     </div>
@@ -33,19 +33,12 @@
     </div>
   </div>
 
-  <div class="nav-item" >
+  <div class="nav-item" on:click={() => navigateTo('/admin/snowconditions')}>
     <div class="nav-icon">
+      <i class="fas fa-snowflake"></i>
     </div>
     <div class="nav-title">
         Snøforhold
-    </div>
-  </div>
-
-  <div class="nav-item" >
-    <div class="nav-icon">
-    </div>
-    <div class="nav-title">
-        Informasjon
     </div>
   </div>
   <section>

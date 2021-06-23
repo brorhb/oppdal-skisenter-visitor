@@ -49,7 +49,7 @@ export const routes = [
     onlyIf: { guard: userIsAdmin, redirect: '/login' },
     nestedRoutes: [
       { name: 'index', component: AdminIndex },
-      { name: 'meldinger', component: AdminMessages},
+      { name: '/alerts', component: AdminMessages},
       {
         name: "/tracks",
         nestedRoutes: [
