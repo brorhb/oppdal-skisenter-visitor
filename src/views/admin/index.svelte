@@ -3,6 +3,11 @@
   import { Route } from 'svelte-router-spa'
   export let currentRoute
   export const params = {} 
+
+  function logout() {
+    localStorage.removeItem('user');
+    navigateTo(`/login`)
+  }
 </script>
 
 <div class="admin-index">
@@ -33,12 +38,21 @@
     </div>
   </div>
 
-  <div class="nav-item" on:click={() => navigateTo('/admin/snowconditions')}>
+  <div class="nav-item" on:click={() => navigateTo('/admin/webcamera')}>
     <div class="nav-icon">
-      <i class="fas fa-snowflake"></i>
+      <i class="fas fa-video"></i>
     </div>
     <div class="nav-title">
-        Snøforhold
+        Webkamera
+    </div>
+  </div>
+
+  <div class="nav-item" on:click={logout}>
+    <div class="nav-icon">
+      <i class="fas fa-sign-out-alt"></i>
+    </div>
+    <div class="nav-title">
+        Logg av
     </div>
   </div>
   <section>
@@ -51,7 +65,7 @@
   .admin-index {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly; 
+    justify-content: center; 
     
   }
   .nav-item {
@@ -65,6 +79,7 @@
     cursor: pointer;
     border-radius: 12px;
     margin-top: 30px;
+    margin: 30px;
     
   }
   .nav-item:hover {
@@ -75,5 +90,14 @@
     margin-bottom: 20px;
   }
 
+  @media only screen and (max-width: 600px) {
+    .admin-index {
+      justify-content: space-evenly;
+    }
+    .nav-item {
+      margin: 0;
+      margin-top: 30px;
+    }
+  }
 
 </style>

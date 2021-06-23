@@ -11,6 +11,8 @@ import AdminLifts from "./views/admin/Lifts.svelte"
 import Cameras from './views/Cameras.svelte'
 import EditItem from './views/admin/EditItem.svelte'
 import AdminMessages from './views/admin/Messages.svelte'
+import AdminWebcamera from './views/admin/Webcamera.svelte'
+import EditWebcamera from './views/admin/EditCamera.svelte'
 function userIsAdmin() {
   const user = localStorage.getItem("user")
   return user
@@ -50,6 +52,19 @@ export const routes = [
     nestedRoutes: [
       { name: 'index', component: AdminIndex },
       { name: '/alerts', component: AdminMessages},
+      { 
+        name: '/webcamera', 
+        nestedRoutes: [
+          {
+            name: "index",
+            component: AdminWebcamera
+          },
+          {
+            name: "/:id",
+            component: EditWebcamera
+          }
+        ]
+      },
       {
         name: "/tracks",
         nestedRoutes: [

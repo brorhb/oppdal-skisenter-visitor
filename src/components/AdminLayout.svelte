@@ -1,19 +1,21 @@
 <script>
-  import { Route } from 'svelte-router-spa'
+  import { Route, navigateTo } from 'svelte-router-spa'
   export let currentRoute
   export const params = {} 
-  import { navigateTo } from 'svelte-router-spa'
-
-  function logout() {
-    localStorage.removeItem('user');
-    navigateTo(`/login`)
+  function back(){
+    console.log(currentRoute.name);
+    console.log(currentRoute);
+    if(currentRoute.path !== "/admin") navigateTo("/admin")
   }
+  
 </script>
 
 <div>
   <div class="nav">
     <h1 class="oppdal-title" on:click={() => navigateTo('/admin')}>Oppdal Skisenter Admin</h1>
-    <button on:click={logout}>Logg av</button>
+    {#if currentRoute.path !== "/admin"}
+    <button on:click={back}>Tilbake</button>
+    {/if}
   </div>
 
   <section>
