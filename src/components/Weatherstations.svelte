@@ -29,22 +29,85 @@
     }
   }
 </script>
-<div class="bg-white flex flex-wrap justify-between w-100">
+
+<div class="card weather-card">
   {#each weatherStations as station}
     {#if !station.error}
-    <div class={`flex flex-column w-100 ${weatherStations.length > 1 ? "w-50-ns" : ""} pa2`}>
-      <div class="flex flex-wrap items-end justify-between">
-        <div class="f4 fw5">{station.stationName.split(" ")[0].replace("_", "")}</div>
-        <div class="fw2 gray">{station.dateTime.split(" ")[1].substring(0, station.dateTime.split(" ")[1].length - 3)}</div>
-      </div>
-      <div class={getTempColor(station.temperature)}>
-        {station.temperature}
-      </div>
-      <div>
-        <span>{station.wind.speed}{station.wind.unit}</span>
-        <span class="pl1 fw2 f6 gray">{getWindDirection(station.wind.direction)}</span>
+    <div class="station-card">
+      <div style="max-width: 10rem; margin: 0 auto 0 auto;">
+        <div class="station-header">
+          <div class="">{station.stationName.split(" ")[0].replace("_", "")}</div>
+          <div class="station-time">{station.dateTime.split(" ")[1].substring(0, station.dateTime.split(" ")[1].length - 3)}</div>
+        </div>
+        <div class="station-middle">
+          <div class="weather-icon"><i class="fas fa-cloud fa-2x "></i></div>
+          <div class="station-forecast">
+              <div>{station.temperature} {decodeURI('%C2%B0')}</div>
+              <div>1.2mm</div>
+          </div>
+        </div>
+        <div class="station-wind">
+          <span>{station.wind.speed}{station.wind.unit}</span>
+          <span class="pl1 fw2 f6 gray">{getWindDirection(station.wind.direction)}</span>
+        </div>
       </div>
     </div>
     {/if}
   {/each}
 </div>
+
+<style>
+  .weather-card {
+    padding: 1rem 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-evenly;
+  }
+
+  @media (min-width: 990px) {
+    .weather-card {
+      grid-template-columns: repeat(3, 1fr);
+      margin: 0 0 1rem 1rem;
+    }
+  }
+
+  .station-card {
+    padding: 0 1rem;
+    border-left: solid #EFEFEF;
+    height: 90%;
+    display: table-cell;
+  }
+
+  .station-card:first-child {
+    border-style: none;
+  }
+
+
+  .station-header {
+    padding-bottom: 1rem;
+    text-align: center;
+  }
+
+  .station-time {
+    color: #BABABA;
+  }
+
+  .station-middle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .station-forecast {
+    justify-self: end;
+    padding-bottom: 1rem;
+    text-align: end;
+  }
+
+  .station-wind {
+    text-align: center;
+  }
+  
+  
+
+
+</style>

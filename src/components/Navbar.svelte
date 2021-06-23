@@ -31,7 +31,7 @@
 
   .navbrand {
     font-size:26px;
-    color: white; 
+    color: #FAFAFA; 
     outline: none; 
   }
 
@@ -45,7 +45,7 @@
     justify-content: center;
     height: 40px;
     width: 40px;  
-    background-color: white; 
+    background-color: #FAFAFA;
     border-radius: 50%;
   }
 </style>
