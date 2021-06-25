@@ -111,8 +111,8 @@
         </div>
       {/each}
     </div>
-    <div class={`flex ${innerWidth < 800 ? "flex-column" : "flex-row"} w-100 h-100`}>
-      {#if innerWidth >= 800}
+    <div class={`flex ${innerWidth < 990 ? "flex-column" : "flex-row"} w-100 h-100`}>
+      {#if innerWidth >= 990}
         <Large {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={visibleWeatherStations} />
       {:else}
         <Small {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={visibleWeatherStations} activeZone={activeZone} />
@@ -124,8 +124,8 @@
 
 <style>
   .wrapper {
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
   }
   .box-shadow {
     box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);

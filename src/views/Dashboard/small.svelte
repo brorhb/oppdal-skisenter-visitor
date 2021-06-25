@@ -22,7 +22,7 @@
   </div>
 </DashboardTile>
 <DashboardTile>
-  <div class="bg-light-gray flex flex-row justify-between">
+  <div>
     <WeatherStations weatherStations={weatherStations}></WeatherStations>
   </div>
 </DashboardTile>
@@ -70,4 +70,11 @@
     </div>
   </DashboardTile>
 {/if}
+
+<style>
+
+
+
+
+</style>
 

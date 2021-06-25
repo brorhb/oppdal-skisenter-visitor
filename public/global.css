@@ -2,6 +2,7 @@ html, body {
 	position: relative;
 	width: 100%;
 	height: 100%;
+	background-color: #FAFAFA;
 }
 
 .oppdal-input {
@@ -23,3 +24,12 @@ html, body {
 .oppdal-title {
 	font-size: 26px;
 }
+
+.card {
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  	transition: 0.3s;
+}
+
+.card:hover {
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
