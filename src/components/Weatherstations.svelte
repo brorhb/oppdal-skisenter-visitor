@@ -1,11 +1,18 @@
 <script>
-  export let weatherStations = []
+  import { makeRainStore } from '../stores/RainStore'
+  import { onDestroy } from 'svelte';
 
-  function getTempColor(val) {
-    const str = `${val}`
-    if (str.includes("-")) return "blue"
-    else return "red"
-  }
+  export let weatherStations = []
+  let rainStore = makeRainStore()
+  let rainData; 
+
+  const unsubscribe = rainStore.subscribe(data => {
+    rainData = data;
+  });
+
+  onDestroy(() => {
+    unsubscribe();
+  });
 
   function getWindDirection(val) {
     if (val >= 0 && val < 22) {
@@ -28,27 +35,48 @@
       return "Nord";
     }
   }
+
+  function createDate() {
+    const today = new Date()
+    const year = today.getFullYear()
+    let month = today.getMonth() + 1
+    let day = today.getDate()
+    let time = today.getHours()
+    if (month < 10) month = `0${month}`
+    if (day < 10) day = `0${day}`
+    if (time < 10) time = `0${time}`
+    return `${year}-${month}-${day}T${time}:00:00Z`
+}
+
+function findWeatherIcon() {
+  const weatherType = rainData.find(item => item.time == `${createDate()}`).data.next_1_hours.summary.symbol_code;
+  return "../../assets/" + weatherType + ".svg"
+}
 </script>
 
 <div class="card weather-card">
   {#each weatherStations as station}
     {#if !station.error}
     <div class="station-card">
-      <div style="max-width: 10rem; margin: 0 auto 0 auto;">
+      <div class="card-size-limit">
         <div class="station-header">
-          <div class="">{station.stationName.split(" ")[0].replace("_", "")}</div>
+          <div>{station.stationName.split(" ")[0].replace("_", "")}</div>
           <div class="station-time">{station.dateTime.split(" ")[1].substring(0, station.dateTime.split(" ")[1].length - 3)}</div>
         </div>
         <div class="station-middle">
-          <div class="weather-icon"><i class="fas fa-cloud fa-2x "></i></div>
+          {#if rainData.length}
+          <div><img src={findWeatherIcon()} alt="Værikon"></div>
+          {/if}
           <div class="station-forecast">
               <div>{station.temperature} {decodeURI('%C2%B0')}</div>
-              <div>1.2mm</div>
+              {#if rainData.length}
+                <div>{`${rainData.find(item => item.time == `${createDate()}`).data.next_1_hours.details.precipitation_amount} mm`}</div>
+              {/if}
           </div>
         </div>
         <div class="station-wind">
           <span>{station.wind.speed}{station.wind.unit}</span>
-          <span class="pl1 fw2 f6 gray">{getWindDirection(station.wind.direction)}</span>
+          <span class="wind-direction">{getWindDirection(station.wind.direction)}</span>
         </div>
       </div>
     </div>
@@ -82,6 +110,10 @@
     border-style: none;
   }
 
+  .card-size-limit {
+    max-width: 10rem;
+    margin: 0 auto 0 auto;
+  }
 
   .station-header {
     padding-bottom: 1rem;
@@ -95,6 +127,7 @@
   .station-middle {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    align-items: center;
   }
 
   .station-forecast {
@@ -106,8 +139,10 @@
   .station-wind {
     text-align: center;
   }
-  
-  
 
-
+  .wind-direction {
+    color: #BABABA;
+    padding-left: 1rem;
+  }
+  
 </style>
