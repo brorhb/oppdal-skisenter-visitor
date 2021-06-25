@@ -13,6 +13,7 @@
   export let weatherStations = []
   let activeGroup
 </script>
+
 <div class="w-100 h-100 flex flex-row">
   <div class="map">
     <Map items={[...tracks, ...lifts]} />
