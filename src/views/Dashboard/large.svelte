@@ -13,11 +13,12 @@
   export let weatherStations = []
   let activeGroup
 </script>
+
 <div class="w-100 h-100 flex flex-row">
-  <div class="w-80">
+  <div class="map">
     <Map items={[...tracks, ...lifts]} />
   </div>
-  <div class="w-20 flex flex-column">
+  <div class="weather-station">
     {#if weatherStations.length}
       <WeatherStations weatherStations={weatherStations}></WeatherStations>
     {/if}
@@ -95,3 +96,24 @@
     </div>
   </div>
 </div>
+
+<style>
+  @media (min-width: 990px) {
+    .map {
+      width: 60%
+    }
+    .weather-station {
+    width: 40%;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .map {
+      width: 70%
+    }
+    .weather-station {
+    width: 30%;
+    } 
+  }
+
+</style>

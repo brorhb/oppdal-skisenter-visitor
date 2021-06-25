@@ -2,8 +2,12 @@
 let innerWidth
 </script>
 <svelte:window bind:innerWidth={innerWidth} />
-<div class={`${innerWidth < 800 ? "w-100" : "w-25"} pa2`}>
-  <div class="bg-lightest-blue pa2">
+<div>
+  <div>
     <slot></slot>
   </div>
 </div>
+
+<style>
+
+</style>
