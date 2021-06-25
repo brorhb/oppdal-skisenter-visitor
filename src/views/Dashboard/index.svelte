@@ -3,25 +3,25 @@
   import { makeLiftsStore } from '../../stores/LiftsStore'
   import { makeZoneStore } from '../../stores/ZoneStore'
   import { makeWeatherStore } from '../../stores/WeatherStore'
-  import { makeImportantMessageStore } from '../../stores/ImportantMessageStore'
+  import { makeAlertStore } from '../../stores/AlertStore'
   import { navigateTo } from 'svelte-router-spa'
   import { onDestroy, onMount } from 'svelte'
   import Large from "./large.svelte"
   import Small from "./small.svelte"
-import ImportantMessage from '../../components/ImportantMessage.svelte'
+  import Alert from '../../components/Alert.svelte'
 
   let unsubscribe
   let tracksStore = makeTracksStore()
   let liftsStore = makeLiftsStore()
   let weatherStore = makeWeatherStore()
   let zoneStore = makeZoneStore()
-  let importantMessageStore = makeImportantMessageStore();
+  let alertStore = makeAlertStore();
   let tracks = []
   let zones = []
   let activeZone = false
   let weatherStations = []
   let lifts = []
-  let importantMessage = {}
+  let alerts = []
   $: visibleWeatherStations = activeZone ? weatherStations.filter((station) => station.zone === activeZone) : weatherStations
   $: trackGroups = tracksInZone.reduce((acc, curr) => {
     const difficulty = curr.difficulty
@@ -74,8 +74,8 @@ import ImportantMessage from '../../components/ImportantMessage.svelte'
     zoneStore.subscribe((data) => {
       zones = data
     })
-    importantMessageStore.subscribe((data) => {
-      importantMessage = data
+    alertStore.subscribe((data) => {
+      alerts = data
     })
   })
   
@@ -89,7 +89,11 @@ import ImportantMessage from '../../components/ImportantMessage.svelte'
 </script>
 <svelte:window bind:innerWidth={innerWidth} />
 <div class="wrapper">
-  <ImportantMessage importantMessage={importantMessage}/>
+  {#each alerts as alert}
+    {#if alert.is_live}
+      <Alert alert={alert}/>
+    {/if}
+  {/each}
   <div>
     <div class="zones">
       <div
@@ -136,7 +140,7 @@ import ImportantMessage from '../../components/ImportantMessage.svelte'
     color: #004A7C;
     cursor: pointer;
     margin: 20px;
-    font-size: 32px;
+    font-size: 26px;
   }
   .nav-item:hover {
     border-bottom: 1px solid #004A7C;

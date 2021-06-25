@@ -5,6 +5,7 @@
   import OFetch from '../../helpers/fetch'
   import config from '../../helpers/config'
   import { navigateTo } from 'svelte-router-spa'
+  import { toast } from '../../stores/Toast'
   import liftTypes, { liftTypeToInt } from '../../helpers/lifts'
   import { makeZoneStore } from '../../stores/ZoneStore'
 
@@ -37,7 +38,7 @@
   })
   
   function editHandler(val) {
-    navigateTo(`/admin/lifts/${val.detail.id}`)
+    navigateTo(`/admin/heiser/${val.detail.id}`)
   }
 
   async function deleteHandler(val) {
@@ -47,10 +48,12 @@
           `${config.BASE_URL}/admin/lift/${val.detail.id}`,
           "DELETE"
         )
+        toast.setToast(`Heis slettet: ${val.detail.name}`, 'success');
         await updateLifts()
-        alert(`Slettet heis: ${val.detail.name}`)
+        
       } catch(err) {
         console.warn(err)
+        toast.setToast('Noe gikk galt', 'error');
       }
     }
   }
@@ -73,12 +76,13 @@
               "zone": zone
           }
         )
+        toast.setToast('Ny heis lagret', 'success');
         const id = res.message.id
         await updateLifts()
-        navigateTo(`/admin/lifts/${id}`)
+        navigateTo(`/admin/heiser/${id}`)
       } catch(err) {
         console.warn(err)
-        alert("Noe gikk galt")
+        toast.setToast('Noe gikk galt', 'success');
       }
     }
   }
@@ -89,6 +93,7 @@
       `${config.BASE_URL}/admin/toggle-status/lifts/${item.item}/${item.status}`,
       "PATCH"
     )
+    toast.setToast('Lagret', 'success');
     await updateLifts()
   }
 </script>

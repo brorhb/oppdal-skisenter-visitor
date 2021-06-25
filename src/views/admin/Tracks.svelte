@@ -8,6 +8,7 @@
   import config from '../../helpers/config'
   import { navigateTo } from 'svelte-router-spa'
   import { difficulty, difficultyToInt } from '../../helpers/difficulty'
+  import { toast } from '../../stores/Toast'
   let unsubscribe
   let tracksStore = makeTracksStore()
   let liftsStore = makeLiftsStore()
@@ -41,7 +42,7 @@
   })
   
   function editHandler(val) {
-    navigateTo(`/admin/tracks/${val.detail.id}`)
+    navigateTo(`/admin/loyper/${val.detail.id}`)
   }
 
   async function deleteHandler(val) {
@@ -51,10 +52,11 @@
           `${config.BASE_URL}/admin/track/${val.detail.id}`,
           "DELETE"
         )
+        toast.setToast(`Slettet løype: ${val.detail.name}`, 'success');
         await updateTracks()
-        alert(`Slettet løype: ${val.detail.name}`)
       } catch(err) {
         console.warn(err)
+        toast.setToast('Noe gikk galt', 'error');
       }
     }
   }
@@ -65,6 +67,7 @@
       `${config.BASE_URL}/admin/toggle-status/tracks/${item.item}/${item.status}`,
       "PATCH"
     )
+    toast.setToast('Lagret', 'success');
     await updateTracks()
   }
 
@@ -87,11 +90,12 @@
           }
         )
         const id = res.message.id
+        toast.setToast('Ny løype lagret', 'success');
         await updateTracks()
-        navigateTo(`/admin/tracks/${id}`)
+        navigateTo(`/admin/loyper/${id}`)
       } catch(err) {
         console.warn(err);
-        alert("Noe gikk galt");
+        toast.setToast('Noe gikk galt', 'error');
       }
     }
   }

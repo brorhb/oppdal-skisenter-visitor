@@ -32,7 +32,7 @@ import { navigateTo } from 'svelte-router-spa';
     })
 
     function editCamera(camera) {
-        navigateTo(`/admin/webcamera/${camera.id}`)
+        navigateTo(`/admin/webkamera/${camera.id}`)
     }
 
     async function deleteCamera(camera) {
