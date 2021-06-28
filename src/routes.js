@@ -41,7 +41,7 @@ export const routes = [
     component: Cameras
   },
   {
-    name: "/map",
+    name: "/kart",
     component: MapView,
     layout: Layout
   },

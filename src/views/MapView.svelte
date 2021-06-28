@@ -32,6 +32,6 @@
     navigateTo(`/tracks/${obj.detail.id}`)
   }
 </script>
-<div class="flex h-100 w-100">
+<div>
   <Map items={[...tracks, ...lifts]} on:select={selectedTrack} />
 </div>
