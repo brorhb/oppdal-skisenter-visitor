@@ -95,7 +95,7 @@ function findWeatherIcon() {
   @media (min-width: 990px) {
     .weather-card {
       grid-template-columns: repeat(3, 1fr);
-      margin: 0 0 1rem 1rem;
+      margin: 0 0 1.5rem 1.5rem;
     }
   }
 
