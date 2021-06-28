@@ -43,18 +43,23 @@
         month++;
         return d + '.' + month;     
     }
+    const isToday = (timestamp) => {
+        let date = new Date(timestamp)
+        let today = new Date();
+        return date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && date.getFullYear() == today.getFullYear();
+    }
 </script>
 
 <div class="avalanche card card-hover">
     {#if warnings.length > 0}
     <div class="avalanche-info">
-        <div class={`avalanche-icon ${color(warnings[0].DangerLevel)}`}>
+        <div class={`avalanche-icon ${color(warnings[4].DangerLevel)}`}>
             <div>{warnings[0].DangerLevel}</div>
-            <div>{dangerLevelToText[warnings[0].DangerLevel]}</div>
+            <div>{dangerLevelToText[warnings[4].DangerLevel]}</div>
         </div>
         <div class="avalanche-text">
             <div class="avalanche-header">
-                Snøskredvarsel for Trollheimen, {formatTimestamp(warnings[0].PublishTime)}
+                Snøskredvarsel for Trollheimen, {formatTimestamp(warnings[4].PublishTime)}
             </div>
             <div class="avalanche-message">
                 {warnings[0].MainText}
@@ -66,7 +71,7 @@
         {#each warnings as warning}
         <div>
             <div class={`avalanche-dangerlevel ${color(warning.DangerLevel)}`}>{warning.DangerLevel}</div>
-            <div>{formatTimestamp(warning.PublishTime)}</div>
+            <div class={isToday(warning.PublishTime) ? `active`:null}>{formatTimestamp(warning.PublishTime)}</div>
         </div>
         {/each}
     </div>
@@ -131,7 +136,9 @@
     .avalanche-footer > a {
         padding-left: 5px;
     }
-
+    .active {
+        border-bottom: 1px solid #004A7C;
+    }
     .bg-green {
         color: #fff;
         background: #75b100;
