@@ -87,6 +87,7 @@ import ImportantMessage from '../../components/ImportantMessage.svelte'
     }
   }
 </script>
+
 <svelte:window bind:innerWidth={innerWidth} />
 <div class="wrapper">
   <ImportantMessage importantMessage={importantMessage}/>
@@ -107,13 +108,11 @@ import ImportantMessage from '../../components/ImportantMessage.svelte'
         </div>
       {/each}
     </div>
-    <div class={`flex ${innerWidth < 990 ? "flex-column" : "flex-row"} w-100 h-100`}>
-      {#if innerWidth >= 990}
+    {#if innerWidth >= 990}
         <Large {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={visibleWeatherStations} />
       {:else}
         <Small {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={visibleWeatherStations} activeZone={activeZone} />
       {/if}
-    </div>
   </div>
 </div>
 
