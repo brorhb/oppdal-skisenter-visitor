@@ -1,9 +1,10 @@
 <script>
   import { UserIcon, LockIcon } from 'svelte-feather-icons'
   import { navigateTo } from 'svelte-router-spa'
+  import { toast } from '../../stores/Toast'
   import config from '../../helpers/config';
   import OFetch from '../../helpers/fetch'
-  let error
+  import Toast from '../../components/admin/Toast.svelte'
   let username = ""
   let password = ""
 
@@ -26,7 +27,7 @@
       navigateTo("/admin")
     } catch (err) {
       console.log(err)
-      error = "Feil brukernavn eller passord"
+      toast.setToast('Feil brukernavn eller passord', 'error');
     }
   }
 
@@ -66,10 +67,8 @@
         Login
       </button>
     </div>
-    {#if error}
-      <div class="error">{ error }</div>
-    {/if}
   </div>
+  <Toast/>
 </div>
 
 <style>
@@ -96,9 +95,5 @@
   .button {
     width: 100%;
     cursor: pointer;
-  }
-  .error {
-    margin-top: 5px;
-    color: red;
   }
 </style>

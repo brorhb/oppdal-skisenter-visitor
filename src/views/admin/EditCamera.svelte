@@ -6,6 +6,7 @@
     import config from "../../helpers/config"
     import { makeCamerasStore } from '../../stores/CamerasStore'
     import { onDestroy, onMount } from 'svelte'
+    import { toast } from '../../stores/Toast'
 
     let unsubscribe
     let zoneStore = makeZoneStore()
@@ -43,10 +44,11 @@
             `${config.BASE_URL}/admin/camera/${camera.id}`,
             "PATCH", camera
             )
+            toast.setToast('Nytt webkamera lagret', 'success');
             navigateTo("/admin/webcamera")
         } catch(err) {
             console.warn(err);
-            alert("Noe gikk galt");
+            toast.setToast('Noe gikk galt', 'error');
         }
     }
 

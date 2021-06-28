@@ -1,22 +1,24 @@
 <script>
   import {createEventDispatcher} from 'svelte'
+import { difficulty } from '../helpers/difficulty';
   const dispatch = createEventDispatcher();
   export let items = []
-  let innerWidth
-
+  let selectedItem = undefined
   function clicked(item) {
     dispatch('select', item)
   }
+  function showDetails(item) {
+    selectedItem = item;
+  }   
 
 </script>
-<svelte:window bind:innerWidth={innerWidth} />
 
-<div class={`${innerWidth < 800 ? "h-100" : ""} w-100 overflow-auto`}>
-  <svg class={`${innerWidth < 800 ? 'h-100': 'w-100'}`} viewBox="0 0 1209 767" preserveAspectRatio="xMinYMin meet">
+<div class="card card-hover">
+  <svg class="map" viewBox="0 0 1209 767" preserveAspectRatio="xMinYMin meet">
     <image height="100%" href="../../assets/map.svg" alt="Løypekart"></image>
     {#each items as item}
       {#if item.coords}
-        <g class="hover_group" opacity="1">
+        <g class="hover_group" opacity="1" on:click="{() => showDetails(item)}">
           <circle
             class="pointer"
             cx={parseInt(item.coords.x) + 7}
@@ -38,4 +40,25 @@
       {/if}
     {/each}
   </svg>
+  {#if selectedItem}
+    <div class="item-detail">
+      <div>{selectedItem.name}</div>
+      <div>{selectedItem.status}</div>
+      <div>{selectedItem.difficulty}</div>
+      <button on:click="{() => selectedItem = undefined}">Lukk</button>
+    </div>
+    {/if}
 </div>
+
+<style>
+  .map {
+    margin: 20px;
+  }
+  .item-detail {
+    z-index: 1000;
+    width: 250px;
+    height: 250px;
+    color: #fff;
+    background: #000;
+  }
+</style>

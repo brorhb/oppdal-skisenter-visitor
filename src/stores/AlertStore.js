@@ -3,9 +3,9 @@ import config from '../helpers/config';
 
 
 let cache;
-const store = writable({});
+const store = writable([]);
 
-export const makeImportantMessageStore = () => {
+export const makeAlertStore = () => {
     const load = async () => {
         if (cache) {
             store.set(cache);
@@ -28,7 +28,7 @@ export const makeImportantMessageStore = () => {
 }
 
 
-export async function updateMessage() {
+export async function updateAlert() {
     const response = await fetchData()
     cache = response
     store.set(response)
@@ -37,7 +37,7 @@ export async function updateMessage() {
 
 const fetchData = async (data, set) => {
     try {
-        const response = await fetch(`${config.BASE_URL}/important-message`)
+        const response = await fetch(`${config.BASE_URL}/alert`)
         if(response.ok) {
             return await response.json();
         } else {

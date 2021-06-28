@@ -3,14 +3,14 @@ import TrackDetail from './views/TrackDetail.svelte'
 import Tracks from './views/Tracks.svelte'
 import MapView from './views/MapView.svelte'
 import Layout from './components/Layout.svelte'
-import AdminLayout from './components/AdminLayout.svelte'
+import AdminLayout from './components/admin/AdminLayout.svelte'
 import Login from './views/admin/Login.svelte'
 import AdminIndex from './views/admin/index.svelte'
 import AdminTracks from "./views/admin/Tracks.svelte"
 import AdminLifts from "./views/admin/Lifts.svelte"
 import Cameras from './views/Cameras.svelte'
 import EditItem from './views/admin/EditItem.svelte'
-import AdminMessages from './views/admin/Messages.svelte'
+import AdminAlerts from './views/admin/Alerts.svelte'
 import AdminWebcamera from './views/admin/Webcamera.svelte'
 import EditWebcamera from './views/admin/EditCamera.svelte'
 function userIsAdmin() {
@@ -41,7 +41,7 @@ export const routes = [
     component: Cameras
   },
   {
-    name: "/map",
+    name: "/kart",
     component: MapView,
     layout: Layout
   },
@@ -51,9 +51,9 @@ export const routes = [
     onlyIf: { guard: userIsAdmin, redirect: '/login' },
     nestedRoutes: [
       { name: 'index', component: AdminIndex },
-      { name: '/alerts', component: AdminMessages},
+      { name: '/meldinger', component: AdminAlerts},
       { 
-        name: '/webcamera', 
+        name: '/webkamera', 
         nestedRoutes: [
           {
             name: "index",
@@ -66,7 +66,7 @@ export const routes = [
         ]
       },
       {
-        name: "/tracks",
+        name: "/loyper",
         nestedRoutes: [
           {
             name: "index",
@@ -79,7 +79,7 @@ export const routes = [
         ]
       },
       {
-        name: "/lifts",
+        name: "/heiser",
         nestedRoutes: [
           {
             name: "index",
