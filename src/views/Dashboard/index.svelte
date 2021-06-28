@@ -10,6 +10,7 @@
   import Small from "./small.svelte"
   import Alert from '../../components/Alert.svelte'
   import Avalanche from '../../components/Avalanche.svelte'
+import AdminLayout from '../../components/admin/AdminLayout.svelte'
 
   let unsubscribe
   let tracksStore = makeTracksStore()
