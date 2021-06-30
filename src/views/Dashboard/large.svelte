@@ -6,7 +6,6 @@
   export let tracks = []
   export let liftGroups = []
   export let lifts = []
-  export let weatherStations = []
 </script>
 
 <div class="large-container">
@@ -14,11 +13,11 @@
     <Map items={[...tracks, ...lifts]} />
   </div>
   <div>
-      {#if weatherStations.length}
-        <WeatherStations weatherStations={weatherStations}></WeatherStations>
-      {/if}
       <Table name={"Heiser"} itemGroups={liftGroups} itemArray={lifts} />
       <Table name={"Løyper"} itemGroups={trackGroups} itemArray={tracks} />
+  </div>
+  <div>
+      <WeatherStations />
   </div>
 </div>
 

@@ -1,17 +1,25 @@
 <script>
   import { makeRainStore } from '../stores/RainStore'
+  import { makeWeatherStore } from '../stores/WeatherStore'
   import { onDestroy } from 'svelte';
 
-  export let weatherStations = []
+  let weatherStore = makeWeatherStore()
+  let weatherStations = []
   let rainStore = makeRainStore()
   let rainData; 
+  let currentRainData;
 
-  const unsubscribe = rainStore.subscribe(data => {
+  const unsubscribe_weather = weatherStore.subscribe(data => {
+    weatherStations = data;
+  });
+
+  const unsubscribe_rain = rainStore.subscribe(data => {
     rainData = data;
   });
 
   onDestroy(() => {
-    unsubscribe();
+    unsubscribe_weather();
+    unsubscribe_rain();
   });
 
   function getWindDirection(val) {
@@ -46,40 +54,71 @@
     if (day < 10) day = `0${day}`
     if (time < 10) time = `0${time}`
     return `${year}-${month}-${day}T${time}:00:00Z`
-}
+  }
+
+  function getHour() {
+    const today = new Date()
+    let time = `${today.getHours()}:00`
+    return time
+  }
 
 function findWeatherIcon() {
-  const weatherType = rainData.find(item => item.time == `${createDate()}`).data.next_1_hours.summary.symbol_code;
+  currentRainData = rainData.find(item => item.time == `${createDate()}`).data
+  const weatherType = currentRainData.next_1_hours.summary.symbol_code;
   return "../../assets/" + weatherType + ".svg"
 }
 </script>
 
 <div class="card weather-card">
-  {#each weatherStations as station}
-    {#if !station.error}
-    <div class="station-card">
-      <div class="card-size-limit">
-        <div class="station-header">
-          <div>{station.stationName.split(" ")[0].replace("_", "")}</div>
-          <div class="station-time">{station.dateTime.split(" ")[1].substring(0, station.dateTime.split(" ")[1].length - 3)}</div>
-        </div>
-        <div class="station-middle">
-          {#if rainData.length}
+  <div>
+    <div class="card-size-limit">
+      <div class="station-header">
+        <div>Oppdal</div>
+        <div class="station-time">{getHour()}</div>
+      </div>
+      <div class="station-middle-oppdal">
+        {#if rainData.length}
           <div><img src={findWeatherIcon()} alt="Værikon"></div>
-          {/if}
-          <div class="station-forecast">
-              <div>{station.temperature} {decodeURI('%C2%B0')}</div>
-              {#if rainData.length}
-                <div>{`${rainData.find(item => item.time == `${createDate()}`).data.next_1_hours.details.precipitation_amount} mm`}</div>
-              {/if}
-          </div>
-        </div>
-        <div class="station-wind">
-          <span>{station.wind.speed}{station.wind.unit}</span>
-          <span class="wind-direction">{getWindDirection(station.wind.direction)}</span>
+        {/if}
+        <div class="station-forecast-oppdal">
+            {#if rainData.length}
+              <div>{`${currentRainData.instant.details.air_temperature} ${decodeURI('%C2%B0')}`}</div>
+              <div>{`${currentRainData.next_1_hours.details.precipitation_amount} mm`}</div>
+            {/if}
         </div>
       </div>
+      <div class="station-wind-oppdal">
+        {#if rainData.length}
+          <span>{`${currentRainData.instant.details.wind_speed} m/s`}</span>
+          <span class="wind-direction">{getWindDirection(currentRainData.instant.details.wind_from_direction)}</span>
+        {/if}
+      </div>
     </div>
+  </div>
+  {#each weatherStations as station}
+    {#if !station.error}
+      <div class="station-card">
+        <div class="card-size-limit">
+          <div class="station-header">
+            <div>{station.stationName.split(" ")[0].replace("_", "")}</div>
+            <div class="station-time">{station.dateTime.split(" ")[1].substring(0, station.dateTime.split(" ")[1].length - 3)}</div>
+          </div>
+          <div class="station-middle">
+            <div class="station-middle-section">
+                <i class="fas fa-thermometer-half blue-icon fa-fw"></i>
+                <span>{station.temperature} {decodeURI('%C2%B0')}</span>
+            </div>
+            <div class="station-middle-section">
+              <i class="fas fa-wind blue-icon fa-fw"></i>
+              <span>{station.wind.speed} {station.wind.unit}</span>
+            </div>
+            <div class="station-middle-section">
+              <i class="fas fa-arrows-alt grey-icon fa-fw"></i>
+              <span class="wind-direction">{getWindDirection(station.wind.direction)}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     {/if}
   {/each}
 </div>
@@ -88,14 +127,14 @@ function findWeatherIcon() {
   .weather-card {
     padding: 1rem 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     justify-content: space-evenly;
   }
 
   @media (min-width: 990px) {
     .weather-card {
-      grid-template-columns: repeat(3, 1fr);
-      margin: 0 0 1.5rem 1.5rem;
+      grid-template-columns: repeat(4, 1fr);
+      margin: 1.5rem 0 1.5rem 0;
     }
   }
 
@@ -124,25 +163,38 @@ function findWeatherIcon() {
     color: #BABABA;
   }
 
-  .station-middle {
+  .station-middle-oppdal {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
   }
-
-  .station-forecast {
+  .station-forecast-oppdal {
     justify-self: end;
     padding-bottom: 1rem;
-    text-align: end;
-  }
-
-  .station-wind {
     text-align: center;
   }
-
+  .station-wind-oppdal {
+    text-align: center;
+  }
   .wind-direction {
     color: #BABABA;
-    padding-left: 1rem;
   }
-  
+
+  .station-middle {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    padding-left: 20%;
+  }
+  .station-middle-section {
+    padding-bottom: 1rem;
+  }
+  .blue-icon {
+    color: #004a7c;
+    padding-right: 1rem;
+  }
+  .grey-icon {
+    color: #BABABA;
+    padding-right: 1rem;
+  }
 </style>
