@@ -13,6 +13,7 @@ import EditItem from './views/admin/EditItem.svelte'
 import AdminAlerts from './views/admin/Alerts.svelte'
 import AdminWebcamera from './views/admin/Webcamera.svelte'
 import EditWebcamera from './views/admin/EditCamera.svelte'
+import AdminSnowConditions from './views/admin/SnowConditions.svelte'
 function userIsAdmin() {
   const user = localStorage.getItem("user")
   return user
@@ -52,6 +53,7 @@ export const routes = [
     nestedRoutes: [
       { name: 'index', component: AdminIndex },
       { name: '/meldinger', component: AdminAlerts},
+      { name: 'snoforhold', component: AdminSnowConditions},
       { 
         name: '/webkamera', 
         nestedRoutes: [

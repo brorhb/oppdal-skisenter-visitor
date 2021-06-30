@@ -4,7 +4,7 @@
     import { onDestroy, onMount } from 'svelte'
     import OFetch from '../../helpers/fetch'
     import config from '../../helpers/config'
-import { navigateTo } from 'svelte-router-spa';
+    import { navigateTo } from 'svelte-router-spa';
 
     let unsubscribe
     let cameraStore = makeCamerasStore()

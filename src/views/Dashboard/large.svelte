@@ -2,6 +2,7 @@
   import Map from "../../components/Map.svelte"
   import WeatherStations from "../../components/Weatherstations.svelte"
   import Table from '../../components/desktop/Table.svelte'
+  import { navigateTo } from "svelte-router-spa";
   export let trackGroups = []
   export let tracks = []
   export let liftGroups = []

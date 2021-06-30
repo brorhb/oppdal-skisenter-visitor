@@ -9,7 +9,7 @@
   import Small from "./small.svelte"
   import Alert from '../../components/Alert.svelte'
   import Avalanche from '../../components/Avalanche.svelte'
-
+  import Zone from '../../components/Zone.svelte'  
   let unsubscribe
   let tracksStore = makeTracksStore()
   let liftsStore = makeLiftsStore()
@@ -113,6 +113,10 @@
       {/if}
   </div>
   <Avalanche/>
+  <Zone zone={zones[3]}/>
+  <Zone zone={zones[0]}/>
+  <Zone zone={zones[2]}/>
+  
 </div>
 
 
