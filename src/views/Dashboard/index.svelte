@@ -2,7 +2,6 @@
   import { makeTracksStore } from '../../stores/TrackStore'
   import { makeLiftsStore } from '../../stores/LiftsStore'
   import { makeZoneStore } from '../../stores/ZoneStore'
-  import { makeWeatherStore } from '../../stores/WeatherStore'
   import { makeAlertStore } from '../../stores/AlertStore'
   import { navigateTo } from 'svelte-router-spa'
   import { onDestroy, onMount } from 'svelte'
@@ -14,16 +13,13 @@
   let unsubscribe
   let tracksStore = makeTracksStore()
   let liftsStore = makeLiftsStore()
-  let weatherStore = makeWeatherStore()
   let zoneStore = makeZoneStore()
   let alertStore = makeAlertStore();
   let tracks = []
   let zones = []
   let activeZone = false
-  let weatherStations = []
   let lifts = []
   let alerts = []
-  $: visibleWeatherStations = activeZone ? weatherStations.filter((station) => station.zone === activeZone) : weatherStations
   $: trackGroups = tracksInZone.reduce((acc, curr) => {
     const difficulty = curr.difficulty
     if (!acc) acc = {}
@@ -69,9 +65,6 @@
     liftsStore.subscribe((data) => {
       lifts = data
     })
-    weatherStore.subscribe((data) => {
-      weatherStations = data
-    })
     zoneStore.subscribe((data) => {
       zones = data
     })
@@ -114,9 +107,9 @@
       {/each}
     </div>
     {#if innerWidth >= 990}
-        <Large {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={visibleWeatherStations} />
+        <Large {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} />
       {:else}
-        <Small {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} weatherStations={visibleWeatherStations} activeZone={activeZone} />
+        <Small {trackGroups} tracks={tracksInZone} {liftGroups} lifts={liftsInZone} {selectedTrack} activeZone={activeZone} />
       {/if}
   </div>
   <Avalanche/>
