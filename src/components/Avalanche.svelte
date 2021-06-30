@@ -13,10 +13,10 @@
         }
     });
         
-        onMount(async () => {
-            avalancheStore.subscribe((data) => {
-                warnings = data
-            })
+    onMount(async () => {
+        avalancheStore.subscribe((data) => {
+            warnings = data
+        })
     })
 
     const color = (level) => {

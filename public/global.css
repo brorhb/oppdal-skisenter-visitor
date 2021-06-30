@@ -16,10 +16,20 @@ html, body {
 	margin: 5px;
 }
 .oppdal-button {
-	min-width: 300px;
-	min-height: 25px;
-	margin: 5px;
+	padding: 10px 50px 10px 50px;
+	border: none;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	background: #FFF;
+	color: #004a7c;
+	border-radius: 50px;
 	cursor: pointer;
+	transition: all 0.5s ease;
+}
+.oppdal-button:hover {
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+	color: #fff;
+	background: #004a7c;
+	transition: all 0.5s ease;
 }
 .oppdal-title {
 	font-size: 26px;

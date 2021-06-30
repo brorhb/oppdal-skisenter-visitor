@@ -12,6 +12,7 @@
   <NavigationButton navigate={"/admin/loyper"} faIcon={"route"} title="Løyper"/>
   <NavigationButton navigate={"/admin/heiser"} faIcon={"skiing"} title="Heiser"/>
   <NavigationButton navigate={"/admin/webkamera"} faIcon={"video"} title="Webkamera"/>
+  <NavigationButton navigate={"/admin/snoforhold"} faIcon={"snowflake"} title="Snøforhold"/>
   <NavigationButton onclick={logout} faIcon={"sign-out-alt"} title="Logg av" /> 
 </div>
 
