@@ -1,41 +1,53 @@
 <script>
   import Map from "../../components/Map.svelte"
   import WeatherStations from "../../components/Weatherstations.svelte"
-  import Table from '../../components/desktop/Table.svelte'
-  import { navigateTo } from "svelte-router-spa";
-  export let trackGroups = []
+  import Avalanche from '../../components/Avalanche.svelte'
+  import Zone from '../../components/Zone.svelte'
   export let tracks = []
-  export let liftGroups = []
   export let lifts = []
+  export let zones = []
 </script>
-
-<div class="large-container">
-  <div>
-    <Map items={[...tracks, ...lifts]} />
-  </div>
-  <div>
-      <Table name={"Heiser"} itemGroups={liftGroups} itemArray={lifts} />
-      <Table name={"Løyper"} itemGroups={trackGroups} itemArray={tracks} />
-  </div>
-  <div>
+<div class="large">
+  <div class="main">
+    <div class="left">
+      <Map items={[...tracks, ...lifts]} />
       <WeatherStations />
+    </div>
+    <div class="right">
+      <Zone zone={zones[3]}/>
+      <Zone zone={zones[0]}/>
+      <Zone zone={zones[2]}/>
+    </div>
+  </div>
+  <div class="content">
+    <Avalanche/>
   </div>
 </div>
 
 <style>
-  .large-container {
-    display: grid;
+  .large {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
-
-  @media (min-width: 990px) {
-    .large-container {
-      grid-template-columns: 55% 45%;
-    }
+  .main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 30px;
   }
-
-  @media (min-width: 1400px) {
-    .large-container {
-      grid-template-columns: 65% 35%;
-    }
+  .left {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+  }
+  .right {
+    display: flex;
+    flex-direction: column;
+  }
+  .content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
   }
 </style>

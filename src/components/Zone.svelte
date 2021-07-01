@@ -69,7 +69,6 @@
         flex-direction: column;
         color: #004a7c;
         padding: 15px;
-        width: 600px;
     }
 
     .zone .main {
