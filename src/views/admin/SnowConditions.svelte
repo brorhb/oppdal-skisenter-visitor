@@ -34,18 +34,32 @@
     }
     
     async function toggleIsLive(condition){
+        let conditionsToUpdate = [];
         condition.is_live = !condition.is_live;
-        try {
-            const result = await OFetch(
-                `${config.BASE_URL}/admin/snow-conditions/${condition.id}`,
-                "PATCH", condition
-            );
-            loadSnowConditions();
-            toast.setToast('Endring lagret', 'success');
-        } catch (error) {
-            console.warn(error);
-            toast.setToast('En feil har oppstått', 'error');
+        conditionsToUpdate.push(condition);
+        if(condition.is_live){
+            snowConditions.forEach(snowCondition => {
+                if (snowCondition.is_live && snowCondition.zone_id == condition.zone_id && snowCondition.id !== condition.id) {
+                    snowCondition.is_live = false;
+                    conditionsToUpdate.push(snowCondition);
+                }
+            })
         }
+
+        for(const snowCondition of conditionsToUpdate) {
+            try {
+                const result = await OFetch(
+                    `${config.BASE_URL}/admin/snow-conditions/${snowCondition.id}`,
+                    "PATCH", snowCondition
+                );
+            } catch (error) {
+                console.warn(error);
+                toast.setToast('En feil har oppstått', 'error');
+            }
+        }
+        loadSnowConditions();
+        toast.setToast('Endring lagret', 'success');
+        
     }
     async function createSnowCondition(){
         if(newCondition.message === '') {
@@ -93,6 +107,9 @@
 </script>
 
 <div class="admin-snowconditions">
+    {#each zones as zone}
+    {#if zone.name == "Stølen" || zone.name == "Vangslia" || zone.name == "Hovden"}
+    <h1 class="oppdal-title">{zone.name}</h1>
     <table class="w-100">
         <thead>
             <tr class="stripe-dark">
@@ -107,6 +124,7 @@
         </thead>
         <tbody class="lh-copy">
         {#each snowConditions as condition}
+        {#if condition.zone_id == zone.id}
             <tr class="stripe-dark">
             <th>{condition.id}</th>
             <th>{condition.message}</th>
@@ -118,9 +136,12 @@
             <th on:click="{() => editItem = condition}"><i class="fas fa-edit"></i></th>
             <th on:click="{() => deleteSnowCondition(condition)}"><i class="fas fa-trash-alt"></i></th>
             </tr>
+        {/if}
         {/each}
         </tbody>
     </table>
+    {/if}   
+    {/each}
 
     <label for="message">Opprett ny melding om snøforhold</label>
     <input class="oppdal-input" type="text" name="message" bind:value={newCondition.message} />
