@@ -7,8 +7,8 @@
   
   let map;
   let svgObj;
-  let height = undefined;
-  let width = undefined;
+  let height;
+  let width;
   let infoBox;
 
   const clicked = (item) => infoBox = item;
