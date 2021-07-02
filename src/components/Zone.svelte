@@ -52,7 +52,7 @@
                     <p class="description">Løyper</p>
                 </div>
             </div>
-            <button on:click="{() => navigateTo(`/sone?sone=${zone.name}`)}" class="oppdal-button button">Mer detaljer</button>
+            <button on:click="{() => navigateTo(`/sone/${zone.id}`)}" class="oppdal-button button">Mer detaljer</button>
         </div>
         <div class="conditions">
             <div class="title">Snøforhold <span class="date">{snowConditions.timestamp ? formatTimestamp(snowConditions.timestamp) : formatTimestamp(new Date())}</span></div>
