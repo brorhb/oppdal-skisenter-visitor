@@ -21,5 +21,8 @@
     "svelte-feather-icons": "^3.3.0",
     "svelte-router-spa": "^5.8.0",
     "svelte-select": "^3.14.1"
+  },
+  "dependencies": {
+    "svg-pan-zoom": "^3.6.1"
   }
 }
