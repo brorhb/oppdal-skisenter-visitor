@@ -1,19 +1,19 @@
 <script>
   import { onMount } from 'svelte';
   export let selected_option;
-  export let options
-  export let chosen_zone = [];
+  export let options;
+  export let chosen_zone;
   let init_option;
   let root;
 
-  $: selected_option = updateSelected(chosen_zone)
+  $: selected_option = updateSelected(chosen_zone);
 
   function updateSelected(chosen_zone) {
     if (chosen_zone) {
       selected_option = chosen_zone;
       init_option = selected_option;
-    }
-  }
+    };
+  };
 
   onMount(async () => {
     if (options) {
@@ -48,7 +48,7 @@
   {#if options} 
     <div class="custom-select-wrapper">
       <div class="custom-select">
-          <div class="custom-select__trigger"><span>{init_option}</span>
+          <div class="custom-select__trigger"><span>{selected_option ? selected_option : init_option}</span>
               <div class="arrow"></div>
           </div>
           <div class="custom-options">
@@ -147,21 +147,21 @@
 }
  .arrow::before {
      left: -5px;
-     transform: rotate(45deg);
+     transform: rotate(-45deg);
      background-color: #305c91;
 }
  .arrow::after {
      left: 5px;
-     transform: rotate(-45deg);
+     transform: rotate(45deg);
      background-color: #305c91;
 }
 :global(.open .arrow::before) {
      left: -5px;
-     transform: rotate(-45deg);
+     transform: rotate(45deg);
 }
 :global(.open .arrow::after) {
      left: 5px;
-     transform: rotate(45deg);
+     transform: rotate(-45deg);
 }
 
 
