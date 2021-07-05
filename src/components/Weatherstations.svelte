@@ -7,7 +7,7 @@
   let weatherStations = []
   let rainStore = makeRainStore()
   let rainData; 
-  let currentRainData;
+  $: currentRainData = setCurrentRainData(rainData);
 
   const unsubscribe_weather = weatherStore.subscribe(data => {
     weatherStations = data;
@@ -45,27 +45,37 @@
   }
 
   function createDate() {
-    const today = new Date()
-    const year = today.getFullYear()
-    let month = today.getMonth() + 1
-    let day = today.getDate()
-    let time = today.getHours()
-    if (month < 10) month = `0${month}`
-    if (day < 10) day = `0${day}`
-    if (time < 10) time = `0${time}`
-    return `${year}-${month}-${day}T${time}:00:00Z`
+    const today = new Date();
+    const year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+    let time = today.getHours();
+    if (month < 10) month = `0${month}`;
+    if (day < 10) day = `0${day}`;
+    if (time < 10) time = `0${time}`;
+    return `${year}-${month}-${day}T${time}:00:00Z`;
   }
 
   function getHour() {
-    const today = new Date()
-    let time = `${today.getHours()}:00`
-    return time
+    const today = new Date();
+    let time = `${today.getHours()}:00`;
+    return time;
   }
 
+function setCurrentRainData(rainData) {
+  if (rainData.length > 0) {
+    currentRainData = rainData.find(item => item.time == `${createDate()}`).data;
+    return currentRainData;
+  } else {
+    return [];
+  };
+}
+
 function findWeatherIcon() {
-  currentRainData = rainData.find(item => item.time == `${createDate()}`).data
-  const weatherType = currentRainData.next_1_hours.summary.symbol_code;
-  return "../../assets/" + weatherType + ".svg"
+  if (currentRainData) {
+    const weatherType = currentRainData.next_1_hours.summary.symbol_code;
+    return "../../assets/" + weatherType + ".svg";
+  };
 }
 </script>
 

@@ -56,7 +56,7 @@
         <div class="description">{snowConditions.message ? snowConditions.message : "Det finnes ingen oppdateringer om snøforhold for denne sonen."}</div>
     </div>
     <div class="button">
-        <button on:click="{() => navigateTo(`/sone?sone=${zone.name}`)}" class="oppdal-button">Mer detaljer</button>
+        <button on:click="{() => navigateTo(`/sone/${zone.id}`)}" class="oppdal-button">Mer detaljer</button>
     </div>
 </div>
 {/if}
