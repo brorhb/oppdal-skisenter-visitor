@@ -6,7 +6,7 @@
 <div class="skipatrulje card card-hover">
     <div class="oppdal-title">Skipatrulje</div>
     <div class="contact">Kontakt: +4790457635</div>
-    <div class="symbol"><i class="fas fa-times-circle"></i></div>
+    <div class="symbol"><img src="../../assets/skipatrulje-icon.svg" alt="skipatrulje-ikon"></div>
     <div class="information">For lokasjon av skipatruljen se etter symbolet over i kartet</div>
     <button class="oppdal-button" on:click="{() => dispatch("openMap")}">Åpne kart</button>
 </div>
@@ -20,10 +20,6 @@
 
         color: #004a7c;
         padding: 15px;
-    }
-    .skipatrulje .symbol {
-        font-size: 54px;
-        color: #DD4C3E;
     }
     .skipatrulje .information {
         max-width: 300px;

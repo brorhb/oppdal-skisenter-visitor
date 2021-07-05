@@ -5,6 +5,7 @@
   import Zone from '../../components/Zone.svelte'
   import FullscreenMap from '../../components/FullscreenMap.svelte'
   import Skipatrulje from '../../components/Skipatrulje.svelte'
+  import Transport from '../../components/Transport.svelte'
   export let tracks = []
   export let lifts = []
   export let zones = []
@@ -27,6 +28,7 @@
   </div>
   <div class="content">
     <Avalanche/>
+    <Transport />
     <Skipatrulje on:openMap={() => showMap = true}/>
   </div>
   <FullscreenMap on:close={() => showMap = false} show={showMap} items={[...tracks, ...lifts]}/>
@@ -66,5 +68,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+
   }
 </style>
