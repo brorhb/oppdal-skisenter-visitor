@@ -1,16 +1,9 @@
 <script>
-
-    import { navigateTo } from 'svelte-router-spa';
-    import Progress from './Progress.svelte'
     import { makeTracksStore } from '../stores/TrackStore'
     import { onDestroy, onMount } from 'svelte'
     let unsubscribe
     let tracksStore = makeTracksStore();
     let tracks = []; 
-    let zone = "Transport"
-
-    let transportVangsliaHovden = ["Ormhaugen", "Gråbergløypa", "Bualøypa", "Håmmårløypa"];
-    let transportHovdenStolen = ["Fjellsida", "Elvekanten", "Transporten"];
 
     onDestroy(() => {
         if(unsubscribe) {
@@ -26,27 +19,18 @@
     })
 </script>
 <div class="transport card card-hover">
+    <div class="oppdal-title title">Skiløyper mellom soner</div>
+    <div class="route">
     {#each tracks as track}
-        {#if tracks.zone == 11}
-        {track.name}
+        {#if track.zone == 11}
+            <div class={`status ${track.status == "closed" ? "closed" : "open"}`}>
+                <div>Stølen -> Hovden</div>
+                <div class="icon"><i class={`far ${track.status == "closed" ? "fa-times-circle" : "fa-check-circle"}`}></i></div>
+                <div class="status-detail">{track.status == "closed" ? "Stengt" : "Åpen"}</div>
+            </div>
         {/if}
-    {/each }
-    <div class="oppdal-title title">Transportruter</div>
-    <div class="main">
-        <div class="column">
-            <p class="column-title">Vangslia-Hovden</p>
-            <Progress numerator={tracks.filter(track => track.status == "open" && track.zone == 11 && transportVangsliaHovden.includes(track.name)).length} denominator={tracks.filter(track => track.zone == 11 && transportVangsliaHovden.includes(track.name)).length} description={"Åpne"}/>
-            <p class="description">Løyper</p>
-            
-        </div>
-        <div class="column">
-            <p class="column-title">Hovden-Stølen</p>
-            <Progress numerator={tracks.filter(track => track.status == "open" && track.zone == 11 && transportHovdenStolen.includes(track.name)).length} denominator={tracks.filter(track => track.zone == 11 && transportHovdenStolen.includes(track.name)).length} description={"Åpne"}/>
-            <p class="description">Løyper</p>
-        </div>
-        
+    {/each}
     </div>
-    <button on:click="{() => navigateTo(`/sone/11`)}" class="oppdal-button button">Mer detaljer</button>
 </div>
 
 
@@ -54,26 +38,35 @@
     .transport {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
         color: #004a7c;
         padding: 15px;
-        width: 30%;
+        text-align: center;
     }
-
-    .transport .main {
+    .transport .title {
+        padding: 0 0 15px 0;
+    }
+    .route {
         display: flex;
         flex-direction: row;
+        justify-content: space-evenly;
     }
-
-    .transport .column {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    .transport .status {
+        width: 75px;
+        height: auto;
         padding: 15px;
+        margin-right: 15px;
     }
-    .transport > button {
-        max-width: 200px;
+    .transport .closed {
+        background: #F5E8E8;
+    }
+    .transport .open {
+        background: #E8F1F5;
+    }
+    .transport .icon {
+        font-size: 37px;
+        font-weight: 500;
+    }
+    .status-detail {
+        font-size: 12px;
     }
 </style>

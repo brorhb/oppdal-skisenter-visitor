@@ -18,10 +18,10 @@
         <Map items={[...tracks, ...lifts]} />
         <button class="oppdal-button" on:click="{() => showMap = true}">Mer detaljer</button>
       </div>
-      <WeatherStations />
     </div>
     <div class="right">
-      
+      <WeatherStations />
+      <Transport />
     </div>
   </div>
   <div class="zones">
@@ -32,7 +32,6 @@
   </div>
   <div class="content">
     <Avalanche/>
-    <Transport />
     <Skipatrulje on:openMap={() => showMap = true}/>
   </div>
   <FullscreenMap on:close={() => showMap = false} show={showMap} items={[...tracks, ...lifts]}/>
@@ -53,7 +52,7 @@
   .left {
     display: flex;
     flex-direction: column;
-    width: 85%;
+    width: 45%;
   }
   .map-container {
     position: relative;
@@ -66,7 +65,7 @@
   }
   .right {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
   }
   .content {
     display: flex;
