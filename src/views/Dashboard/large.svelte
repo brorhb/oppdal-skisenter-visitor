@@ -21,10 +21,14 @@
       <WeatherStations />
     </div>
     <div class="right">
-      <Zone zone={zones[3]}/>
-      <Zone zone={zones[0]}/>
-      <Zone zone={zones[2]}/>
+      
     </div>
+  </div>
+  <div class="zones">
+    <Zone zone={zones[3]}/>
+    <Zone zone={zones[0]}/>
+    <Zone zone={zones[2]}/>
+    <Zone zone={zones[1]}/>
   </div>
   <div class="content">
     <Avalanche/>
@@ -62,12 +66,16 @@
   }
   .right {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
   }
   .content {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
 
+  }
+  .zones {
+    display: flex;
+    justify-content: space-evenly;
   }
 </style>
