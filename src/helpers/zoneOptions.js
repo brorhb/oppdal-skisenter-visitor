@@ -1,1 +1,0 @@
-export const standard_options = ['Alle', 'Vangslia', 'Hovden', 'Stølen', 'Transport'];

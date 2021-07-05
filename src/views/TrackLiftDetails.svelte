@@ -7,15 +7,14 @@
     import { makeLiftsStore } from '../stores/LiftsStore';
     import { makeZoneStore } from '../stores/ZoneStore';
     import { onDestroy, onMount } from 'svelte';
-    import { standard_options } from '../helpers/zoneOptions';
     
     let chosen_zone;
-    let options;
     let selected_option = "";
+    let other_options;
     let unsubscribe;
     let zoneId = currentRoute.name.split("/")[2]
 
-    $: chosen_zone, options = getOptions(zoneId, zones);
+    $: chosen_zone, other_options = getOptions(zoneId, zones);
     $: activeZone = updateActiveZone(selected_option) /*$: is used to ensure that updateActiveZone is performed when selected_options is changed*/
     $: tracksInZone = updateTracksZone(activeZone, tracks)
     $: liftsInZone = updateLiftsZone(activeZone, lifts)
@@ -49,28 +48,30 @@
     });
 
     function getOptions(zoneId, zones) {
-        options = standard_options;
         if (zones.length > 0) {
             chosen_zone = zones.filter(zone => zone.id === parseInt(zoneId))[0].name
-            options = options.filter(zone_name => zone_name !== chosen_zone)
-            return chosen_zone, options
+            other_options = zones.filter(zone => zone.name !== chosen_zone).map(zone => zone.name)
+            other_options.push('Alle')
+            return chosen_zone, other_options
         } else {
-            return false, options
+            return false, [];
         };
     };
 
-    function updateActiveZone(selected_zone_name) {
-        if (selected_zone_name && selected_zone_name !== 'Alle') {
-            let zoneID = (zones.find(zone => zone.name === selected_zone_name)).id
-            activeZone = zoneID;
+    function updateActiveZone(selected_zone) {
+        if (!selected_zone && chosen_zone) {
+            let zoneID = (zones.find(zone => zone.name === chosen_zone)).id
+            return zoneID;
+        } else if (selected_zone && selected_zone !== 'Alle') {
+            let zoneID = (zones.find(zone => zone.name === selected_zone)).id
+            return zoneID;
         } else {
-            activeZone = false;
+            return false;
         };
-        return activeZone;
     };
 
     function updateTracksZone(activeZone, tracks) {
-        if (!activeZone) {  /*Maybe move logic to helpers?*/
+        if (!activeZone) {
             tracksInZone = tracks;
         } else {
             tracksInZone = tracks.filter(track => track.zone === activeZone);
@@ -88,7 +89,7 @@
     };
 
     function updateLiftsZone(activeZone, lifts) {
-        if (!activeZone) {  /*Maybe move logic to helpers?*/
+        if (!activeZone) {
             liftsInZone = lifts;
         } else {
             liftsInZone = lifts.filter(lift => lift.zone === activeZone)
@@ -111,7 +112,7 @@
         <Map items={[...tracksInZone, ...liftsInZone]} />
     </div>
     <div class="right-container">
-        <DropDown bind:selected_option options={options} chosen_zone={chosen_zone}/>  <!-- bind:selected_option ensures that parent component updates when selected option in dropdown changes-->
+        <DropDown bind:selected_option options={other_options} chosen_zone={chosen_zone}/>  <!-- bind:selected_option ensures that parent component updates when selected option in dropdown changes-->
         <Table name={"Heiser"} itemGroups={liftGroupsInZone} itemArray={liftsInZone} />
         <Table name={"Løyper"} itemGroups={trackGroupsInZone} itemArray={tracksInZone} />
     </div>
