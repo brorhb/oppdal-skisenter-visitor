@@ -7,22 +7,14 @@
     export let itemGroups = []
     export let itemArray = []
     let activeGroup;
+    
 </script>
 
 <div class="table card">
     {#if itemArray.length}
         <div class="table-header">{name}</div>
         <div class="table-body">
-            {#if itemArray.length <= 5}
-                {#each itemArray as item}
-                    {#if name === 'Heiser'}
-                        <LiftItem lift={item} />
-                    {:else} 
-                        <TrackItem track={item} />
-                    {/if}
-                {/each}
-            {:else}
-                {#each Object.keys(itemGroups) as groupName}
+            {#each Object.keys(itemGroups) as groupName}
                     <div class="table-column-border">
                         <div class="table-column" on:click={activeGroup === groupName ? () => activeGroup = undefined : () => activeGroup = groupName}>
                             {#if name === "Heiser"}
@@ -65,14 +57,13 @@
                         {/if}
                     </div>
                 {/each}
-            {/if}
         </div>
     {/if}
 </div> 
 
 <style>
     .table{
-        margin: 1.5rem 0 1.5rem 1.5rem;
+        margin: 1.5rem 0 1.5rem 0;
     }
     
     .table-header{

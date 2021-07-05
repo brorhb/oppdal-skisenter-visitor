@@ -14,6 +14,7 @@ import AdminAlerts from './views/admin/Alerts.svelte'
 import AdminWebcamera from './views/admin/Webcamera.svelte'
 import EditWebcamera from './views/admin/EditCamera.svelte'
 import AdminSnowConditions from './views/admin/SnowConditions.svelte'
+import TrackLiftDetail from './views/TrackLiftDetails.svelte';
 function userIsAdmin() {
   const user = localStorage.getItem("user")
   return user
@@ -45,6 +46,11 @@ export const routes = [
     name: "/kart",
     component: MapView,
     layout: Layout
+  },
+  {
+    name: "/sone/:id",
+    component: TrackLiftDetail,
+    layout: Layout,
   },
   {
     name: "admin",
@@ -98,5 +104,5 @@ export const routes = [
   {
     name: "/login",
     component: Login
-  }
+  },
 ]
