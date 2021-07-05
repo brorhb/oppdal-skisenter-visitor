@@ -52,7 +52,6 @@
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 10;
-        font-weight: 500;
         color: #004a7c;
         text-align: center;
     }

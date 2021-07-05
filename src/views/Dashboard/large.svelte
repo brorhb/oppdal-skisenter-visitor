@@ -3,25 +3,38 @@
   import WeatherStations from "../../components/Weatherstations.svelte"
   import Avalanche from '../../components/Avalanche.svelte'
   import Zone from '../../components/Zone.svelte'
+  import FullscreenMap from '../../components/FullscreenMap.svelte'
+  import Skipatrulje from '../../components/Skipatrulje.svelte'
+  import Transport from '../../components/Transport.svelte'
   export let tracks = []
   export let lifts = []
   export let zones = []
+  let showMap = false;
 </script>
 <div class="large">
   <div class="main">
     <div class="left">
-      <Map items={[...tracks, ...lifts]} />
-      <WeatherStations />
+      <div class="map-container">
+        <Map items={[...tracks, ...lifts]} />
+        <button class="oppdal-button" on:click="{() => showMap = true}">Mer detaljer</button>
+      </div>
     </div>
     <div class="right">
-      <Zone zone={zones[3]}/>
-      <Zone zone={zones[0]}/>
-      <Zone zone={zones[2]}/>
+      <WeatherStations />
+      <Transport />
     </div>
+  </div>
+  <div class="zones">
+    <Zone zone={zones[3]}/>
+    <Zone zone={zones[0]}/>
+    <Zone zone={zones[2]}/>
+    <Zone zone={zones[1]}/>
   </div>
   <div class="content">
     <Avalanche/>
+    <Skipatrulje on:openMap={() => showMap = true}/>
   </div>
+  <FullscreenMap on:close={() => showMap = false} show={showMap} items={[...tracks, ...lifts]}/>
 </div>
 
 <style>
@@ -39,7 +52,16 @@
   .left {
     display: flex;
     flex-direction: column;
-    width: 85%;
+    width: 45%;
+  }
+  .map-container {
+    position: relative;
+    overflow: hidden;
+  }
+  .map-container > button {
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
   }
   .right {
     display: flex;
@@ -48,6 +70,11 @@
   .content {
     display: flex;
     flex-direction: row;
+    justify-content: space-evenly;
+
+  }
+  .zones {
+    display: flex;
     justify-content: space-evenly;
   }
 </style>
