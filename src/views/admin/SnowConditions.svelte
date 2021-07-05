@@ -108,7 +108,7 @@
 
 <div class="admin-snowconditions">
     {#each zones as zone}
-    {#if zone.name == "Stølen" || zone.name == "Vangslia" || zone.name == "Hovden"}
+    {#if zone.name !== "Transport"}
     <h1 class="oppdal-title">{zone.name}</h1>
     <table class="w-100">
         <thead>
