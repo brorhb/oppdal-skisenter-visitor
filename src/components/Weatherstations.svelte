@@ -98,7 +98,7 @@ function findWeatherIcon() {
             {/if}
         </div>
       </div>
-      <div class="information">
+      <div class="information wind-oppdal">
         {#if rainData.length}
           <span>{`${currentRainData.instant.details.wind_speed} m/s`}</span>
           <span class="wind-direction-oppdal">{getWindDirection(currentRainData.instant.details.wind_from_direction)}</span>
@@ -164,6 +164,9 @@ function findWeatherIcon() {
   }
   .station-forecast-oppdal {
     justify-self: end;
+  }
+  .wind-oppdal {
+    text-align: center;
   }
   .wind-direction-oppdal {
     color: #BABABA;

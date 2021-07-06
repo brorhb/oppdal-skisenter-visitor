@@ -47,6 +47,7 @@
         border-radius: 100%;
     }
     .progress-bar .number {
+        text-align: center;
         position: absolute;
         top: 50%;
         left: 50%;
