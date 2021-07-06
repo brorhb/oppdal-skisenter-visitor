@@ -11,70 +11,90 @@
   export let zones = []
   let showMap = false;
 </script>
-<div class="large">
-  <div class="main">
-    <div class="left">
-      <div class="map-container">
-        <Map items={[...tracks, ...lifts]} />
-        <button class="oppdal-button" on:click="{() => showMap = true}">Mer detaljer</button>
-      </div>
-    </div>
-    <div class="right">
-      <WeatherStations />
-      <Transport />
+
+<div class="main-container">
+  <div class="map-container card" >
+    <div class="map-div">
+      <Map items={[...tracks, ...lifts]} />
+      <button class="oppdal-button" on:click="{() => showMap = true}">Åpne kart</button>
     </div>
   </div>
-  <div class="zones">
+  <div class="weather-container"><WeatherStations /></div>
+  <div class="transport-container"><Transport /></div>
+  <div class="zones-container">
     <Zone zone={zones[3]}/>
     <Zone zone={zones[0]}/>
     <Zone zone={zones[2]}/>
     <Zone zone={zones[1]}/>
   </div>
-  <div class="content">
-    <Avalanche/>
-    <Skipatrulje on:openMap={() => showMap = true}/>
-  </div>
+  <div class="avalanche-container"><Avalanche /></div>
+  <div class="skipatrulje-container"><Skipatrulje  on:openMap={() => showMap = true}/></div>
   <FullscreenMap on:close={() => showMap = false} show={showMap} items={[...tracks, ...lifts]}/>
 </div>
 
 <style>
-  .large {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+   .main-container {
+    display: grid;
+    grid-template-areas:
+      "map map weather weather"
+      "map map transport transport"
+      "zones zones zones zones"
+      "avalanche avalanche skipatrulje skipatrulje";
+    grid-template-columns: 1fr 1fr 1fr 1fr; 
+    column-gap: 2rem;
+    row-gap: 2rem;
   }
-  .main {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin-bottom: 30px;
-  }
-  .left {
-    display: flex;
-    flex-direction: column;
-    width: 45%;
-  }
+
   .map-container {
-    position: relative;
-    overflow: hidden;
+    grid-area: map;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
   }
-  .map-container > button {
+  .map-div { 
+    width: 100%;
+    position: relative;
+  }
+  .map-div > button {
     position: absolute;
     bottom: 5%;
     right: 5%;
   }
-  .right {
-    display: flex;
-    flex-direction: column;
-  }
-  .content {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
 
+  .weather-container {
+    grid-area: weather;
   }
-  .zones {
+  .transport-container {
+    grid-area: transport;
+  }
+  .zones-container {
     display: flex;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    grid-area: zones;
+    justify-content: space-between;
   }
+  .avalanche-container {
+    grid-area: avalanche;
+  }
+  .skipatrulje-container {
+    grid-area: skipatrulje;
+  }
+
+  @media only screen and (max-width: 1400px) {
+    .main-container {
+      grid-template-areas:
+        "map map" 
+        "weather weather "
+        "transport transport"
+        "zones zones"
+        "zones zones"
+        "avalanche avalanche"
+        "skipatrulje skipatrulje";
+      grid-template-columns: 1fr 1fr; 
+      column-gap: 10px;
+    }
+  }
+
 </style>
