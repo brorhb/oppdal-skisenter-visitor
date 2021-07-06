@@ -36,7 +36,7 @@
 
   .navbar > a:hover {
     cursor: pointer;
-    opacity: 90%;
+    opacity: 70%;
   }
 
   .navbrand {
@@ -51,14 +51,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 40px;
-    width: 40px;  
+    height: 55px;
+    width: 55px;  
     background-color: #FAFAFA;
     border-radius: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   }
 
   .div-circle:hover {
-    opacity: 90%;
+    opacity: 70%;
   }
 
   #webcam-icon {
