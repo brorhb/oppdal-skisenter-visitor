@@ -20,6 +20,7 @@
   let length = null
   let newLiftType = ''
   let zone = ''
+  let zone_id = 1
 
   onDestroy(() => {
     if(unsubscribe) {
@@ -96,9 +97,55 @@
     toast.setToast('Lagret', 'success');
     await updateLifts()
   }
+
+  async function setStatusAll(type) {
+    try {
+        const res = await OFetch(
+          `${config.BASE_URL}/admin/lift/status`,
+          "PATCH",
+          {
+            type
+          }
+        )
+        toast.setToast('Endring lagret', 'success');
+        await updateLifts()
+      } catch(err) {
+        console.warn(err);
+        toast.setToast('Noe gikk galt', 'error');
+      }
+  }
+  async function setStatusByZone(type, zone) {
+    try {
+        const res = await OFetch(
+          `${config.BASE_URL}/admin/lift/status-zone`,
+          "PATCH",
+          {
+            type, zone
+          }
+        )
+        toast.setToast('Endring lagret', 'success');
+        await updateLifts()
+      } catch(err) {
+        console.warn(err);
+        toast.setToast('Noe gikk galt', 'error');
+      }
+  }
 </script>
 <div>
-  <List
+  <div class="actions">
+      <h1>Valg for alle heiser</h1>
+      <button class="oppdal-button" on:click="{() => setStatusAll("open")}">Åpne alle heiser</button>
+      <button class="oppdal-button" on:click="{() => setStatusAll("closed")}">Lukk alle heiser</button>
+      <h1>Valg for heiser i valgt sone</h1>
+      <select id="zone" class="oppdal-select" bind:value={zone_id}>
+        {#each zones as zone}
+          <option value={zone.id}>{zone.name}</option>
+        {/each}
+      </select>
+      <button class="oppdal-button" on:click="{() => setStatusByZone("open", zone_id)}">Åpne alle heiser i {zones.find(zone => zone.id == zone_id) ? zones.find(zone => zone.id == zone_id).name : "Finner ikke sone"}</button>
+      <button class="oppdal-button" on:click="{() => setStatusByZone("closed", zone_id)}">Lukk alle heiser i {zones.find(zone => zone.id == zone_id) ? zones.find(zone => zone.id == zone_id).name : "Finner ikke sone"}</button>
+  </div>
+   <List
     items={lifts}
     columns={['map_name', 'name']}
     columnLabels={['id', 'Name']}
@@ -148,5 +195,14 @@
     align-items: center;
     align-content: center;
     flex-direction: column;
+  }
+  .actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .actions > h1 {
+    text-align: center;
   }
 </style>
