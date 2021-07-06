@@ -22,12 +22,14 @@
 </script>
 <div class="layout">
   <Navbar />
+  <div class="main-container">
   {#each alerts as alert}
     <Alert alert={alert}/>
   {/each}
   <section>
     <Route {currentRoute}  {params} />
   </section>
+</div>
   <Footer />
 </div>
 
@@ -36,5 +38,9 @@
     height: 100%;
     display: flex;
 	  flex-direction: column;
+  }
+  .main-container {
+    max-width: 1440px;
+    margin: 0 auto 0 auto;
   }
 </style>
