@@ -39,21 +39,21 @@
 </script>
 {#if zone}
 <div class="zone card">
-    <div class="oppdal-title title">{zone.name}</div>
+    <div class="header">{zone.name}</div>
     <div class="progress-bars">
         <div>
             <Progress numerator={lifts.filter(lift => lift.status == "open" && lift.zone == zone.id).length} denominator={lifts.filter(lift => lift.zone == zone.id).length} description={"Åpne"}/>
-            <p class="description">Heiser</p>
+            <p class="subsub-header">Heiser</p>
         </div>
         <div>
             <Progress numerator={tracks.filter(track => track.status == "open" && track.zone == zone.id).length} denominator={tracks.filter(track => track.zone == zone.id).length} description={"Åpne"}/>
-            <p class="description">Løyper</p>
+            <p class="subsub-header">Løyper</p>
         </div>
     </div>
     <div class="line"><span></span></div>
     <div class="conditions">
-        <div class="title">Snøforhold <span class="date">{snowConditions.timestamp ? formatTimestamp(snowConditions.timestamp) : formatTimestamp(new Date())}</span></div>
-        <div class="description">{snowConditions.message ? snowConditions.message : "Det finnes ingen oppdateringer om snøforhold for denne sonen."}</div>
+        <div><span class="sub-header">Snøforhold</span> <span class="sub-text sub-text-date">{snowConditions.timestamp ? formatTimestamp(snowConditions.timestamp) : formatTimestamp(new Date())}</span></div>
+        <div class="paragraph">{snowConditions.message ? snowConditions.message : "Det finnes ingen oppdateringer om snøforhold for denne sonen."}</div>
     </div>
     <div class="button">
         <button on:click="{() => navigateTo(`/sone/${zone.id}`)}" class="oppdal-button">Mer detaljer</button>
@@ -67,13 +67,10 @@
         display: flex;
         flex-direction: column;
         color: #004a7c;
-        padding: 15px;
-        width: 350px;
-        min-height: 420px;
+        width: 25rem;
+        min-height: 25rem;
         justify-content: space-evenly;
-    }
-    .zone .title {
-        text-align: center;
+        max-width: 20rem;
     }
     .zone .button {
         display: flex;
@@ -85,33 +82,17 @@
     }
     .zone .line > span{
         width: 80%;
-        border: 1px solid #E8F1F5;
-
-    }
-    .zone .button > {
-        width: 200px;
-    }
-    .conditions .title {
-        text-align: left;
+        border: 1px solid #EFEFEF;
     }
     .zone .progress-bars {
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
     }
-    .progress-bars .description {
-        text-align: center;
-        margin: 5px 0 15px 0;
-    }
-    .conditions .title {
-        font-size: 20px;
-    }
-    .conditions .title .date {
-        font-size: 12px;
+
+    .sub-text-date {
         color: #BABABA;
-        margin-left: 5px;
+        margin-left: 0.4rem;
     }
-    .conditions .description {
-        padding: 5px 0 0 0;
-    }
+    
 </style>

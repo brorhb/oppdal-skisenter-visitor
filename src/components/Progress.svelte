@@ -7,7 +7,7 @@
 
 <div class="progress-bar">
     <div class="inner"></div>
-    <div class="number">
+    <div class="information number">
         <div>{numerator}/{denominator}</div>
         <div>{description}</div>
     </div>
@@ -52,8 +52,6 @@
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 10;
-        color: #004a7c;
-        text-align: center;
     }
     .progress-bar .bar {
         position: absolute;

@@ -2,7 +2,7 @@
     export let alert = {};
 </script>
 
-<div class="alert">
+<div class="paragraph-big alert">
     <i class="fas fa-exclamation"></i> {alert.message}
 </div>
 
@@ -11,13 +11,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 100%;
         text-align: center;
         background-color: #F5E8E8;
         color: #004A7C;
-        height: 112px;
-        font-size: 26px;
-        margin-top: 10px;
+        padding: 1rem;
+        margin: 1rem 3rem 0 3rem;
     }
     .alert > i {
         margin-right: 10px;
