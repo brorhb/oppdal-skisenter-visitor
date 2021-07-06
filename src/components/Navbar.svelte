@@ -15,7 +15,7 @@
         {#if item.label != "camera"} 
           <a href={item.route}>{item.label}</a>
         {:else}
-            <a class="camera-anchor" href={item.route}><div class="div-circle"><i class="fas fa-camera fa-lg"></i></div></a>
+            <a class="camera-anchor" href={item.route}><div class="div-circle"><img id="webcam-icon" src="../../assets/webcam-icon.svg" alt="webkamera-ikon"></div></a>
         {/if}
       {/each}
   </div>
@@ -59,5 +59,11 @@
 
   .div-circle:hover {
     opacity: 90%;
+  }
+
+  #webcam-icon {
+    width: 37px;
+    height: 37px;
+    margin-top: 7px;
   }
 </style>
