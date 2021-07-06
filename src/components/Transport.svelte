@@ -19,17 +19,17 @@
     })
 </script>
 <div class="transport card card-hover">
-    <div class="oppdal-title title">Skiløyper mellom soner</div>
+    <div class="header title">Skiløyper mellom soner</div>
     <div class="route">
-    {#each tracks as track}
-        {#if track.zone == 11}
-            <div class={`status ${track.status == "closed" ? "closed" : "open"}`}>
-                <div>Stølen -> Hovden</div>
-                <div class="icon"><i class={`far ${track.status == "closed" ? "fa-times-circle" : "fa-check-circle"}`}></i></div>
-                <div class="status-detail">{track.status == "closed" ? "Stengt" : "Åpen"}</div>
-            </div>
-        {/if}
-    {/each}
+        {#each tracks as track}
+            {#if track.zone == 11}
+                <div class={`status ${track.status == "closed" ? "closed" : "open"}`}>
+                    <div class="information">Stølen -> Hovden</div>
+                    <div class="icon"><i class={`far ${track.status == "closed" ? "fa-times-circle" : "fa-check-circle"}`}></i></div>
+                    <div class="sub-text">{track.status == "closed" ? "Stengt" : "Åpen"}</div>
+                </div>
+            {/if}
+        {/each}
     </div>
 </div>
 
@@ -38,24 +38,26 @@
     .transport {
         display: flex;
         flex-direction: column;
+        justify-content: center;
         color: #004a7c;
-        padding: 15px;
+        padding: 1rem;
         text-align: center;
+        height: 100%;
     }
     .transport .title {
-        padding: 0 0 15px 0;
+        padding: 0 0 1rem 0;
     }
     .route {
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
+        justify-content: space-between;
     }
     .transport .status {
         width: 75px;
         height: auto;
-        padding: 15px;
-        margin-right: 15px;
+        padding: 1rem;
     }
+
     .transport .closed {
         background: #F5E8E8;
     }
@@ -63,10 +65,10 @@
         background: #E8F1F5;
     }
     .transport .icon {
-        font-size: 37px;
+        font-size: 2rem;
         font-weight: 500;
+        justify-self: center;
+        padding: 0.2rem 0;
     }
-    .status-detail {
-        font-size: 12px;
-    }
+ 
 </style>

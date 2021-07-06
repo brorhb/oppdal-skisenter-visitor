@@ -58,10 +58,10 @@
             <div>{dangerLevelToText[warnings[4].DangerLevel]}</div>
         </div>
         <div class="avalanche-text">
-            <div class="avalanche-header">
+            <div class="header avalanche-header">
                 Snøskredvarsel for Trollheimen, {formatTimestamp(warnings[4].PublishTime)}
             </div>
-            <div class="avalanche-message">
+            <div class="paragraph-big avalanche-message">
                 {warnings[0].MainText}
             </div>
         </div>
@@ -71,11 +71,11 @@
         {#each warnings as warning}
         <div>
             <div class={`avalanche-dangerlevel ${color(warning.DangerLevel)}`}>{warning.DangerLevel}</div>
-            <div class={isToday(warning.PublishTime) ? `active`:null}>{formatTimestamp(warning.PublishTime)}</div>
+            <div class={`information ${isToday(warning.PublishTime) ? `active`:null}`}>{formatTimestamp(warning.PublishTime)}</div>
         </div>
         {/each}
     </div>
-    <div class="avalanche-footer">
+    <div class="subsub-header avalanche-footer">
         Varsler fra Snøskredvarslingen i Norge og <a href="https://varsom.no">www.varsom.no</a>
     </div>
     {/if}
@@ -88,7 +88,6 @@
         justify-content: center;
         color: #004A7C;
         padding: 1rem;
-        max-width: 600px;
     }
     .avalanche-info {
         display: flex;
@@ -106,7 +105,6 @@
         align-items: center;
     }
     .avalanche-header {
-        font-size: 26px;
         margin-bottom: 6px;
     }
     .avalanche-text {
@@ -121,6 +119,7 @@
         align-items: center;
         height: 40px;
         min-width: 32px;
+        margin-bottom: 0.2rem;
     }
     .avalanche-dates {
         display: flex;
