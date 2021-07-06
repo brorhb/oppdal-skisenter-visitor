@@ -4,7 +4,15 @@
     let unsubscribe
     let tracksStore = makeTracksStore();
     let tracks = []; 
-
+    let transportZoneConnection = {
+        13: "Stølen -> Hovden",
+        21: "Hovden -> Stølen",
+        24: "Hovden -> Ådalen",
+        28: "Ådalen -> Hovden",
+        35: "Vangslia -> Hovden",
+        36: "Hovden -> Vangslia",
+        37: "Vangslia -> Ådalen"
+    }
     onDestroy(() => {
         if(unsubscribe) {
             unsubscribe()
@@ -21,10 +29,10 @@
 <div class="transport card card-hover">
     <div class="header title">Skiløyper mellom soner</div>
     <div class="route">
-        {#each tracks as track}
+        {#each tracks as track, i}
             {#if track.zone == 11}
                 <div class={`status ${track.status == "closed" ? "closed" : "open"}`}>
-                    <div class="information">Stølen -> Hovden</div>
+                    <div class="information">{transportZoneConnection[i]}</div>
                     <div class="icon"><i class={`far ${track.status == "closed" ? "fa-times-circle" : "fa-check-circle"}`}></i></div>
                     <div class="sub-text">{track.status == "closed" ? "Stengt" : "Åpen"}</div>
                 </div>
