@@ -6,6 +6,7 @@
   import FullscreenMap from '../../components/FullscreenMap.svelte'
   import Skipatrulje from '../../components/Skipatrulje.svelte'
   import Transport from '../../components/Transport.svelte'
+  import WebcamCard from '../../components/WebcamCard.svelte'
   export let tracks = []
   export let lifts = []
   export let zones = []
@@ -32,6 +33,7 @@
     <Zone zone={zones[1]}/>
   </div>
   <div class="avalanche-container"><Avalanche /></div>
+  <div class="webcam-container"><WebcamCard/></div>
   <div class="skipatrulje-container"><Skipatrulje on:openMap={openMap}/></div>
   <FullscreenMap on:close={() => showMap = false} show={showMap} items={[...tracks, ...lifts]}/>
 </div>
@@ -43,7 +45,7 @@
       "map map weather weather"
       "map map transport transport"
       "zones zones zones zones"
-      "avalanche avalanche skipatrulje skipatrulje";
+      "avalanche avalanche skipatrulje webcam";
     grid-template-columns: 1fr 1fr 1fr 1fr; 
     column-gap: 2rem;
     row-gap: 2rem;
@@ -84,6 +86,9 @@
   }
   .skipatrulje-container {
     grid-area: skipatrulje;
+  }
+  .webcam-container {
+    grid-area: webcam;
   }
 
   @media only screen and (max-width: 1400px) {
