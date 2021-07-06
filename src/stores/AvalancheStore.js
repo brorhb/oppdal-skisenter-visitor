@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 import config from '../helpers/config';
 
 let cache
-const store = writable({})
+const store = writable([])
 
 export const makeAvalancheStore = () => {
   const load = async () => {

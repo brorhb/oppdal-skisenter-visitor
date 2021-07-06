@@ -1,47 +1,30 @@
 <script>
-  import { makeLiftsStore, updateLifts } from '../../stores/LiftsStore'
-  import { makeTracksStore, updateTracks } from '../../stores/TrackStore'
-  import { onDestroy, onMount } from 'svelte'
-  let unsubscribe
-  let liftsStore = makeLiftsStore()
-  let lifts = []
-  let tracksStore = makeTracksStore()
-  let tracks = []
-
-
-  onDestroy(() => {
-    if(unsubscribe) {
-      unsubscribe()
-      unsubscribe = null
-    }
-	});
-	
-	onMount(async () => {
-		liftsStore.subscribe((data) => {
-			lifts = data
-    })
-    tracksStore.subscribe((data) => {
-      tracks = data
-    })
-  })
+  import NavigationButton from '../../components/admin/NavigationButton.svelte'
+  import { navigateTo } from 'svelte-router-spa'
+  function logout() {
+    localStorage.removeItem('user');
+    navigateTo(`/login`)
+  }
 </script>
-<div class="flex flex-row w-100 h-100 items-center justify-center">
-  {#if lifts.length}
-    <div class="w-100 mw4 bg-light-gray pa2 ma1">
-      <h2>Heiser</h2>
-      <div>
-        <h3>{lifts.filter(lift => lift.status === "open").length}/{lifts.length}</h3>
-        åpne
-      </div>
-    </div>
-  {/if}
-  {#if tracks.length}
-    <div class="w-100 mw4 bg-light-gray pa2 ma1">
-      <h2>Løyper</h2>
-      <div>
-        <h3>{tracks.filter(track => track.status === "open").length}/{tracks.length}</h3>
-        åpne
-      </div>
-    </div>
-  {/if}
+
+<div class="admin-index">
+  <NavigationButton navigate={"/admin/meldinger"} faIcon={"info-circle"} title="Viktige meldinger"/>
+  <NavigationButton navigate={"/admin/loyper"} faIcon={"route"} title="Løyper"/>
+  <NavigationButton navigate={"/admin/heiser"} faIcon={"skiing"} title="Heiser"/>
+  <NavigationButton navigate={"/admin/webkamera"} faIcon={"video"} title="Webkamera"/>
+  <NavigationButton navigate={"/admin/snoforhold"} faIcon={"snowflake"} title="Snøforhold"/>
+  <NavigationButton onclick={logout} faIcon={"sign-out-alt"} title="Logg av" /> 
 </div>
+
+<style>
+  .admin-index {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  @media only screen and (max-width: 600px) {
+    .admin-index {
+      justify-content: space-evenly;
+    }
+  }
+</style>

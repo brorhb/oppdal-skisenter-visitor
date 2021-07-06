@@ -26,6 +26,13 @@ export const makeCamerasStore = () => {
   return store;
 }
 
+export async function updateCameras() {
+  const response = await fetchData()
+  cache = response
+  store.set(response)
+  return response
+}
+
 const fetchData = async (data, set) => {
   try {
     const response = await fetch(`${config.BASE_URL}/cameras`)

@@ -1,16 +1,12 @@
 <script>
   import { UserIcon, LockIcon } from 'svelte-feather-icons'
   import { navigateTo } from 'svelte-router-spa'
+  import { toast } from '../../stores/Toast'
   import config from '../../helpers/config';
   import OFetch from '../../helpers/fetch'
-  let showPassword = false
-  let error
+  import Toast from '../../components/admin/Toast.svelte'
   let username = ""
   let password = ""
-
-  function toggleShowPassword() {
-    showPassword = !showPassword
-  }
 
   async function login() {
     const body = {
@@ -31,62 +27,73 @@
       navigateTo("/admin")
     } catch (err) {
       console.log(err)
-      error = "Wrong username or password"
+      toast.setToast('Feil brukernavn eller passord', 'error');
     }
   }
 
+  const onKeyPress = e => {
+    if (e.charCode === 13) login();
+  }
+
 </script>
-<div class="mt5 tc">
-  <div class="ma3" style="width: 300px">
-    <h3 class="near-black">Login</h3>
-    <div class="mt2 flex">
+<div class="login">
+  <div>
+    <h3 class="header">Logg inn</h3>
+    <div class="input-wrapper">
       <UserIcon size="28" />
       <input
         type="text"
-        class="dib flex-auto"
-        placeholder="Username"
+        class=""
+        placeholder="Brukernavn"
         bind:value={username}
+        on:keypress={onKeyPress}
         autocomplete="off"
         autocorrect="off"
         autocapitalize="off"
         spellcheck="false"
       />
     </div>
-    <div class="mt2 flex">
+    <div class="input-wrapper">
       <LockIcon size="28" />
-      <div class="relative dib flex-auto">
-        <input
-          type="password"
-          class="w-100"
-          style="padding-right: 30px"
-          placeholder="Password"
-          bind:value={password}
-        />
-        <div
-          on:click={toggleShowPassword}
-          class="absolute pointer near-black"
-          style="top: calc(50% - 9px); right: 6px"
-        >
-          <eco-icon
-            type="feather"
-            size="18"
-            :name="showPassword ? 'eye-off' : 'eye'"
-          ></eco-icon>
-        </div>
-      </div>
+      <input
+        type="password"
+        placeholder="Passord"
+        bind:value={password}
+        on:keypress={onKeyPress}
+      />
     </div>
-    <div class="flex flex-column mt3">
-      <button
-        class="btn near-black bg-lightest-blue"
-        on:click={login}
-      >
+    <div class="input-wrapper">
+      <button class="button" on:click={login}>
         Login
       </button>
-      {#if error}
-      <div class="flex-auto">
-        <div class="light-red">{ error }</div>
-      </div>
-      {/if}
     </div>
   </div>
+  <Toast/>
 </div>
+
+<style>
+  .login {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: 50vh;
+  }
+  .header {
+    font-size: 32px;
+    color: #004A7C;
+    text-align: center;
+  }
+
+  .input-wrapper {
+    display: flex;
+    margin-top: 10px;
+  }
+  .input-wrapper > input {
+    min-height: 30px;
+  }
+  .button {
+    width: 100%;
+    cursor: pointer;
+  }
+</style>

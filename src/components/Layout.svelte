@@ -1,17 +1,40 @@
 <script>
   import { Route } from 'svelte-router-spa'
+  import Footer from './Footer.svelte'
   import Navbar from './Navbar.svelte'
-  import AvalancheBanner from '../components/AvalancheBanner.svelte'
+  import Alert from './Alert.svelte'
+  import { makeAlertStore } from '../stores/AlertStore'
+  import { onDestroy, onMount } from 'svelte'
   export let currentRoute
   export const params = {}
+  let alertStore = makeAlertStore();
+  let alerts = []
+  let unsubscribe
+  onDestroy(() => {
+    if(unsubscribe) {
+      unsubscribe()
+      unsubscribe = null
+    }
+	});
+  onMount(() => {
+    unsubscribe = alertStore.subscribe((data) => alerts = data.filter(alert => alert.is_live))
+  })
 </script>
-<div class="h-100 flex flex-column">
-  <div class="flex w-100 justify-center pa2 items-center bg-red white fw5">
-    <div>BETA</div>
-  </div>
-  <AvalancheBanner />
+<div class="layout">
   <Navbar />
-  <section class="flex h-100">
+  {#each alerts as alert}
+    <Alert alert={alert}/>
+  {/each}
+  <section>
     <Route {currentRoute}  {params} />
   </section>
+  <Footer />
 </div>
+
+<style>
+  .layout {
+    height: 100%;
+    display: flex;
+	  flex-direction: column;
+  }
+</style>

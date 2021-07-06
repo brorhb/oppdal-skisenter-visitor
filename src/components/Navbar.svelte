@@ -1,18 +1,69 @@
 <script>
-  import { Navigate } from 'svelte-router-spa'
-  import { onMount } from "svelte"
-
   // List of navigation items
   const navItems = [
     {
-      label: "Kamera",
+      label: "camera",
       route: "/cameras"
-    }
+    }, 
   ]
 </script>
-<nav class="pa3 bb b--black-10">
-  <a class="link dim black b f6 f5-ns dib mr3" href="/">Løypekart</a>
-  {#each navItems as item}
-    <a class="link dim gray f6 f5-ns dib mr3 pointer" href={item.route}>{item.label}</a>
-  {/each}
+
+<nav class="navbar">
+  <a class="navbrand oppdal-title" href="/">Oppdal Skisenter</a>
+    <div>
+      {#each navItems as item}
+        {#if item.label != "camera"} 
+          <a href={item.route}>{item.label}</a>
+        {:else}
+            <a class="camera-anchor" href={item.route}><div class="div-circle"><img id="webcam-icon" src="../../assets/webcam-icon.svg" alt="webkamera-ikon"></div></a>
+        {/if}
+      {/each}
+  </div>
 </nav>
+
+<style>
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #004a7c;
+    padding: 1rem 3rem;
+  }
+
+  .navbar > a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+  }
+
+  .navbar > a:hover {
+    cursor: pointer;
+    opacity: 90%;
+  }
+
+  .navbrand {
+    cursor: pointer; 
+  }
+
+  .camera-anchor {
+    color: #004a7c;
+  }
+
+  .div-circle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;  
+    background-color: #FAFAFA;
+    border-radius: 50%;
+  }
+
+  .div-circle:hover {
+    opacity: 90%;
+  }
+
+  #webcam-icon {
+    width: 37px;
+    height: 37px;
+    margin-top: 7px;
+  }
+</style>
