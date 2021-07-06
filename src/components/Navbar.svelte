@@ -8,14 +8,14 @@
   ]
 </script>
 
-<nav class="pa3 bb b--black-10 navbar">
-  <a class="link dim b dib mr3 navbrand" href="/">Oppdal Skisenter</a>
+<nav class="navbar">
+  <a class="navbrand oppdal-title" href="/">Oppdal Skisenter</a>
     <div>
       {#each navItems as item}
         {#if item.label != "camera"} 
-          <a class="link dim gray dib mr3 pointer" href={item.route}>{item.label}</a>
+          <a href={item.route}>{item.label}</a>
         {:else}
-            <a class="link dim gray dib mr3 pointer camera-anchor" href={item.route}><div class="div-circle"><i class="fas fa-camera fa-lg"></i></div></a>
+            <a class="camera-anchor" href={item.route}><div class="div-circle"><i class="fas fa-camera fa-lg"></i></div></a>
         {/if}
       {/each}
   </div>
@@ -27,12 +27,20 @@
     justify-content: space-between;
     align-items: center;
     background-color: #004a7c;
+    padding: 1rem 3rem;
+  }
+
+  .navbar > a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+  }
+
+  .navbar > a:hover {
+    cursor: pointer;
+    opacity: 90%;
   }
 
   .navbrand {
-    font-size:26px;
-    color: #FAFAFA; 
-    outline: none; 
+    cursor: pointer; 
   }
 
   .camera-anchor {
@@ -47,5 +55,9 @@
     width: 40px;  
     background-color: #FAFAFA;
     border-radius: 50%;
+  }
+
+  .div-circle:hover {
+    opacity: 90%;
   }
 </style>
