@@ -10,13 +10,17 @@
   export let lifts = []
   export let zones = []
   let showMap = false;
+  const openMap = () => {
+    showMap = true;
+    window.scrollTo(0,0);
+  }
 </script>
 
 <div class="main-container">
   <div class="map-container card" >
     <div class="map-div">
       <Map items={[...tracks, ...lifts]} />
-      <button class="oppdal-button" on:click="{() => showMap = true}">Åpne kart</button>
+      <button class="oppdal-button" on:click="{openMap}">Åpne kart</button>
     </div>
   </div>
   <div class="weather-container"><WeatherStations /></div>
@@ -28,7 +32,7 @@
     <Zone zone={zones[1]}/>
   </div>
   <div class="avalanche-container"><Avalanche /></div>
-  <div class="skipatrulje-container"><Skipatrulje  on:openMap={() => showMap = true}/></div>
+  <div class="skipatrulje-container"><Skipatrulje on:openMap={openMap}/></div>
   <FullscreenMap on:close={() => showMap = false} show={showMap} items={[...tracks, ...lifts]}/>
 </div>
 

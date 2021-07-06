@@ -18,14 +18,14 @@
 
 <style>
     .blur {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
+        bottom: 0;
+        right: 0;
         z-index: 10;
         opacity: 0.9;
         background: gray;
-        width: 100%;
-        height: 100%;
     }
     .map-container {
         position: absolute;
