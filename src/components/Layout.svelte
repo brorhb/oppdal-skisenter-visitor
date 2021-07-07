@@ -42,5 +42,6 @@
   .main-container {
     max-width: 1440px;
     margin: 0 auto 0 auto;
+    width: 100%;
   }
 </style>

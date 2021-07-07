@@ -21,6 +21,16 @@ $: activeCameras = (activeZone ? cameras
     return cam
   })
 
+/**
+ * Temp for brukertest
+ */
+$: formattedCameras = cameras.map(camera => {
+    if(camera.url.includes("${PARENT}")) {
+      camera.url = camera.url.replace("${PARENT}", window.location.host)
+    }
+    return camera
+})
+
 $: zonesWithCamera = cameras.reduce((acc, curr) => {
   const exists = acc.find((item) => item?.id === curr.zone)
   if (exists) return acc
@@ -47,6 +57,7 @@ onDestroy(() => {
 })
 
 </script>
+<!---
 <div class="flex flex-column w-100 h-100">
   {#if cameras.length > 1}
     <div class="flex flex-wrap justify-center items-center mb1">
@@ -82,3 +93,40 @@ onDestroy(() => {
     {/each}
   </div>
 </div>
+--->
+
+<div class="cameras">
+  {#each formattedCameras as camera}
+      <div>
+        <iframe
+          title={camera.title}
+          src={camera.url}
+          frameborder="0"
+          allowfullscreen="true"
+          scrolling="no"
+          height="100%"
+          width="100%"
+        ></iframe>
+      </div>
+    {/each}
+</div>
+
+<style>
+  /**
+  * Temp styling for brukertest
+  */
+  .cameras {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    min-height: 80vh;
+    margin: 50px;
+  }
+
+  .cameras > div {
+    min-height: 600px;
+    max-width: 80%;
+    margin-left: 10%;
+    margin-bottom: 50px;
+  }
+</style>
