@@ -8,7 +8,7 @@
 <div class="progress-bar">
     <div class="inner"></div>
     <div class="information number">
-        <div>{numerator}/{denominator}</div>
+        <div>{numerator} / {denominator}</div>
         <div>{description}</div>
     </div>
     <div class="circle">

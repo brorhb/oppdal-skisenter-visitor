@@ -5,6 +5,8 @@
     import config from '../../helpers/config';
     import { formatTimestamp } from '../../helpers/formatTimestamp.js'
     import { makeZoneStore } from '../../stores/ZoneStore'
+import AdminLayout from '../../components/admin/AdminLayout.svelte';
+import Alerts from './Alerts.svelte';
     let zoneStore = makeZoneStore()
     let zones = []
     let snowConditions = [];
@@ -12,7 +14,7 @@
         message: '',
         zone_id: 1
     };
-    let editItem;
+    let editItem = undefined;
     onMount(async () => {
         loadSnowConditions();
         zoneStore.subscribe((data) => {
@@ -20,7 +22,7 @@
         })
     });
 
-    async function loadSnowConditions() {
+    const loadSnowConditions = async () => {
         try {
             const result = await OFetch(
                 `${config.BASE_URL}/admin/snow-conditions`,
@@ -33,7 +35,7 @@
         }
     }
     
-    async function toggleIsLive(condition){
+    const toggleIsLive = async (condition) => {
         let conditionsToUpdate = [];
         condition.is_live = !condition.is_live;
         conditionsToUpdate.push(condition);
@@ -61,7 +63,7 @@
         toast.setToast('Endring lagret', 'success');
         
     }
-    async function createSnowCondition(){
+    const createSnowCondition = async () => {
         if(newCondition.message === '') {
             toast.setToast('Meldingen kan ikke være tom', 'error');
             return;
@@ -78,7 +80,7 @@
             toast.setToast('En feil har oppstått', 'error');
         }
     }
-    async function editSnowCondition() {
+    const editSnowCondition = async () => {
         try {
             const result = await OFetch(
                 `${config.BASE_URL}/admin/snow-conditions/${editItem.id}`,
@@ -92,7 +94,7 @@
             toast.setToast('En feil har oppstått', 'error');
         }
     }
-    async function deleteSnowCondition(condition) {
+    const deleteSnowCondition = async (condition) => {
         try {
             const result = await OFetch(
                 `${config.BASE_URL}/admin/snow-conditions/${condition.id}`, "DELETE"
@@ -109,12 +111,12 @@
 <div class="admin-snowconditions">
     {#each zones as zone}
     {#if zone.name !== "Transport"}
-    <h1 class="oppdal-title">{zone.name}</h1>
-    <table class="w-100">
-        <thead>
-            <tr class="stripe-dark">
+    <h1 class="header">Snøforhold i {zone.name}</h1>
+    <table class="admin-table">
+        <thead class="admin-table-header">
+            <tr class="admin-table-row">
                 <th>ID</th>
-                <th>Melding</th>
+                <th style="width: 580px">Melding</th>
                 <th>Dato</th>
                 <th>Live</th>
                 <th>Sone</th>
@@ -122,10 +124,10 @@
                 <th>Slett</th>
             </tr>
         </thead>
-        <tbody class="lh-copy">
+        <tbody>
         {#each snowConditions as condition}
         {#if condition.zone_id == zone.id}
-            <tr class="stripe-dark">
+            <tr class="admin-table-row">
             <th>{condition.id}</th>
             <th>{condition.message}</th>
             <th>{formatTimestamp(condition.timestamp)}</th>
@@ -142,53 +144,37 @@
     </table>
     {/if}   
     {/each}
-
-    <label for="message">Opprett ny melding om snøforhold</label>
-    <input class="oppdal-input" type="text" name="message" bind:value={newCondition.message} />
-    <select id="zone" class="oppdal-select" bind:value={newCondition.zone_id}>
-        {#each zones as zone}
-          <option value={zone.id}>{zone.name}</option>
-        {/each}
-      </select>
-    <button class="oppdal-button" on:click={createSnowCondition}>Lagre ny melding</button>
-
-    {#if editItem}
-    <div class="edit-item" >
-        <input class="oppdal-input" type="text" name="message" bind:value={editItem.message} />
-        <select id="zone" class="oppdal-select" bind:value={editItem.zone_id}>
+    <div class="admin-add">
+        <h1 class="sub-header">Opprett ny melding om snøforhold</h1>
+        <input class="oppdal-input" type="text" name="message" placeholder="Melding om snøforhold..." bind:value={newCondition.message} />
+        <select id="zone" class="oppdal-select" bind:value={newCondition.zone_id}>
             {#each zones as zone}
             <option value={zone.id}>{zone.name}</option>
             {/each}
         </select>
-        <button class="oppdal-button" on:click={editSnowCondition}>Lagre endringer</button>
-        <button class="oppdal-button" on:click={() => editItem = undefined}>Angre</button>
+        <button class="admin-button" on:click={createSnowCondition}>Lagre ny melding</button>
+    </div>
+
+    {#if editItem}
+    <div class="admin-blur" on:click="{() => editItem = undefined}"></div>
+    <div class="admin-edit">
+        <h1 class="sub-header">Endre melding om snøforhold</h1>
+        <input class="oppdal-input" type="text" name="message" bind:value={editItem.message} />
+        <select id="zone" class="oppdal-select" bind:value={editItem.zone}>
+            {#each zones as zone}
+            <option value={zone.id}>{zone.name}</option>
+            {/each}
+        </select>
+        <div>
+            <button class="admin-button" on:click={editSnowCondition}>Lagre endring</button>
+            <button class="admin-button" on:click={() => editItem = undefined}>Avbryt</button>
+        </div>
     </div>
     {/if}
 </div>
 
 <style>
-    .admin-snowconditions {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-content: center;
-        align-items: center;
-        margin: 20px;
-    }
-    .edit-item {
-        position: absolute;
-        z-index: 1000;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-content: center;
-        align-items: center;
-        top: 30%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 100px;
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-        background: #FAFAFA;
-
+    .admin-snowconditions > table{
+        margin-bottom: 5rem;
     }
 </style>

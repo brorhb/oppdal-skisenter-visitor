@@ -5,13 +5,14 @@
     let tracksStore = makeTracksStore();
     let tracks = []; 
     let transportZoneConnection = {
-        13: "Stølen -> Hovden",
-        21: "Hovden -> Stølen",
+        13: "Ådalen -> Vangslia",
+        21: "Vangslia -> Ådalen",
         24: "Hovden -> Ådalen",
         28: "Ådalen -> Hovden",
         35: "Vangslia -> Hovden",
         36: "Hovden -> Vangslia",
-        37: "Vangslia -> Ådalen"
+        37: "Stølen -> Hovden",
+
     }
     onDestroy(() => {
         if(unsubscribe) {
