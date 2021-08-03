@@ -75,8 +75,8 @@ onDestroy(() => {
     }
     .webcamera {
         /** Temp fixed width and height*/
-        width: 800px;
-        height: 600px;
+        width: 100%;
+        height: 588px;
     }
     .embed {
         position: absolute;
