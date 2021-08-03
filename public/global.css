@@ -43,8 +43,9 @@ html, body {
 }
 
 .card {
-	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  	transition: 0.3s;
+	background-color: #F4F8FF;
+    border-radius: 9px;
+    padding: 1rem;
 }
 
 * { /*As long as only one font-family is used*/
@@ -80,6 +81,16 @@ p {
 	font-size: 0.8125rem; /*13px*/
 	font-weight: normal;
 	line-height: 15px;
+}
+
+.smallbold {
+	font-family: Work Sans;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 12px;
+	line-height: 14px;
+
+	color: #004A7C;
 }
 
 button {
