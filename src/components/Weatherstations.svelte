@@ -6,8 +6,9 @@
   let weatherStore = makeWeatherStore()
   let weatherStations = []
   let rainStore = makeRainStore()
-  let rainData; 
+  let rainData;
   $: currentRainData = setCurrentRainData(rainData);
+  $: futureRainData = setFutureRainData(rainData);
 
   const unsubscribe_weather = weatherStore.subscribe(data => {
     weatherStations = data;
@@ -44,22 +45,19 @@
     }
   }
 
-  function createDate() {
+  function createDate(timeAdd = 0) {
     const today = new Date();
     const year = today.getFullYear();
     let month = today.getMonth() + 1;
     let day = today.getDate();
     let time = today.getHours();
+    if (timeAdd !== 0) {
+      time = (time + timeAdd) % 24;
+    }
     if (month < 10) month = `0${month}`;
     if (day < 10) day = `0${day}`;
     if (time < 10) time = `0${time}`;
     return `${year}-${month}-${day}T${time}:00:00Z`;
-  }
-
-  function getHour() {
-    const today = new Date();
-    let time = `${today.getHours()}:00`;
-    return time;
   }
 
 function setCurrentRainData(rainData) {
@@ -69,140 +67,148 @@ function setCurrentRainData(rainData) {
   } else {
     return [];
   };
+};
+
+function setFutureRainData(rainData) {
+  let futureRainDataArray = []
+  if (rainData.length > 0) {
+    let currentIndex = rainData.findIndex(item => item.time == `${createDate()}`);
+    for (let i=currentIndex+1; i<=currentIndex+5; i++) { //Show weather for next five hours 
+      if (i < rainData.length) {
+        futureRainDataArray.push(rainData[i].data)
+      }
+    }
+    return futureRainDataArray;
+  } else {
+    return [];
+  };
 }
 
-function findWeatherIcon() {
-  if (currentRainData) {
-    const weatherType = currentRainData.next_1_hours.summary.symbol_code;
+function findWeatherIcon(rainDataItem) {
+  if (rainDataItem) {
+    const weatherType = rainDataItem.next_1_hours.summary.symbol_code;
     return "../../assets/" + weatherType + ".svg";
   };
 }
 </script>
 
-<div class="card weather-card">
-  <div class="header weather-header">Værstatus i løypene</div>
-  <div class="weather-wrapper">
-    <div class="card-size-limit">
-      <div>
-        <div class="subsub-header">Oppdal</div>
-        <div class="sub-text station-time">{getHour()}</div>
-      </div>
-      <div class="station-middle-oppdal">
-        {#if rainData.length}
-          <div><img src={findWeatherIcon()} alt="Værikon"></div>
-        {/if}
-        <div class="information station-forecast-oppdal">
-            {#if rainData.length}
-              <div>{`${currentRainData.instant.details.air_temperature} ${decodeURI('%C2%B0')}`}</div>
-              <div>{`${currentRainData.next_1_hours.details.precipitation_amount} mm`}</div>
-            {/if}
-        </div>
-      </div>
-      <div class="information wind-oppdal">
-        {#if rainData.length}
-          <span>{`${currentRainData.instant.details.wind_speed} m/s`}</span>
-          <span class="wind-direction-oppdal">{getWindDirection(currentRainData.instant.details.wind_from_direction)}</span>
-        {/if}
-      </div>
-    </div>
-    {#each weatherStations as station}
-      {#if !station.error}
-        <div class="station-card-border">
-          <div class="card-size-limit">
-            <div class="station-header">
-              <span class="subsub-header">{station.stationName.split(" ")[0].replace("_", "")}</span>
-              <span class="sub-text station-time">{station.dateTime.split(" ")[1].substring(0, station.dateTime.split(" ")[1].length - 3)}</span>
-            </div>
-            <div class="station-middle">
-              <div class="information station-middle-section">
-                  <i class="fas fa-thermometer-half blue-icon fa-fw"></i>
-                  <span>{station.temperature} {decodeURI('%C2%B0')}</span>
-              </div>
-              <div class="information station-middle-section">
-                <i class="fas fa-wind blue-icon fa-fw"></i>
-                <span>{station.wind.speed} {station.wind.unit}</span>
-              </div>
-              <div class="information station-middle-section">
-                <i class="fas fa-arrows-alt grey-icon fa-fw"></i>
-                <span class="wind-direction">{getWindDirection(station.wind.direction)}</span>
-              </div>
-            </div>
-          </div>
+<div class="weather">
+
+  <div class="card weather-card">
+    <div class="paragraph-bold">Værprediksjon</div>
+    <div class="current-weather">
+      {#if rainData.length}
+        <div class="current-weather-header"><h4>Oppdal skisenter</h4></div>
+        <div class="current-weather-icon"><img src={findWeatherIcon(currentRainData)} alt="Værikon"></div>
+        <div class="current-weather-parameters">
+          <h2>{`${currentRainData.instant.details.air_temperature} ${decodeURI('%C2%B0')}C`}</h2>
+          <div class="small-info">{`${currentRainData.next_1_hours.details.precipitation_amount} mm`}</div>
+          <div class="small-info">{`${currentRainData.instant.details.wind_speed} m/s ${getWindDirection(currentRainData.instant.details.wind_fr).toLowerCase()}`}</div>
         </div>
       {/if}
+    </div>
+    <div class="future-weather">
+      {#if futureRainData.length}
+        {#each futureRainData as futureRainDataItem, i}
+          <div class="future-weather-card">
+            <div class="small-info">{"kl. " + createDate(i+1).split("T")[1].split(":")[0]}</div>
+            <div class="future-weather-icon"><img src={findWeatherIcon(futureRainDataItem)} alt="Værikon"></div>
+            <div class="paragraph-bold">{`${futureRainDataItem.instant.details.air_temperature} ${decodeURI('%C2%B0')}C`}</div>
+            <div class="small-info">{`${futureRainDataItem.next_1_hours.details.precipitation_amount} mm`}</div>
+          </div>
+        {/each}
+      {/if}
+    </div>
+  </div>
+
+  <div class="card snow-card">
+    <div class="paragraph-bold">Snøforhold</div>
+    <p class="">Nydelig føre med nysnø og pudder. Se opp for skred.</p>
+  </div>
+
+  <div class="card">
+    <div class="paragraph-bold">Værstatus i løypene</div>
+    <div class="stations-container">
+      {#each weatherStations as station}
+        {#if !station.error}
+          <div class="weather-station">
+            <h2>{`${station.temperature} ${decodeURI('%C2%B0')}C`}</h2>
+            <div class="big-paragraph-bold">
+              {#if station.stationName.split("_")[0] == "Vangshøa"} Topp - Vangslia
+              {:else if station.stationName.split("_")[0] == "Vangslia"} Bunn - Vangslia
+              {:else} Bunn - Stølen
+              {/if}
+            </div>
+            <div class="small-info">{station.wind.speed} {station.wind.unit.toLowerCase()}</div>
+            <div class="small-info">{`Målt: ${station.dateTime.split(" ")[1].substring(0, station.dateTime.split(" ")[1].length - 3)}`}</div>
+          </div>
+        {/if}
     {/each}
+    </div>
   </div>
 </div>
 
 <style>
-  .weather-card {
+  .weather {
     height: 100%;
-  }
-  .weather-header {
-    color: #004a7c;
-    padding: 1rem 0;
-  }
-  .weather-wrapper {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    justify-content: space-evenly;
-  }
-  .card-size-limit {
-    max-width: 15rem;
-    padding: 1rem;
-  }
-  .station-time {
-    color: #BABABA;
-    text-align: center;
-    margin-left: 0.4rem;
+    max-width: 380px;
   }
 
-  .station-middle-oppdal {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
+  .current-weather {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items:flex-end;
+    padding-top: 1rem; 
   }
-  .station-forecast-oppdal {
-    justify-self: end;
+  .current-weather-header {
+    max-width: 5rem;
+    padding-bottom: 1rem;
+    padding-right: 0.5rem;
   }
-  .wind-oppdal {
-    text-align: center;
+  .current-weather-icon {
+    width: 5.5rem;
   }
-  .wind-direction-oppdal {
-    color: #BABABA;
-    margin-left: 0.5rem;
+  .current-weather-parameters {
+    padding-left: 1.5rem;
+    padding-bottom: 1rem;
   }
 
-  .station-card-border {
+  .future-weather {
+    border-top: 1px solid #A0B2DC;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .future-weather-card {
     padding-top: 1rem;
-    border-left: solid #EFEFEF;
-    height: 90%;
-  }
-  .station-header {
     text-align: center;
   }
-  .station-middle {
+  .future-weather-icon {
+    padding-top: 0.5rem;
+    width: 2rem;
+    margin: 0 auto 0 auto;
+  }
+  .snow-card {
+    margin: 1rem 0;
+  }
+
+  .stations-container {
     display: grid;
-    grid-template-columns: 1fr;
-    align-items: center;
-    padding-left: 20%;
-    padding-top: 0.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
   }
-  .station-middle-section {
-    justify-self: left;
-    padding-top: 0.5rem;
-  }
-  .wind-direction {
-    color: #BABABA;
-  }
-  .station-middle-section > i {
-    padding-right: 1rem;
-  }
-  .blue-icon {
-    color: #004a7c;
-  }
-  .grey-icon {
-    color: #BABABA;
+  .weather-station:last-child {
+    grid-column-start: 2;
   }
   
+  .weather-station {
+    max-width: 15rem;
+    padding-top: 1rem;
+    padding-left: 1rem;
+  }
+
+  .weather-station:first-child {
+    padding-left: 0;
+  }
 </style>
