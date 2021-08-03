@@ -1,6 +1,5 @@
 <script>
   import { Route } from 'svelte-router-spa'
-  import Footer from './Footer.svelte'
   import Navbar from './Navbar.svelte'
   import Alert from './Alert.svelte'
   import { makeAlertStore } from '../stores/AlertStore'
@@ -20,17 +19,26 @@
     unsubscribe = alertStore.subscribe((data) => alerts = data.filter(alert => alert.is_live))
   })
 </script>
+
 <div class="layout">
-  <Navbar />
-  <div class="main-container">
-  {#each alerts as alert}
-    <Alert alert={alert}/>
-  {/each}
-  <section>
+  <div class="container">
+    <Navbar />
+  </div>
+  <div class="banner">
+    <div class="container">
+      <h3>Siste løypestatus</h3>
+      <h1>Forhold i løypene akkurat nå</h1>
+    </div>
+  </div>
+  <div class="container">
+    {#each alerts as alert}
+      <Alert alert={alert}/>
+    {/each}
+  </div>
+
+  <section class="container">
     <Route {currentRoute}  {params} />
   </section>
-</div>
-  <Footer />
 </div>
 
 <style>
@@ -39,9 +47,17 @@
     display: flex;
 	  flex-direction: column;
   }
-  .main-container {
-    max-width: 1440px;
+  .container {
+    max-width: 1100px;
     margin: 0 auto 0 auto;
     width: 100%;
+  }
+  .banner {
+    background-color: #F4F8FF;
+    width: 100%;
+    min-height: 150px;  
+    display: flex;
+    align-items: center;  
+    margin: 2rem 0 2rem 0;
   }
 </style>
