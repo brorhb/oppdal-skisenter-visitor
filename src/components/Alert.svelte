@@ -2,23 +2,24 @@
     export let alert = {};
 </script>
 
-<div class="paragraph-big alert">
-    <i class="fas fa-exclamation"></i> {alert.message}
+<div class="alert">
+    <i class="fas fa-exclamation"></i> 
+    <div>
+        <h3>Beskjed:</h3>
+        <p>{alert.message}</p>
+    </div>
 </div>
 
 <style>
     .alert {
         display: flex;
-        justify-content: center;
         align-items: center;
-        text-align: center;
-        background-color: #F5E8E8;
-        color: #004A7C;
-        padding: 1rem;
-        margin: 1rem 3rem 0 3rem;
+        border-radius: 9px;
+        min-height: 67px;
+        background-color: #FFF0E4;
     }
     .alert > i {
-        margin-right: 10px;
-        font-size: 32px;
+        font-size: 39px;
+        margin: 0 22px 0 22px;
     }
 </style>
