@@ -52,8 +52,8 @@ html, body {
 
 .card {
 	background-color: #F4F8FF;
-	border-radius: 12px;
-	padding: 1rem;
+    border-radius: 9px;
+    padding: 1rem;
 }
 
 * { /*As long as only one font-family is used*/
@@ -64,6 +64,7 @@ h1, h2, h3, h4, p {
 	font-family: 'Work Sans';
 	font-style: normal;
 	margin: 0;
+	color: #2C3B6C;
 }
 
 h1 {
@@ -97,6 +98,15 @@ p {
 	line-height: 15px;
 }
 
+.smallbold {
+	font-family: Work Sans;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 12px;
+	line-height: 14px;
+
+	color: #004A7C;
+}
 .small-info {
 	font-size: 0.75rem; /*12px*/
 	font-weight: 300;

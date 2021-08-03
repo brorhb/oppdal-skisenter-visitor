@@ -39,16 +39,18 @@
 
 <svelte:window bind:innerWidth={innerWidth} />
 <div class="wrapper">
+  <Large tracks={tracks} lifts={lifts} zones={zones}/>
+  <!---
   {#if innerWidth >= 990}
     <Large tracks={tracks} lifts={lifts} zones={zones}/>
   {:else}
     <Small tracks={tracks} lifts={lifts} activeZone={zones} />
   {/if}
+-->
 </div>
 
 
 <style>
   .wrapper {
-    margin: 2rem 3rem;
   }
 </style>

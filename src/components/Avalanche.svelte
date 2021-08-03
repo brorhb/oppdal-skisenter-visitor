@@ -14,10 +14,10 @@
     });
         
     onMount(async () => {
-        avalancheStore.subscribe((data) => {
+        unsubscribe = avalancheStore.subscribe((data) => {
             warnings = data
         })
-    })
+    });
 
     const color = (level) => {
         switch (level) {
@@ -50,94 +50,96 @@
     }
 </script>
 
-<div class="avalanche card card-hover">
-    {#if warnings.length > 0}
-    <div class="avalanche-info">
-        <div class={`avalanche-icon ${color(warnings[4].DangerLevel)}`}>
-            <div>{warnings[0].DangerLevel}</div>
-            <div>{dangerLevelToText[warnings[4].DangerLevel]}</div>
+<div class="avalanche card">
+    {#if warnings.length > 0} <!-- If statement added because accessing warnings[4] (today) might happen before warnings are loaded -->
+    <div class="avalanche-header smallbold">Skredvarsel</div>
+    <div class="avalanche-today">
+        <div class={`avalanche-big-circle ${color(warnings[4].DangerLevel)}`}>
+            <h3>{warnings[4].DangerLevel}</h3>
+            <p>{dangerLevelToText[warnings[4].DangerLevel]}</p>
         </div>
-        <div class="avalanche-text">
-            <div class="header avalanche-header">
-                Snøskredvarsel for Trollheimen, {formatTimestamp(warnings[4].PublishTime)}
-            </div>
-            <div class="paragraph-big avalanche-message">
-                {warnings[0].MainText}
-            </div>
-        </div>
-
-    </div>
-    <div class="avalanche-dates">
-        {#each warnings as warning}
         <div>
-            <div class={`avalanche-dangerlevel ${color(warning.DangerLevel)}`}>{warning.DangerLevel}</div>
-            <div class={`information ${isToday(warning.PublishTime) ? `active`:null}`}>{formatTimestamp(warning.PublishTime)}</div>
+            <h3>Snøskredvarsel for Trollheimen {formatTimestamp(warnings[4].PublishTime)}</h3>
+            <p>{warnings[0].MainText}</p>
         </div>
-        {/each}
     </div>
-    <div class="subsub-header avalanche-footer">
-        Varsler fra Snøskredvarslingen i Norge og <a href="https://varsom.no">www.varsom.no</a>
+    <div class="avalanche-border"></div>
+    <div class="avalanche-week">
+        <h3>Varsel til uka</h3>
+        <p>Varsler fra Snøskredvarslingen i Norge og www.varsom.no</p>
+        <div class="avalanche-circle-container">
+            {#each warnings as warning}
+            <div class={isToday(warning.PublishTime) ? `active`:null}>
+                <div class={`avalanche-small-circle ${color(warning.DangerLevel)}`}>
+                    <h3>{warning.DangerLevel}</h3>
+                </div>
+                <p>{formatTimestamp(warning.PublishTime)}</p>
+            </div>
+            {/each}
+        </div>
     </div>
     {/if}
 </div>
 
 <style>
     .avalanche {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        color: #004A7C;
-        padding: 1rem;
-    }
-    .avalanche-info {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: center;
-        margin: 10px 0 10px 0;
-    }
-    .avalanche-icon {
-        min-width: 80px;
-        min-height: 100px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        display: grid;
+        grid-template-areas: 
+        "header header header"
+        "today border week";
+        min-height: 200px;
+        max-width: 850px;
     }
     .avalanche-header {
-        margin-bottom: 6px;
+        grid-area: header;
     }
-    .avalanche-text {
+    .avalanche-today {
+        grid-area: today;
+        display: flex;
+        align-items: center;
+        margin-right: 1rem;
+    }
+    .avalanche-week {
+        grid-area: week;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: 20px;
     }
-    .avalanche-dangerlevel {
+    .avalanche-big-circle {
+        min-width: 98px;
+        min-height: 98px;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 40px;
-        min-width: 32px;
-        margin-bottom: 0.2rem;
+        border-radius: 50%;
+        margin-right: 1rem;
     }
-    .avalanche-dates {
+    .avalanche-small-circle {
+        min-width: 36px;
+        min-height: 36px;
+        border-radius: 50%;
         display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
+        align-items: center;
+        justify-content: center;
+    }
+    .avalanche-circle-container {
+        display: flex;
+        justify-content: space-between;
         text-align: center;
-    }
-    .avalanche-footer {
-        display: flex;
-        justify-content: flex-end;
-        padding: 10px;
-    }
-    .avalanche-footer > a {
-        padding-left: 5px;
+        margin-top: 1rem;
     }
     .active {
-        border-bottom: 1px solid #004A7C;
+        background: #EAEEF9;
+        border-radius: 9px;
     }
+    .avalanche-border {
+        grid-area: border;
+        height: 100%;
+        border: 0.840336px solid #A0B2DC;
+        margin-right: 1rem; 
+    }
+
     .bg-green {
         color: #fff;
         background: #75b100;
@@ -162,5 +164,22 @@
     .bg-light-gray {
         color: #fff;
         background: #AAAAAA;
+    }
+    @media only screen and (max-width: 700px) {
+        .avalanche {
+            grid-template-areas: 
+            "header"
+            "today"
+            "border"
+            "week";
+        }
+        .avalanche-border {
+            height: 0;
+            width: 100%;
+            margin: 1rem 0 1rem 0;
+        }
+        .avalanche-header {
+            margin: 0 0 1rem 0;
+        }
     }
 </style>
