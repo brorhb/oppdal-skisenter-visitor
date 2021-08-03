@@ -79,69 +79,89 @@ function findWeatherIcon() {
 }
 </script>
 
-<div class="card weather-card">
-  <div class="header weather-header">Værstatus i løypene</div>
-  <div class="weather-wrapper">
-    <div class="card-size-limit">
-      <div>
-        <div class="subsub-header">Oppdal</div>
-        <div class="sub-text station-time">{getHour()}</div>
-      </div>
-      <div class="station-middle-oppdal">
-        {#if rainData.length}
-          <div><img src={findWeatherIcon()} alt="Værikon"></div>
-        {/if}
-        <div class="information station-forecast-oppdal">
-            {#if rainData.length}
-              <div>{`${currentRainData.instant.details.air_temperature} ${decodeURI('%C2%B0')}`}</div>
-              <div>{`${currentRainData.next_1_hours.details.precipitation_amount} mm`}</div>
-            {/if}
+<div class="weather-cards">
+  <div class="card">
+    <div class="header">Oppdal i dag</div>
+    <div class="current-weather">
+      {#if rainData.length}
+        <div class="weather-icon-large"><img src={findWeatherIcon()} alt="Værikon"></div>
+        <div>
+          <div>{`${currentRainData.instant.details.air_temperature} ${decodeURI('%C2%B0')}`}</div>
+          <div>{`${currentRainData.next_1_hours.details.precipitation_amount} mm`}</div>
+          <div>{`${currentRainData.instant.details.wind_speed} m/s ${getWindDirection(currentRainData.instant.details.wind_fr).toLowerCase()}`}</div>
         </div>
-      </div>
-      <div class="information wind-oppdal">
-        {#if rainData.length}
-          <span>{`${currentRainData.instant.details.wind_speed} m/s`}</span>
-          <span class="wind-direction-oppdal">{getWindDirection(currentRainData.instant.details.wind_from_direction)}</span>
-        {/if}
+      {/if}
+      <div class="information">
+        
       </div>
     </div>
-    {#each weatherStations as station}
-      {#if !station.error}
-        <div class="station-card-border">
-          <div class="card-size-limit">
-            <div class="station-header">
-              <span class="subsub-header">{station.stationName.split(" ")[0].replace("_", "")}</span>
-              <span class="sub-text station-time">{station.dateTime.split(" ")[1].substring(0, station.dateTime.split(" ")[1].length - 3)}</span>
-            </div>
-            <div class="station-middle">
-              <div class="information station-middle-section">
-                  <i class="fas fa-thermometer-half blue-icon fa-fw"></i>
-                  <span>{station.temperature} {decodeURI('%C2%B0')}</span>
+    <hr>
+    <div>Other weather</div>
+    </div>
+  </div>
+
+
+  
+  <div class="card weather-card">
+    <div class="header weather-header">Oppdal i dag</div>
+    <div class="weather-wrapper">
+      <div class="card-size-limit">
+        <div>
+          <div class="subsub-header">Oppdal</div>
+          <div class="sub-text station-time">{getHour()}</div>
+        </div>
+        <div class="station-middle-oppdal">
+          {#if rainData.length}
+            <div><img src={findWeatherIcon()} alt="Værikon"></div>
+          {/if}
+          <div class="information station-forecast-oppdal">
+              {#if rainData.length}
+                <div>{`${currentRainData.instant.details.air_temperature} ${decodeURI('%C2%B0')}`}</div>
+                <div>{`${currentRainData.next_1_hours.details.precipitation_amount} mm`}</div>
+              {/if}
+          </div>
+        </div>
+        <div class="information wind-oppdal">
+          {#if rainData.length}
+            <span>{`${currentRainData.instant.details.wind_speed} m/s`}</span>
+            <span class="wind-direction-oppdal">{getWindDirection(currentRainData.instant.details.wind_from_direction)}</span>
+          {/if}
+        </div>
+      </div>
+      {#each weatherStations as station}
+        {#if !station.error}
+          <div class="station-card-border">
+            <div class="card-size-limit">
+              <div class="station-header">
+                <span class="subsub-header">{station.stationName.split(" ")[0].replace("_", "")}</span>
+                <span class="sub-text station-time">{station.dateTime.split(" ")[1].substring(0, station.dateTime.split(" ")[1].length - 3)}</span>
               </div>
-              <div class="information station-middle-section">
-                <i class="fas fa-wind blue-icon fa-fw"></i>
-                <span>{station.wind.speed} {station.wind.unit}</span>
-              </div>
-              <div class="information station-middle-section">
-                <i class="fas fa-arrows-alt grey-icon fa-fw"></i>
-                <span class="wind-direction">{getWindDirection(station.wind.direction)}</span>
+              <div class="station-middle">
+                <div class="information station-middle-section">
+                    <i class="fas fa-thermometer-half blue-icon fa-fw"></i>
+                    <span>{station.temperature} {decodeURI('%C2%B0')}</span>
+                </div>
+                <div class="information station-middle-section">
+                  <i class="fas fa-wind blue-icon fa-fw"></i>
+                  <span>{station.wind.speed} {station.wind.unit}</span>
+                </div>
+                <div class="information station-middle-section">
+                  <i class="fas fa-arrows-alt grey-icon fa-fw"></i>
+                  <span class="wind-direction">{getWindDirection(station.wind.direction)}</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      {/if}
-    {/each}
+        {/if}
+      {/each}
+    </div>
   </div>
-</div>
 
 <style>
-  .weather-card {
+  .weather-cards {
     height: 100%;
   }
-  .weather-header {
-    color: #004a7c;
-    padding: 1rem 0;
-  }
+
   .weather-wrapper {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -157,11 +177,21 @@ function findWeatherIcon() {
     margin-left: 0.4rem;
   }
 
-  .station-middle-oppdal {
+  .current-weather {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
+    width: 60%;
   }
+
+  .weather-icon-large {
+    width: 80px;
+    justify-content: center;
+
+  }
+
+
+
   .station-forecast-oppdal {
     justify-self: end;
   }
