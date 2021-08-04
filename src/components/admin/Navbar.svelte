@@ -25,6 +25,7 @@
         align-content: space-around;
         justify-content: center;
         align-items: flex-end;
+        overflow: scroll;
     }
     .admin-nav > div {
         min-width: 6rem;
@@ -39,5 +40,10 @@
     }
     .active {
         border-bottom: 1px solid #fff;
+    }
+    @media only screen and (max-width: 1000px) {
+        .admin-nav {
+            justify-content: left;
+        }
     }
 </style>
