@@ -3,16 +3,14 @@
     import { onDestroy, onMount } from 'svelte'
     import OFetch from '../../helpers/fetch';
     import config from '../../helpers/config';
-    import { formatTimestamp } from '../../helpers/formatTimestamp.js'
     import { makeZoneStore } from '../../stores/ZoneStore'
-import AdminLayout from '../../components/admin/AdminLayout.svelte';
-import Alerts from './Alerts.svelte';
+    import get_publish_date from '../../helpers/publishedDate';
+
     let zoneStore = makeZoneStore()
     let zones = []
     let snowConditions = [];
     let newCondition = {
-        message: '',
-        zone_id: 1
+        message: ''
     };
     let editItem = undefined;
     onMount(async () => {
@@ -106,56 +104,52 @@ import Alerts from './Alerts.svelte';
             toast.setToast('En feil har oppstått', 'error');
         }
     }
+    function get_char_left() {
+        var textAreaLength = this.value.length;
+        var charactersLeft = 150 - textAreaLength;
+        var count = document.getElementById('remain-count');
+        count.innerHTML = "Bokstaver igjen: " + charactersLeft;
+    }
 </script>
 
+
+<div class="admin-add">
+    <h1 class="sub-header">Oppdater snøforhold</h1>
+    <p>Snøforhold publiseres på oppdalskisenter.no/loypestatus</p>
+    <textarea class="oppdal-input" type="text" name="message" placeholder="Skriv litt om snøforhold her (max 150 tegn)" maxlength="150" on:keypress={get_char_left} bind:value={newCondition.message}></textarea>
+    <p id="remain-count"></p>
+    <button class="admin-button" on:click={createSnowCondition}>Oppdater</button>
+</div>
+
+{#if snowConditions}
 <div class="admin-snowconditions">
-    {#each zones as zone}
-    {#if zone.name !== "Transport"}
-    <h1 class="header">Snøforhold i {zone.name}</h1>
+    <h3>Meldinger</h3>
     <table class="admin-table">
         <thead class="admin-table-header">
             <tr class="admin-table-row">
-                <th>ID</th>
-                <th style="width: 580px">Melding</th>
                 <th>Dato</th>
+                <th style="width: 580px">Melding</th>
                 <th>Live</th>
-                <th>Sone</th>
                 <th>Endre</th>
                 <th>Slett</th>
             </tr>
         </thead>
         <tbody>
         {#each snowConditions as condition}
-        {#if condition.zone_id == zone.id}
             <tr class="admin-table-row">
-            <th>{condition.id}</th>
+            <th>{get_publish_date(condition.timestamp)}</th>
             <th>{condition.message}</th>
-            <th>{formatTimestamp(condition.timestamp)}</th>
-            <th>
-                <input on:change="{() => toggleIsLive(condition)}" bind:checked={condition.is_live} type="checkbox"/>
-            </th>
-            <th>{zones[condition.zone_id-1] ? zones[condition.zone_id-1].name : condition.zone_id}</th>
+            <th><input on:change="{() => toggleIsLive(condition)}" bind:checked={condition.is_live} type="checkbox"/></th>
             <th on:click="{() => editItem = condition}"><i class="fas fa-edit"></i></th>
             <th on:click="{() => deleteSnowCondition(condition)}"><i class="fas fa-trash-alt"></i></th>
             </tr>
-        {/if}
         {/each}
         </tbody>
     </table>
-    {/if}   
-    {/each}
-    <div class="admin-add">
-        <h1 class="sub-header">Opprett ny melding om snøforhold</h1>
-        <input class="oppdal-input" type="text" name="message" placeholder="Melding om snøforhold..." bind:value={newCondition.message} />
-        <select id="zone" class="oppdal-select" bind:value={newCondition.zone_id}>
-            {#each zones as zone}
-            <option value={zone.id}>{zone.name}</option>
-            {/each}
-        </select>
-        <button class="admin-button" on:click={createSnowCondition}>Lagre ny melding</button>
-    </div>
+</div>
+{/if}
 
-    {#if editItem}
+{#if editItem}
     <div class="admin-blur" on:click="{() => editItem = undefined}"></div>
     <div class="admin-edit">
         <h1 class="sub-header">Endre melding om snøforhold</h1>
@@ -170,8 +164,8 @@ import Alerts from './Alerts.svelte';
             <button class="admin-button" on:click={() => editItem = undefined}>Avbryt</button>
         </div>
     </div>
-    {/if}
-</div>
+{/if}
+
 
 <style>
     .admin-snowconditions > table{
