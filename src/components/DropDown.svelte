@@ -1,12 +1,13 @@
 <script>
+  import { selected_zone } from '../stores/SelectedZoneStore';
   import { onMount } from 'svelte';
-  export let selected_option;
   export let options;
   export let zones;
-  export let lifts; 
+  export let lifts;
+  
+  let selected_option = $selected_zone;
   let init_option = selected_option;
   let root;
-
 
   onMount(async () => {
     if (options) {
@@ -20,11 +21,10 @@
             if (!this.classList.contains('selected')) {
                 this.parentNode.querySelector('.custom-option.selected').classList.remove('selected');
                 this.classList.add('selected');
-                
             };
         });
       };
-    }
+    };
   });
 
   window.addEventListener('click', function(e) {
@@ -32,16 +32,16 @@
       const select = document.querySelector('.custom-select')
       if (!select.contains(e.target)) {
           select.classList.remove('open');
-      }
-    }
+      };
+    };
   });
 
-  function get_status(selected_zone) {
-    if (selected_zone) {
-      if (selected_zone == "Alle" || selected_zone == "Transport") {
+  function get_status(chosen_zone) {
+    if (chosen_zone) {
+      if (chosen_zone == "Alle" || chosen_zone == "Transport") {
         return "";
       } else {
-        let zoneID = (zones.find(zone => zone.name == selected_zone)).id;
+        let zoneID = (zones.find(zone => zone.name == chosen_zone)).id;
         let lifts_in_zone = lifts.filter(lift => lift.zone == zoneID);
         for (var i=0; i<lifts_in_zone.length; i++) {
           if (lifts_in_zone[i].status == "open") {
@@ -54,19 +54,30 @@
       return "Ukjent status";
     };
   }
+
+  function handleClick(option) {
+    selected_option = option;
+    selected_zone.update(value => value = selected_option);
+  };
 </script>
 
 <div bind:this={root}>
   {#if options} 
     <div class="custom-select-wrapper">
       <div class="custom-select">
-          <div class="custom-select__trigger"><div class="mobile-h3 selected-text">{selected_option !== "Vangslia" ? selected_option : init_option}</div>
+          <div class="custom-select__trigger"><div class="mobile-h3 selected-text">{selected_option}</div>
               <div class="arrow"></div>
           </div>
           <div class="custom-options">
-              <div class="custom-option selected paragraph" data-value={init_option} on:click={() => selected_option = init_option}><div>{init_option}</div><div style={get_status(init_option) == "Åpen" ? "color: #2FC93E" : "color: #A0B2DC"}>{get_status(init_option)}</div></div>
+              <div class="custom-option selected paragraph" data-value={init_option} on:click={() => handleClick(init_option)}><div>{init_option}</div><div style={get_status(init_option) == "Åpen" ? "color: #2FC93E" : "color: #A0B2DC"}>{get_status(init_option)}</div></div>
               {#each options as option}
-                <div class="custom-option paragraph" data-value={option} on:click={() => selected_option = option}><div>{option}</div><div style={get_status(option) == "Åpen" ? "color: #2FC93E" : "color: #A0B2DC"}>{get_status(option)}</div></div>
+                {#if option == "Transport"}
+                  <div class="custom-option paragraph" data-value={option} on:click={() => handleClick(option)}><div>Vis løyper mellom skiområdene</div></div>
+                {:else if option == "Alle"}
+                  <div class="custom-option paragraph" data-value={option} on:click={() => handleClick(option)}><div>Vis alle løyper</div></div>
+                {:else}
+                  <div class="custom-option paragraph" data-value={option} on:click={() => handleClick(option)}><div>{option}</div><div style={get_status(option) == "Åpen" ? "color: #2FC93E" : "color: #A0B2DC"}>{get_status(option)}</div></div>
+                {/if}
               {/each}
           </div>
       </div>
@@ -156,7 +167,6 @@
 	font-weight: normal;
 	line-height: 15px;
 }
-
 
 .arrow {
   position: relative;

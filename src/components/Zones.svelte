@@ -1,4 +1,6 @@
 <script>
+    import { selected_zone } from '../stores/SelectedZoneStore';
+    import { map_focus } from '../stores/MapFocusStore';
     import { makeTracksStore } from '../stores/TrackStore';
     import { makeLiftsStore } from '../stores/LiftsStore';
     import { makeZoneStore } from '../stores/ZoneStore';
@@ -7,7 +9,6 @@
     import { difficulty, difficultyIntToColor, difficultyToInt } from '../helpers/difficulty';
 
     let unsubscribe;
-    let selected_zone = "Vangslia";
 
     let trackStore = makeTracksStore();
     let tracks = [];
@@ -17,9 +18,9 @@
     let zones = [];
 
     $: dropdownOptions = setDropdownOptions(zones);
-    $: activeZoneID = updateActiveZone(selected_zone, zones);
-    $: tracksInZone = updateTracksZone(activeZoneID, tracks); //Change to store so it can be accessed by map in index/large
-    $: liftsInZone = updateLiftsZone(activeZoneID, lifts); //Change to store so it can be accessed by map in index/large
+    $: activeZoneID = updateActiveZone($selected_zone, zones);
+    $: tracksInZone = updateTracksZone(activeZoneID, tracks); 
+    $: liftsInZone = updateLiftsZone(activeZoneID, lifts);
 
     onMount(async () => {
         unsubscribe = trackStore.subscribe(data => {
@@ -31,6 +32,8 @@
         unsubscribe = zoneStore.subscribe(data => {
             zones = data;
         });
+
+        
     });
 
     onDestroy(() => {
@@ -80,6 +83,14 @@
         };
         return liftsInZone;
     };
+
+    function activateFocus() {
+        map_focus.update(name => name = this.querySelector('.attraction-name').innerText.split(" ")[0]);
+    }
+
+    function deactivateFocus() {
+        map_focus.update(name => name = "");
+    }
 </script> 
 
 <div class="card zones-card"> <!-- ADD GRID TO zones-card and use 2/3 rows-->
@@ -88,20 +99,26 @@
         <div class="smallbold">Tilgjengelige løyper</div>
         <div class="small-info zones-dropdown-header">Skiområde:</div>
         {#if dropdownOptions.length > 0}
-            <DropDown bind:selected_option={selected_zone} options={dropdownOptions} zones={zones} lifts={lifts} />
+            <DropDown options={dropdownOptions} zones={zones} lifts={lifts} />
         {/if}
     </div>
 
     <div class="zones-card-bottom">
         {#if tracksInZone.length > 0}
             <div class="lift-track-card">
-                <p class="paragraph-bold">Løyper i {selected_zone}</p>
+                {#if $selected_zone == "Alle"}
+                    <p class="paragraph-bold">Alle løyper</p>
+                {:else if $selected_zone == "Transport"}
+                    <p class="paragraph-bold">Alle løyper mellom skiområdene</p>
+                {:else}
+                    <p class="paragraph-bold">Løyper i {$selected_zone}</p> 
+                {/if}
                 <div class="lift-track-container">
                     <div class="scroll-container">
                         {#each tracksInZone as track}
-                            <div class="lift-track-single">
+                            <div class="lift-track-single" on:mouseenter={activateFocus} on:mouseleave={deactivateFocus}>
                                 <div>
-                                    <p class="paragraph">{`${track.name} (${track.id}) `}</p>
+                                    <p class="paragraph attraction-name">{`${track.name} (${track.id}) `}</p>
                                     <span class="paragraph-bold" style={`color: ${difficultyIntToColor[difficultyToInt[track.difficulty]]}`}>{(difficulty[track.difficulty]).toLowerCase()}</span>
                                 </div>
                                 <div>
@@ -122,13 +139,17 @@
 
         {#if liftsInZone.length > 0}
             <div class="lift-track-card">
-                <p class="paragraph-bold">Heiser i {selected_zone}</p>
+                {#if $selected_zone == "Alle"}
+                    <p class="paragraph-bold">Alle heiser</p>
+                {:else}
+                    <p class="paragraph-bold">Heiser i {$selected_zone}</p> 
+                {/if}
                 <div class="lift-track-container">
                     <div class="scroll-container">
                         {#each liftsInZone as lift}
-                            <div class="lift-track-single">
+                            <div class="lift-track-single" on:mouseenter={activateFocus} on:mouseleave={deactivateFocus}>
                                 <div>
-                                    <p class="paragraph">{`${lift.name} (${(lift.map_name).toUpperCase()})`}</p>
+                                    <p class="paragraph attraction-name">{`${lift.name} (${(lift.map_name).toUpperCase()})`}</p>
                                 </div>
                                 <div>
                                     {#if lift.status === "closed"}
@@ -184,6 +205,10 @@
     }
     .lift-track-single:last-child {
         border-bottom: none;
+    }
+    .lift-track-single:hover {
+        background-color: #D7E3FE;
+        cursor: pointer;
     }
     .paragraph {
         display: inline;
