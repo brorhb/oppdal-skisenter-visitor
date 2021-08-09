@@ -1,12 +1,16 @@
 <script>
   import { makeRainStore } from '../stores/RainStore'
   import { makeWeatherStore } from '../stores/WeatherStore'
+  import { makeSnowConditionsStore } from '../stores/SnowConditionsStore';
   import { onDestroy } from 'svelte';
+  import get_publish_date from '../helpers/publishedDate';
 
-  let weatherStore = makeWeatherStore()
-  let weatherStations = []
-  let rainStore = makeRainStore()
+  let weatherStore = makeWeatherStore();
+  let weatherStations = [];
+  let rainStore = makeRainStore();
   let rainData;
+  let snowConditionStore = makeSnowConditionsStore();
+  let snowCondition;
   $: currentRainData = setCurrentRainData(rainData);
   $: futureRainData = setFutureRainData(rainData);
 
@@ -18,9 +22,14 @@
     rainData = data;
   });
 
+  const unsubscribe_snowCondition = snowConditionStore.subscribe(data => {
+    snowCondition = data;
+  });
+
   onDestroy(() => {
     unsubscribe_weather();
     unsubscribe_rain();
+    unsubscribe_snowCondition();
   });
 
   function getWindDirection(val) {
@@ -121,10 +130,19 @@ function findWeatherIcon(rainDataItem) {
     </div>
   </div>
 
+  {#if snowCondition.length > 0} <!--CHANGE TO snowCondition when no longer list!-->
   <div class="card snow-card">
-    <div class="paragraph-bold">Snøforhold</div>
-    <p class="">Nydelig føre med nysnø og pudder. Se opp for skred.</p>
+    <div class="snow-icon"><img src="../../assets/snowflake.svg" alt="snøikon"></div>
+    <div>
+      <div class="paragraph-bold">Snøforhold i løypene</div>
+      <div>
+        <p><span class="time-published small-info" >{get_publish_date(snowCondition[0].timestamp)}</span>{snowCondition[0].message ? snowCondition[0].message : "Det finnes ingen nylige oppdateringer om snøforholdene i skisenteret."}</p>
+      </div>
+      
+      
+    </div>
   </div>
+  {/if}
 
   <div class="card">
     <div class="paragraph-bold">Værstatus i løypene</div>
@@ -151,8 +169,11 @@ function findWeatherIcon(rainDataItem) {
 <style>
   .weather {
     height: 100%;
+  }
+  .weather-card {
     max-width: 380px;
   }
+ 
 
   .current-weather {
     width: 90%;
@@ -191,6 +212,15 @@ function findWeatherIcon(rainDataItem) {
   }
   .snow-card {
     margin: 1rem 0;
+    display: flex;
+    flex-direction: row;
+  }
+  .snow-icon {
+    margin-right: 0.5rem;
+  }
+  .time-published {
+    color: #B7631A;
+    margin-right: 0.5rem;
   }
 
   .stations-container {

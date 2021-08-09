@@ -9,8 +9,7 @@ html, body {
 
 .oppdal-input {
 	min-width: 300px;
-	min-height: 25px;
-	margin: 5px;
+	min-height: 75px;
 }
 .oppdal-select {
 	min-width: 300px;
@@ -171,9 +170,7 @@ button {
 .admin-add {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	padding: 2rem;
+	justify-content: flex-start;
 }
 .admin-add .show {
 	display: flex;
@@ -181,7 +178,7 @@ button {
 	align-items: center;
 }
 .admin-add .show > button {
-	margin: 0 0 0 0.5rem;
+	padding: 0 0 0 0.5rem;
 	border: none;
 	background-color: #fafafa;
 	font-size: 2rem;
