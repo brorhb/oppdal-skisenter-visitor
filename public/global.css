@@ -236,6 +236,26 @@ button {
 }
 
 @media only screen and (max-width: 1000px) {
+	h1 {
+		font-size: 30px;
+		line-height: 35px;
+	}
+	p {
+		font-size: 12px;
+		line-height: 14px;
+	}
+	h2 {
+		font-size: 22px;
+		line-height: 26px;
+	}
+	h3 {
+		font-size: 18px;
+		line-height: 21px;
+	}
+	h4 {
+		font-size: 14px;
+		line-height: 16px;
+	}
 	.max-width-wrapper {
 		margin: 0 0rem 0 0rem;
 	}
