@@ -10,6 +10,7 @@
   import Webcam from '../../components/Webcam.svelte'
   import Zones from '../../components/Zones.svelte'
 import Weatherstations from "../../components/Weatherstations.svelte";
+import Links from "../../components/Links.svelte"
   export let tracks = []
   export let lifts = []
   export let zones = []
@@ -38,6 +39,9 @@ import Weatherstations from "../../components/Weatherstations.svelte";
   </div>
   <div class="avalanche-container">
     <Avalanche />
+  </div>
+  <div class="links-container">
+    <Links/>
   </div>
 <!---
   <div class="map-container card" >
@@ -68,7 +72,8 @@ import Weatherstations from "../../components/Weatherstations.svelte";
     grid-template-areas:
       "webcam webcam weather"
       "map map zones"
-      "skipatrulje avalanche avalanche";
+      "skipatrulje avalanche avalanche"
+      "links links links";
     grid-template-columns: 1fr 1fr 1fr; 
     column-gap: 1rem;
     row-gap: 1rem;
@@ -106,6 +111,9 @@ import Weatherstations from "../../components/Weatherstations.svelte";
   .skipatrulje-container {
     grid-area: skipatrulje;
   }
+  .links-container {
+    grid-area: links;
+  }
 
   @media only screen and (max-width: 1000px) {
     .main-container {
@@ -115,7 +123,8 @@ import Weatherstations from "../../components/Weatherstations.svelte";
         "webcam"
         "zones"
         "avalanche"
-        "skipatrulje";
+        "skipatrulje"
+        "links";
       grid-template-columns: 1fr; 
       column-gap: 10px;
     }

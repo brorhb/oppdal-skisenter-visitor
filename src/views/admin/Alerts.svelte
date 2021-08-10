@@ -1,26 +1,28 @@
 <script>
-    import { makeAlertStore, updateAlert } from '../../stores/AlertStore'
     import { toast } from '../../stores/Toast'
-    import { onDestroy, onMount } from 'svelte'
+    import { onMount } from 'svelte'
     import OFetch from '../../helpers/fetch';
     import config from '../../helpers/config';
     import { formatTimestamp } from '../../helpers/formatTimestamp.js'
-    let unsubscribe;
-    let alertStore = makeAlertStore();
     let alerts = [];
     let newAlert = '';
     let editItem = undefined;
-    onDestroy(() => {
-        if(unsubscribe) {
-            unsubscribe()
-            unsubscribe = null
-        }
-	});
+
     onMount(async () => {
-        unsubscribe = alertStore.subscribe((data) => {
-            alerts = data
-        })
+        fetchAllAlerts();
     })
+    
+    const fetchAllAlerts = async () => {
+        try {
+            alerts = await OFetch(
+                `${config.BASE_URL}/admin/alert/`,
+                "GET"
+            )
+        } catch (error) {
+            console.warn(error);
+            toast.setToast('En feil har oppstått', 'error');
+        }
+    }
     const toggleIsLive = async (alert) => {
         alert.is_live = !alert.is_live;
         try {
@@ -28,7 +30,7 @@
                 `${config.BASE_URL}/admin/alert/${alert.id}`,
                 "PATCH", alert
             );
-            await updateAlert();
+            await fetchAllAlerts();
             toast.setToast('Ny endring lagret', 'success');
         } catch (error) {
             console.warn(error);
@@ -46,7 +48,7 @@
                 "POST", newAlert
             );
             toast.setToast('Ny melding lagret', 'success');
-            await updateAlert();
+            await fetchAllAlerts();
         } catch (error) {
             console.warn(error);
             toast.setToast('En feil har oppstått', 'error');
@@ -59,7 +61,7 @@
                 "DELETE"
             )
             toast.setToast('Slettet melding', 'success');
-            await updateAlert();
+            await fetchAllAlerts();
         } catch (error) {
             console.warn(error);
             toast.setToast('En feil har oppstått', 'error');
@@ -72,7 +74,7 @@
                 "PATCH", editItem
             )
             toast.setToast('Endring lagret', 'success');
-            await updateAlert();
+            await fetchAllAlerts();
         } catch (error) {
             console.warn(error);
             toast.setToast('En feil har oppstått', 'error');

@@ -12,7 +12,6 @@
         justify-content: space-evenly;
         color: #5b5f6b;
         height: 100%;
-        max-width: 360px;
     }
     .skipatrulje .symbol {
         padding: 0.4rem 0;
@@ -21,6 +20,5 @@
 
     .skipatrulje a {
         color:#2C3B6C;
-
     }
 </style>

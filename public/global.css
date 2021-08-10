@@ -7,6 +7,10 @@ html, body {
 	background-color: #FFFFFF;
 }
 
+body {
+	display: flex;
+	flex-direction: column;
+}
 .oppdal-input {
 	min-width: 300px;
 	min-height: 75px;
@@ -224,4 +228,15 @@ button {
 	z-index: 10;
 	opacity: 0.9;
 	background: gray;
+}
+.max-width-wrapper {
+	max-width: 1200px;
+    margin: 0 auto 0 auto;
+    width: 100%;
+}
+
+@media only screen and (max-width: 1000px) {
+	.max-width-wrapper {
+		margin: 0 0rem 0 0rem;
+	}
 }

@@ -3,13 +3,16 @@ import { onMount, onDestroy } from "svelte"
 import { makeZoneStore } from '../stores/ZoneStore'
 import { makeCamerasStore } from '../stores/CamerasStore'
 
+let zonesWithCamera = [];
+let formattedCameras = [];
+let selectedZoneId = 1;
+
 let camerasStore = makeCamerasStore()
 let cameras = []
 
 let zoneStore = makeZoneStore()
 let zones = []
 
-let selectedZoneId = 1;
 let unsubscribe
 
 $: formattedCameras = cameras.map(camera => {
@@ -43,7 +46,7 @@ onDestroy(() => {
 })
 
 </script>
-
+{#if zonesWithCamera.length > 0}
 <div class="webcamera-container">   
     <div class="webcamera">
         {#each formattedCameras as camera}
@@ -61,22 +64,25 @@ onDestroy(() => {
             </div>
         {/if}
         {/each}
-        <div class="buttons">
+        <div class="buttons"> 
             {#each zonesWithCamera as zone}
-                <button on:click="{() => selectedZoneId = zone.id}" class="{zone.id === selectedZoneId ? "active" : ""}"><i class="fas fa-video"></i> {zone.name}</button>
+                {#if zone} <!-- TODO: Find out why zone can be undefined ...-->
+                <button on:click="{() => selectedZoneId = zone.id}" class="{zone.id == selectedZoneId ? "active" : ""}"><i class="fas fa-video"></i> {zone.name}</button>
+                {/if}
             {/each}
         </div>
     </div>
 </div>
+{/if}
 
 <style>
     .webcamera-container {
         position: relative;
+        height: 100%;
     }
     .webcamera {
-        /** Temp fixed width and height*/
         width: 100%;
-        height: 588px;
+        height: 100%;
     }
     .embed {
         position: absolute;
@@ -110,4 +116,11 @@ onDestroy(() => {
         border: 2px solid #F08532;
         color: #F4F8FF;
     }   
+    @media only screen and (max-width: 1000px) {
+        .webcamera-container {
+            width: 100%;
+            min-height: 500px;
+        }
+    }
+
 </style>

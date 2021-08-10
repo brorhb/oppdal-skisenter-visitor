@@ -86,6 +86,7 @@ function get_length(text) {
             r="14"
             on:click={() => clicked(item)}
             on:mouseover={() => clicked(item)}
+            on:mouseout={() => clicked()}
           >
         </circle>
         <polygon points={`${parseInt(item.coords.x)+get_length(item.name)/2+10},${parseInt(item.coords.y)-20} ${parseInt(item.coords.x)+10},${parseInt(item.coords.y)-20} ${parseInt(item.coords.x)},${parseInt(item.coords.y)} ${parseInt(item.coords.x)-10},${parseInt(item.coords.y)-20} ${parseInt(item.coords.x)-get_length(item.name)/2-10},${parseInt(item.coords.y)-20} ${parseInt(item.coords.x)-get_length(item.name)/2-10},${parseInt(item.coords.y)-50} ${parseInt(item.coords.x)+get_length(item.name)/2+10},${parseInt(item.coords.y)-50}`} style={infoBox == item ? "fill: #2C3B6C": 'display:none'} />
@@ -106,13 +107,27 @@ function get_length(text) {
     <button on:click="{zoomOut}"><i class="fas fa-minus"></i></button>
   </div>
   {/if}
+  <div class="live-overlay">
+    <div class="overlay-circle red"></div>
+    <p class="smallbold">DIREKTE</p>
+  </div>
+  <div class="information-overlay">
+    <div>
+      <div class="overlay-circle green"></div>
+      <p>Åpen</p>
+    </div>
+    <div>
+      <div class="overlay-circle red"></div>
+      <p>Stengt</p>
+    </div>
+  </div>
 </div>
 
 <style>
   .map {
     box-sizing: border-box;
     width: 100%;
-    height: 100%;
+    position: relative;
   }
   .zoom-buttons {
     display: flex;
@@ -135,5 +150,62 @@ function get_length(text) {
   .zoom-buttons > button:hover {
     background: #d6efff;
     transition: 0.5s ease;
+  }
+  .live-overlay {
+    width: 68px;
+    height: 68px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(35, 35, 35, 0.41);
+    border-radius: 8px;
+    position: absolute; 
+    top: 2%;
+    right: 2%;
+    z-index: 1000;
+  }
+  .information-overlay {
+    position: absolute;
+    bottom: 2%;
+    left: 2%;
+    width: 111px;
+    height: 53px;
+    background: rgba(255, 255, 255, 0.81);
+    border-radius: 8px;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .information-overlay > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem;
+  }
+  .live-overlay > p {
+    color: #FFFFFF;
+  }
+  .overlay-circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+  }
+  .red {
+    background: #FB3F3F;
+    border: 2px solid rgba(0, 0, 0, 0.42);
+    box-sizing: border-box;
+  }
+  .green {
+    background: #2FC93E;
+    border: 1.3px solid #1DAB2B;
+    box-shadow: 0px 1px 6px #74FF82;
+  }
+  @media only screen and (max-width: 1000px) {
+      .map {
+          height: 100%;
+      }
   }
 </style>

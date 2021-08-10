@@ -1,26 +1,64 @@
 <script>
   import NavigationButton from '../../components/admin/NavigationButton.svelte'
   import { navigateTo } from 'svelte-router-spa'
+  import OFetch from '../../helpers/fetch';
+  import config from '../../helpers/config';
+  import Navbar from '../../components/admin/Navbar.svelte';
+  import { Route } from 'svelte-router-spa'
+  export let currentRoute
+  export const params = {} 
   function logout() {
     localStorage.removeItem('user');
     navigateTo(`/login`)
   }
+  async function testAvalanche() {
+    try {
+            const res = await OFetch(
+                `${config.BASE_URL}/admin/panoramasign/avalanche`,
+                "PATCH", 1
+            )
+            console.log(res)
+            
+        } catch(err) {
+            console.warn(err)
+        }
+  }
+  async function testRelays() {
+    try {
+            const res = await OFetch(
+                `${config.BASE_URL}/admin/panoramasign/relays`,
+                "PATCH"
+            )
+            console.log(res)
+            
+        } catch(err) {
+            console.warn(err)
+        }
+  }
 </script>
 
 <div class="admin-index">
+  <Navbar {currentRoute}/>
+  <section class="max-width-wrapper">
+    <Route {currentRoute}  {params} />
+  </section>
+  <!----
   <NavigationButton navigate={"/admin/meldinger"} faIcon={"info-circle"} title="Viktige meldinger"/>
   <NavigationButton navigate={"/admin/loyper"} faIcon={"route"} title="Løyper"/>
   <NavigationButton navigate={"/admin/heiser"} faIcon={"skiing"} title="Heiser"/>
   <NavigationButton navigate={"/admin/webkamera"} faIcon={"video"} title="Webkamera"/>
   <NavigationButton navigate={"/admin/snoforhold"} faIcon={"snowflake"} title="Snøforhold"/>
   <NavigationButton onclick={logout} faIcon={"sign-out-alt"} title="Logg av" /> 
+  <button on:click={testAvalanche}>avalanche test</button>
+  <button on:click={testRelays}>relays test</button>
+  -->
 </div>
 
 <style>
   .admin-index {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    min-width: 100%;
+    height: 100%;
+    background: #F5F2F2;
   }
   @media only screen and (max-width: 600px) {
     .admin-index {

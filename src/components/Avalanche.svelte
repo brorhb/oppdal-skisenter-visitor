@@ -84,11 +84,11 @@
 <style>
     .avalanche {
         display: grid;
+        grid-template-rows: 20px auto;
         grid-template-areas: 
         "header header header"
         "today border week";
-        min-height: 200px;
-        max-width: 850px;
+        height: 100%;
     }
     .avalanche-header {
         grid-area: header;
@@ -97,7 +97,7 @@
         grid-area: today;
         display: flex;
         align-items: center;
-        margin-right: 1rem;
+        
     }
     .avalanche-week {
         grid-area: week;
@@ -125,7 +125,7 @@
     }
     .avalanche-circle-container {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-evenly;
         text-align: center;
         margin-top: 1rem;
     }
@@ -137,7 +137,7 @@
         grid-area: border;
         height: 100%;
         border: 0.840336px solid #A0B2DC;
-        margin-right: 1rem; 
+        margin: 0 1rem 0 0.3rem; 
     }
 
     .bg-green {
@@ -165,7 +165,7 @@
         color: #fff;
         background: #AAAAAA;
     }
-    @media only screen and (max-width: 700px) {
+    @media only screen and (max-width: 1000px) {
         .avalanche {
             grid-template-areas: 
             "header"
@@ -178,8 +178,9 @@
             width: 100%;
             margin: 1rem 0 1rem 0;
         }
-        .avalanche-header {
-            margin: 0 0 1rem 0;
+        .avalanche-circle-container {
+            max-width: 400px;
+            justify-content: space-between;
         }
     }
 </style>
