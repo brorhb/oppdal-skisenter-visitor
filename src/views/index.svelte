@@ -7,6 +7,7 @@
 
 <div class="main">
     <div class="grid">
+        
         <div class="weather-wrapper">
             <Weather/>
         </div>
@@ -16,11 +17,9 @@
         <div class="safety-wrapper">
             <Safety/>
         </div>
-        <!---
         <div class="links-wrapper">
             <Links/>
         </div>
-    -->
     </div>   
 </div>
 

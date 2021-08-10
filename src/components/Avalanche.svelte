@@ -130,7 +130,7 @@
         margin-top: 1rem;
     }
     .warning {
-        padding: 10px;
+        padding: 4px;
     }
     .active {
         background: #EAEEF9;
