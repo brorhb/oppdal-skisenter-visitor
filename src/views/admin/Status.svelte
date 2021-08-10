@@ -1,103 +1,298 @@
 <script>
+    import { onMount, onDestroy } from 'svelte';
+    import { makeZoneStore } from '../../stores/ZoneStore';
+    import { makeLiftsStore, updateLifts } from '../../stores/LiftsStore'
+    import { makeTracksStore, updateTracks } from '../../stores/TrackStore';
+    import { toast } from '../../stores/Toast'
+    import OFetch from '../../helpers/fetch'
+    import config from '../../helpers/config'
+
+    let unsubscribe_zone;
+    let unsubscribe_lift;
+    let unsubscribe_track;
+    let root;
+    let zoneStore = makeZoneStore();
+    let zones = [];
+    let liftStore = makeLiftsStore();
+    let lifts = [];
+    let trackStore = makeTracksStore();
+    let tracks = [];
+
+    $: console.log(lifts.map(lift => lift.zone))
+
+    onMount(() => {
+        unsubscribe_zone = zoneStore.subscribe(data => {zones = data;});
+        unsubscribe_lift = liftStore.subscribe(data => {lifts = data;});
+        unsubscribe_track = trackStore.subscribe(data => {tracks = data;});
+    });
+
+    onDestroy(() => {
+        unsubscribe_zone();
+        unsubscribe_lift();
+        unsubscribe_track();
+    });
+
+    function handleClick(zone) {
+        if (zone) {
+            let selected_zone = root.querySelector(`.${zone.name}`)
+            if (selected_zone) {
+                console.log(selected_zone.classList)
+                selected_zone.classList.toggle('open-container');
+            };
+        };
+    };
+
+    const setStatusByZone = async (type, zone) => {
+        try {
+            await OFetch(
+                `${config.BASE_URL}/admin/track/status-zone`,
+                "PATCH", {type, zone}
+            );
+            await updateTracks();
+            await OFetch(
+                `${config.BASE_URL}/admin/lift/status-zone`,
+                "PATCH", {type, zone}
+            )
+            await updateLifts()
+            toast.setToast('Endring lagret', 'success');
+        } catch(err) {
+            console.warn(err);
+            toast.setToast('Noe gikk galt', 'error');
+        };
+    };
+
+    const setTrackStatus = async (track, status) => {
+        try {
+            await OFetch(
+            `${config.BASE_URL}/admin/toggle-status/tracks/${track.id}/${status}`,
+            "PATCH"
+        )
+        toast.setToast('Lagret', 'success');
+        await updateTracks();
+        } catch(err) {
+            console.warn(err);
+            toast.setToast('Noe gikk galt', 'error');
+        }
+    };
+    const setLiftStatus = async (lift, status) => {
+        try {
+            await OFetch(
+            `${config.BASE_URL}/admin/toggle-status/lifts/${lift.id}/${status}`,
+            "PATCH"
+        )
+        toast.setToast('Lagret', 'success');
+        await updateLifts();
+        } catch(err) {
+            console.warn(err);
+            toast.setToast('Noe gikk galt', 'error');
+        }
+    };
 
 </script>
 
-<div class="admin-status">
-    <h2>Åpne/steng løyper og heiser</h2>
-    <div class="premade">
-        <button>Helgekjøring</button>
-        <button>Kveld</button>
-        <button>Uke</button>
-    </div>
-    <div class="zones">
-        <p>Soner</p>
-        <div class="zone">
-            <div class="dropdown">
-                <h4>Vangslia</h4>
-                <p class="small-info">5/5 heiser</p>
-                <p class="small-info">11/11 løyper</p>
-                <i class="fas fa-angle-down"></i>
+<div bind:this={root}>
+    {#each zones as zone}
+    <div class="custom-select-wrapper">
+        <div class={`${zone.name} custom-select`}>
+            <div class="custom-select__trigger" on:click={() => handleClick(zone)}>
+                <h2>{zone.name}</h2>
+                <div class="custom-select__trigger-right">
+                    {#if lifts.length > 0}
+                    <div class="trigger-status-text"><p>{`${(lifts.filter((lift) => lift.zone == zone.id && lift.status == "open")).length}/${(lifts.filter((lift) => lift.zone == zone.id)).length} heiser`}</p></div>
+                    <div class="trigger-status-text"><p>{`${(tracks.filter((track) => track.zone == zone.id && track.status == "open")).length}/${(tracks.filter((track) => track.zone == zone.id)).length} løyper`}</p></div>
+                    {/if}
+                </div>
+                <div class="arrow"></div>    
             </div>
-            <div class="zone-content"> <!-- Hidden by default -->
-                <div class="lifts">
-                    <h3>Heiser i Vangslia</h3>
-                    <p>Åpne alle</p>
-                    <p>Steng alle</p>
+            <div  class="custom-options">
+                <div class="status-button-container">
+                    <div class="status-button" on:click="{() => setStatusByZone("open", zone.id)}"><p class="status-button-text">Åpne alt i {zone.name}</p></div>
+                    <div class="status-button small-info" on:click="{() => setStatusByZone("closed", zone.id)}"><p class="status-button-text">Steng alt i {zone.name}</p></div>
                 </div>
-                <div class="list">
-                    <div class="list-item">
-                        <p>A</p>
-                        <p>Pomaen</p>
-                        <p>Åpen</p>
-                        <button>*</button>
+                <div class="table-container">
+                    <div>
+                        {#if zone.name != "Transport"}
+                        <h3>Heiser i {zone.name}</h3>
+                        <table class="admin-table">
+                            <tbody>
+                            {#each lifts as lift}
+                                {#if lift.zone == zone.id}
+                                <tr class="admin-table-row">
+                                <th><div class="information-bold">{(lift.map_name).toUpperCase()}</div></th>
+                                <th class="item-name information">{lift.name}</th>
+                                <th>
+                                    <div class="item-status">
+                                        <div class="item-status-text information" style={lift.status == "open" ? "color: #22A830;" : "color: #BABABA;" }>{lift.status == "open" ? "Åpen" : "Stengt"}</div>
+                                        <div><label class="toggle-switch"><input type="checkbox" on:change={lift.status == "open" ? () => setLiftStatus(lift, 2) : () => setLiftStatus(lift, 1)} checked={lift.status === "open"}></label></div>
+                                    </div>
+                                </th>
+                                </tr>
+                                {/if}
+                            {/each}
+                            </tbody>
+                        </table>
+                        {/if}
                     </div>
-                    <div class="list-item">
-                        <p>A</p>
-                        <p>Pomaen</p>
-                        <p>Åpen</p>
-                        <button>*</button>
-                    </div>
-                </div>
-                <div class="slopes">
-                    <h3>Løyper i Vangslia</h3>
-                    <p>Åpne alle</p>
-                    <p>Steng alle</p>
-                    <div class="list">
-                        <div class="list-item">
-
-                        </div>
+                    <div>
+                        <h3>Løyper i {zone.name}</h3>
+                        <table class="admin-table">
+                            <tbody>
+                            {#each tracks as track}
+                                {#if track.zone == zone.id}
+                                <tr class="admin-table-row">
+                                <th class="information-bold">{track.id}</th>
+                                <th class="item-name information">{track.name}</th>
+                                <th>
+                                    <div class="item-status">
+                                        <div class="item-status-text information" style={track.status == "open" ? "color: #22A830;" : "color: #BABABA;" }>{track.status == "open" ? "Åpen" : "Stengt"}</div>
+                                        <div><label class="toggle-switch"><input type="checkbox" on:change={track.status == "open" ? () => setTrackStatus(track, 2) : () => setTrackStatus(track, 1)} checked={track.status === "open"}></label></div>
+                                    </div>
+                                </th>
+                                </tr>
+                                {/if}
+                            {/each}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="zone">
-            <div class="dropdown">
-                <h4>Hovden</h4>
-                <p class="small-info">5/5 heiser</p>
-                <p class="small-info">11/11 løyper</p>
-                <i class="fas fa-angle-down"></i>
-            </div>
-            <div class="zone-content"> <!-- Hidden by default -->
-
-            </div>
-        </div>
     </div>
+    {/each}
 </div>
 
+
+
 <style>
-    .premade > button {
+    table {
+        border-collapse: collapse;
+    }
+    .custom-select-wrapper {
+        position: relative;
+        user-select: none;
+        width: 100%;
+        margin: 2rem 0;
+    }
+    .custom-select {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    }
+    .custom-select__trigger {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0 1rem 2rem;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 60px;
+    background: #FFFFFF;
+    cursor: pointer;
+    border-radius:4px;
+    }
+    .custom-select__trigger-right {
+        display: flex;
+        flex-direction: row;
+        padding-right: 5rem;
+    }
+    .trigger-status-text {
+        padding-right: 5rem;
+    }
+    .custom-options {
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #FFFFFF;
+    transition: all 0.5s;
+    display: none;
+    visibility: hidden;
+    pointer-events: none;
+    }
+    :global(.open-container .custom-options) {  /*Global is needed to ensure that the Svelte compiler does not remove the CSS rule */
+        display: block;
+        visibility: visible;
+        pointer-events: all;
+    }
+    .status-button-container{
+        display: flex; 
+        flex-direction: row;
+    }
+    .status-button{
         border: none;
-        border-radius: 3px;
-        background: #FFFFFF;
-        padding: 8px;
+        background-color: white;
+        margin-left: 2rem;
+        
+    }
+    .status-button-text {
         color: #2C3B6C;
+        border-bottom: 1px solid #2C3B6C;
     }
-    .zone {
-        background: #ffffff;
-        padding: 8px;
-        margin-bottom: 8px;
+    .status-button-text:hover {
+        color: #E48D42;
+        border-bottom: 1px solid #E48D42;
+        cursor: pointer;
     }
-    .dropdown {
+    .table-container {
         display: flex;
-        justify-content: space-between;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding: 2rem 1rem 3rem 1rem;
     }
-    .lifts, .slopes {
+    .item-name{
+        text-align: left;
+    }
+    .admin-table {
+        margin-right: 4rem;
+        min-width: 390px;
+    }
+    .arrow {
+    position: absolute;
+    right: 20px;
+    height: 10px;
+    width: 10px;
+    }
+    .arrow::before, .arrow::after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    width: 0.15rem;
+    height: 100%;
+    transition: all 0.5s;
+    }
+    .arrow::before {
+    left: -3px;
+    transform: rotate(-45deg);
+    background-color: #2C3B6C;
+    }
+    .arrow::after {
+    left: 3px;
+    transform: rotate(45deg);
+    background-color: #2C3B6C;
+    }
+    :global(.open .arrow::before) {
+    left: -3px;
+    transform: rotate(45deg);
+    }
+    :global(.open .arrow::after) {
+    left: 3px;
+    transform: rotate(-45deg);
+    }
+    .item-status {
         display: flex;
-        justify-content: space-between;
-        margin-top: 8px;
+        flex-direction: row;
+        justify-content: flex-end;
+        padding-right: 1rem;
+        align-items: center;
     }
-    .lifts, .slopes > p {
-        text-decoration: underline;
+    .item-status-text {
+        padding-right: 1rem;
     }
-    .list {
-        min-height: 64px;
-        background: #F4F8FF;
-    }
-    .list:nth-child(even) {
-        background: #FFFFFF;
-    }
-    .list-item {
-        display: flex;
-        justify-content: space-between;
+    input[type="checkbox"]{
+    width: 20px;
+    height: 20px;
     }
 </style>
