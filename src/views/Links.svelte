@@ -28,23 +28,27 @@
 .links {
     background: #F4F8FF;
     padding: 4.5rem 0 4.5rem 0;
-    margin: 4rem auto 0 auto;
 }
 .links > div > h2 {
-    padding: 0 0 1rem 0;
+    padding: 1rem;
 }
 .group-container {
     display: flex;
-    margin: 0 1rem 0 1rem;
+    padding: 1rem;    
 }
 .group {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    width: 33%;
+    padding: 0 4rem 0 0;
+}
+.group:last-child {
+    padding: 0;
 }
 .group > h3 {
     padding: 1rem 0 0.5rem 0;
 }
-
 .group > img {
     max-width: 100%;
     height: auto;
@@ -71,13 +75,10 @@
     .group-container {
         flex-direction: column;
     }
-    .links > div > h2 {
-        padding: 0 0 1rem 0;
-        margin: 0 1rem 0 1rem;
+    .group {
+        width: 100%;
+        padding: 0 0 2rem 0;
     }
-    .group > img {
-        max-width: 100%;
-        height: auto;
-    }
+    
 }
 </style>

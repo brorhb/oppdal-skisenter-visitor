@@ -10,7 +10,6 @@
   import Webcam from '../../components/Webcam.svelte'
   import Zones from '../../components/Zones.svelte'
 import Weatherstations from "../../components/Weatherstations.svelte";
-import Links from "../../components/Links.svelte"
   export let tracks = []
   export let lifts = []
   export let zones = []
@@ -41,7 +40,6 @@ import Links from "../../components/Links.svelte"
     <Avalanche />
   </div>
   <div class="links-container">
-    <Links/>
   </div>
 <!---
   <div class="map-container card" >

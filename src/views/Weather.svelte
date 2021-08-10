@@ -18,7 +18,7 @@ import Webcam from "../components/Webcam.svelte";
     .weather-view {
         display: flex;
         flex-direction: column;
-        margin: 4rem auto 4rem auto;
+      
     }
     .weather-view > h2 {
         padding: 0 0 1rem 0;

@@ -164,14 +164,14 @@ function get_length(text) {
     background: rgba(35, 35, 35, 0.41);
     border-radius: 8px;
     position: absolute; 
-    top: 2%;
-    right: 2%;
+    top: 1rem;
+    right: 1rem;
     z-index: 1000;
   }
   .information-overlay {
     position: absolute;
-    bottom: 2%;
-    left: 2%;
+    bottom: 1rem;
+    left: 1rem;
     width: 111px;
     height: 53px;
     background: rgba(255, 255, 255, 0.81);
@@ -192,18 +192,21 @@ function get_length(text) {
     color: #FFFFFF;
   }
   .overlay-circle {
-    width: 22px;
-    height: 22px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
+    margin-bottom: 4px;
   }
   .red {
     background: #FB3F3F;
-    border: 2px solid rgba(0, 0, 0, 0.42);
+    border: 1.3px solid rgba(0, 0, 0, 0.42);
     box-sizing: border-box;
+    box-shadow: 0px 1px 6px #FF3B3B;
   }
   .green {
     background: #2FC93E;
     border: 1.3px solid #1DAB2B;
+    box-sizing: border-box;
     box-shadow: 0px 1px 6px #74FF82;
   }
   @media only screen and (max-width: 1000px) {
@@ -212,10 +215,10 @@ function get_length(text) {
           padding: 0 1rem 0 1rem;
       }
       .live-overlay {
-        right: 3%;
+        right: 2rem;
       }
       .information-overlay {
-        left: 3%;
+        left: 2rem;
       }
   }
 </style>

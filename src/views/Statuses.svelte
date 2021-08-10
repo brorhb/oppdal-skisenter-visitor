@@ -44,7 +44,7 @@
 
 <style>
     .statuses-view { 
-        margin: 4rem auto 4rem auto;
+        
         max-height: 600px;
     }
     .statuses-view > p{

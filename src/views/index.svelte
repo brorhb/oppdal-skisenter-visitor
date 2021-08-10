@@ -13,9 +13,13 @@
         <div class="statuses-wrapper">
             <Statuses/>
         </div>
-    </div>
-    <Safety/>
-    <Links/>
+        <div class="safety-wrapper">
+            <Safety/>
+        </div>
+        <div class="links-wrapper">
+            <Links/>
+        </div>
+    </div>   
 </div>
 
 <style>
@@ -23,7 +27,9 @@
         display: grid;
         grid-template-areas: 
         "weather"
-        "statuses";
+        "statuses"
+        "safety"
+        "links";
     }
     .weather-wrapper {
         grid-area: weather;
@@ -31,11 +37,24 @@
     .statuses-wrapper {
         grid-area: statuses;
     }
+    .weather-wrapper, .statuses-wrapper, .safety-wrapper {
+        margin: 3rem 0 0 0;
+    }
+    .safety-wrapper {
+        grid-area: safety;
+        margin: 3rem 0 6rem 0;
+    }
+    .links-wrapper {
+        grid-area: links;
+
+    }
     @media only screen and (max-width: 1000px) {
         .grid {
             grid-template-areas: 
             "statuses"
-            "weather";
+            "weather"
+            "safety"
+            "links";
         }
     }
 </style>

@@ -29,7 +29,7 @@
         border-radius: 9px;
         min-height: 67px;
         background-color: #FFF0E4;
-        margin: 2rem auto 2rem auto;
+        margin: 2rem auto 0 auto;
     }
     .alerts-wrapper {
         padding: 16px;

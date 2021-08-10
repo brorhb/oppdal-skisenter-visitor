@@ -17,7 +17,7 @@ import Skipatrulje from "../components/Skipatrulje.svelte";
 
 <style>
     .safety {
-        margin: 4rem auto 4rem auto;
+        
     }
     .safety > h2 {
         padding: 0 0 1rem 0;
