@@ -26,8 +26,7 @@
         display: flex;
         align-content: space-around;
         justify-content: space-between;
-        align-items: flex-end;
-        
+        align-items: flex-end;        
     }
     .nav-right {
         display: flex;
@@ -41,5 +40,10 @@
     }
     @media only screen and (max-width: 800px) {
         
+    }
+    @media only screen and (max-width: 1000px) {
+        .admin-nav {
+            justify-content: left;
+        }
     }
 </style>
