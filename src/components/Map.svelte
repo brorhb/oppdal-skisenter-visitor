@@ -212,7 +212,7 @@ function get_length(text) {
   @media only screen and (max-width: 1000px) {
       .map {
           height: 100%;
-          padding: 0 1rem 0 1rem;
+          
       }
       .live-overlay {
         right: 2rem;
