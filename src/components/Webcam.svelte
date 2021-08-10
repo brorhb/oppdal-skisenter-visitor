@@ -106,13 +106,22 @@ onDestroy(() => {
         width: 125px;
         height: 40px;
         background: #F4F8FF;
-        border: 2px solid #2C3B6C;
+        border: none;
         box-sizing: border-box;
         border-radius: 25px;
         margin-right: 11px;
         color: #2C3B6C;
     }
+    .buttons > button:hover   {
+        background: #2C3B6C;
+        color: #F4F8FF;
+    }
     .buttons > .active {
+        background: #E48D42;
+        border: 2px solid #F08532;
+        color: #F4F8FF;
+    }   
+    .buttons > .active:hover {
         background: #E48D42;
         border: 2px solid #F08532;
         color: #F4F8FF;

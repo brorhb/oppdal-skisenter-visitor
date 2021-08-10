@@ -10,9 +10,10 @@
         <div class="weather-wrapper">
             <Weather/>
         </div>
+        <!---
         <div class="statuses-wrapper">
             <Statuses/>
-        </div>
+        </div>-->
         <div class="safety-wrapper">
             <Safety/>
         </div>
