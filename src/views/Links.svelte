@@ -28,7 +28,7 @@
 .links {
     background: #F4F8FF;
     padding: 4.5rem 0 4.5rem 0;
-    margin: 4rem auto 4rem auto;
+    margin: 4rem auto 0 auto;
 }
 .links > div > h2 {
     padding: 0 0 1rem 0;
@@ -46,7 +46,7 @@
 }
 
 .group > img {
-    max-width: 355px;
+    max-width: 100%;
     height: auto;
 }
 .group > button {
@@ -61,8 +61,12 @@
     align-items: center;
     justify-content: center;
     margin: 1rem 0 1rem 0;
+    transition: 0.1s ease;
 }
-
+.group > button:hover {
+    background: #2C3B6C;
+    color: #F4F8FF;
+}
 @media only screen and (max-width: 1000px) {
     .group-container {
         flex-direction: column;

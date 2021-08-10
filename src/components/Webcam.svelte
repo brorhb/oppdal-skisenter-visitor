@@ -100,9 +100,10 @@ onDestroy(() => {
         bottom: 21px;
         z-index: 1000;
         display: flex;
+        overflow: scroll;
     }
     .buttons > button {
-        width: 120px;
+        width: 125px;
         height: 40px;
         background: #F4F8FF;
         border: 2px solid #2C3B6C;
