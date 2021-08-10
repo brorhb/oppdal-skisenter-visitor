@@ -15,6 +15,9 @@ import AdminWebcamera from './views/admin/Webcamera.svelte'
 import EditWebcamera from './views/admin/EditCamera.svelte'
 import AdminSnowConditions from './views/admin/SnowConditions.svelte'
 import TrackLiftDetail from './views/TrackLiftDetails.svelte';
+import index from './views/index.svelte'
+import AdminHome from './views/admin/AdminHome.svelte'
+import AdminStatus from './views/admin/Status.svelte'
 function userIsAdmin() {
   const user = localStorage.getItem("user")
   return user
@@ -23,7 +26,7 @@ function userIsAdmin() {
 export const routes = [
   {
     name: "/",
-    component: Dashboard,
+    component: index,
     layout: Layout
   },
   {
@@ -54,12 +57,13 @@ export const routes = [
   },
   {
     name: "admin",
-    layout: AdminLayout,
+    component: AdminIndex,
     onlyIf: { guard: userIsAdmin, redirect: '/login' },
     nestedRoutes: [
-      { name: 'index', component: AdminIndex },
+      { name: 'index', component: AdminHome},
       { name: '/meldinger', component: AdminAlerts},
       { name: 'snoforhold', component: AdminSnowConditions},
+      { name: '/status', component: AdminStatus },
       { 
         name: '/webkamera', 
         nestedRoutes: [

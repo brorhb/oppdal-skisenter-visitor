@@ -173,9 +173,9 @@
 <style>
     .zones-card {
         border-radius: 9px;
-        margin: 1rem;
         display: flex;
         flex-direction: column;
+        height: 100%;
     }
     .zones-dropdown-header {
         margin: 1rem 0 0.5rem 0;
@@ -223,7 +223,7 @@
     }
     .scroll-container {
         padding-right: 0.5rem; /* padding between scrollbar and track/lift single */
-        max-height: 200px;
+        max-height: 120px;
         overflow-y: auto;
     }
     ::-webkit-scrollbar {

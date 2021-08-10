@@ -104,7 +104,7 @@ function findWeatherIcon(rainDataItem) {
 <div class="weather">
 
   <div class="card weather-card">
-    <div class="paragraph-bold">Værprediksjon</div>
+    <div class="paragraph-bold">Værpredikasjon</div>
     <div class="current-weather">
       {#if rainData.length}
         <div class="current-weather-header"><h4>Oppdal skisenter</h4></div>
@@ -170,11 +170,6 @@ function findWeatherIcon(rainDataItem) {
   .weather {
     height: 100%;
   }
-  .weather-card {
-    max-width: 380px;
-  }
- 
-
   .current-weather {
     width: 90%;
     display: flex;

@@ -20,7 +20,7 @@
         height: 100%;
     }
     .admin-layout > section {
-        max-width: 1360px;
+        max-width: 1100px;
         margin: 0 auto 0 auto;
     }
 </style>
