@@ -31,10 +31,10 @@
 </script>
 <div class="statuses-view max-width-wrapper">
     <h2>Hvilke heiser og løyper er åpne nå?</h2>
-    <p class="smallinfo">Åpningstidene varierer etter klokkeslett, sesong og værforhold. Gå til informasjon om åpningstider ></p>
+    <p class="smallinfo">Åpningstidene varierer etter klokkeslett, sesong og værforhold. <a href="https://www.oppdalskisenter.no/%C3%A5pningstider" target="_blank">Gå til informasjon om åpningstider ></a></p>
     <div class="statuses-grid">
         <div id="map-wrapper">
-            <Map items={tracks} panAndZoom={false}/>
+            <Map items={[...tracks, ...lifts]} panAndZoom={false}/>
         </div> 
         <div id="zones-wrapper">
             <Zones/>
@@ -44,7 +44,7 @@
 
 <style>
     .statuses-view { 
-        margin: 4rem auto 4rem auto;
+        
         max-height: 600px;
     }
     .statuses-view > p{
@@ -69,6 +69,9 @@
     @media only screen and (max-width: 1000px) {
         .statuses-view { 
             max-height: 100%;
+        }
+        .statuses-view > h2, p {
+            padding: 0 0 0 1rem;
         }
         #zones-wrapper {
             max-height: auto;

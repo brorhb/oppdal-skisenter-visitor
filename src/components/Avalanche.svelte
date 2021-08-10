@@ -66,10 +66,10 @@
     <div class="avalanche-border"></div>
     <div class="avalanche-week">
         <h3>Varsel til uka</h3>
-        <p>Varsler fra Snøskredvarslingen i Norge og www.varsom.no</p>
+        <p>Varsler fra Snøskredvarslingen i Norge og <a href="https://varsom.no" target="_blank">https://varsom.no</a></p>
         <div class="avalanche-circle-container">
             {#each warnings as warning}
-            <div class={isToday(warning.PublishTime) ? `active`:null}>
+            <div class={isToday(warning.PublishTime) ? `active warning`:`warning`}>
                 <div class={`avalanche-small-circle ${color(warning.DangerLevel)}`}>
                     <h3>{warning.DangerLevel}</h3>
                 </div>
@@ -129,6 +129,9 @@
         text-align: center;
         margin-top: 1rem;
     }
+    .warning {
+        padding: 10px;
+    }
     .active {
         background: #EAEEF9;
         border-radius: 9px;
@@ -137,7 +140,7 @@
         grid-area: border;
         height: 100%;
         border: 0.840336px solid #A0B2DC;
-        margin: 0 1rem 0 0.3rem; 
+        margin: 0 2rem 0 1rem;
     }
 
     .bg-green {
