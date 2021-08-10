@@ -4,13 +4,16 @@ html, body {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	background-color: #FAFAFA;
+	background-color: #FFFFFF;
 }
 
+body {
+	display: flex;
+	flex-direction: column;
+}
 .oppdal-input {
 	min-width: 300px;
-	min-height: 25px;
-	margin: 5px;
+	min-height: 75px;
 }
 .oppdal-select {
 	min-width: 300px;
@@ -20,7 +23,6 @@ html, body {
 .oppdal-button {
 	padding: 0.5rem 1.5rem;
 	border: none;
-	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 	background: #FFF;
 	color: #004a7c;
 	border-radius: 50px;
@@ -29,12 +31,22 @@ html, body {
 	font-size: 1.3125rem; /*21px*/
 	font-weight: lighter;
 }
+
+.oppdal-button:active {
+	background-color: #E48D42;
+	color: #FFFFFF;
+}
+
 .oppdal-button:hover {
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-	color: #fff;
-	background: #004a7c;
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);
 	transition: all 0.5s ease;
 }
+
+.oppdal-button-selected {
+	background-color: #E48D42;
+	color: #FFFFFF;
+}
+
 .oppdal-title {
 	color: #FAFAFA; 
 	font-size: 30px;
@@ -42,43 +54,95 @@ html, body {
 }
 
 .card {
-	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  	transition: 0.3s;
+	background-color: #F4F8FF;
+    border-radius: 9px;
+    padding: 1rem;
 }
 
 * { /*As long as only one font-family is used*/
-	font-family: 'Ropa Sans', sans-serif;
+	font-family: 'Work Sans';
 }
 
-.header {
-	font-size: 1.875rem; /*30px*/
+h1, h2, h3, h4, p {
+	font-family: 'Work Sans';
+	font-style: normal;
+	margin: 0;
+	color: #2C3B6C;
+}
+
+h1 {
+	font-size: 2.5rem; /*40px*/
 	font-weight: bold;
-	text-align: center;
+	line-height: 47px;
 }
 
-.sub-header {
-	font-size: 1.4375rem; /*23px*/
-	font-weight: medium;
-	margin-left: 1.5rem;
-	color: #004a7c;
+h2 {
+	font-size: 2rem; /*32px*/
+	font-weight: 600;
+	line-height: 38px;
+	color: #2C3B6C;
 }
 
-.paragraph-big {
-	font-size: 1.3125rem; /*21px*/
-	font-weight: lighter;
+h3 {
+	font-size: 1.375rem; /*22px*/
+	font-weight: 600;
+	line-height: 26px;
 }
-
-.subsub-header {
+.mobile-h3 {
 	font-size: 1.125rem; /*18px*/
-	font-weight: medium;
-	text-align: center;
-	color: #004a7c;
+	font-weight: 600;
+	line-height: 21px;
+}
+h4 {
+	font-size: 1rem; /*16px*/
+	font-weight: normal;
+	line-height: 19px; 
+	color: #2C3B6C;
 }
 
-.paragraph {
-	font-size: 1rem; /*16px*/
-	font-weight: lighter;
-	margin: 0.2rem 1.5rem;
+p {
+	font-size: 0.8125rem; /*13px*/
+	font-weight: normal;
+	line-height: 15px;
+}
+
+.smallbold {
+	font-family: Work Sans;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 12px;
+	line-height: 14px;
+
+	color: #004A7C;
+}
+.small-info {
+	font-size: 0.75rem; /*12px*/
+	font-weight: 300;
+	line-height: 14px;
+	color: #2C3B6C;
+}
+
+.paragraph-bold {
+	font-size: 0.75rem; /*12px*/
+	font-weight: 600;
+	line-height: 14px;
+	color: #2C3B6C;
+}
+
+.big-paragraph-bold {
+	font-size: 1.25rem; /*20px*/
+	font-weight: 600;
+	color: #2C3B6C;
+}
+
+button {
+	font-family: Work Sans;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	line-height: 19px;
+	color: #F4F8FF;
+	cursor: pointer;
 }
 
 .information { 
@@ -110,9 +174,7 @@ html, body {
 .admin-add {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	padding: 2rem;
+	justify-content: flex-start;
 }
 .admin-add .show {
 	display: flex;
@@ -120,7 +182,7 @@ html, body {
 	align-items: center;
 }
 .admin-add .show > button {
-	margin: 0 0 0 0.5rem;
+	padding: 0 0 0 0.5rem;
 	border: none;
 	background-color: #fafafa;
 	font-size: 2rem;
@@ -166,4 +228,15 @@ html, body {
 	z-index: 10;
 	opacity: 0.9;
 	background: gray;
+}
+.max-width-wrapper {
+	max-width: 1200px;
+    margin: 0 auto 0 auto;
+    width: 100%;
+}
+
+@media only screen and (max-width: 1000px) {
+	.max-width-wrapper {
+		margin: 0 0rem 0 0rem;
+	}
 }

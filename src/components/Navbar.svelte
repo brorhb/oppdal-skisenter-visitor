@@ -1,24 +1,6 @@
-<script>
-  // List of navigation items
-  const navItems = [
-    {
-      label: "camera",
-      route: "/cameras"
-    }, 
-  ]
-</script>
-
-<nav class="navbar">
-  <a class="navbrand oppdal-title" href="/">Oppdal Skisenter</a>
-    <div>
-      {#each navItems as item}
-        {#if item.label != "camera"} 
-          <a href={item.route}>{item.label}</a>
-        {:else}
-            <a class="camera-anchor" href={item.route}><div class="div-circle"><img id="webcam-icon" src="../../assets/webcam-icon.svg" alt="webkamera-ikon"></div></a>
-        {/if}
-      {/each}
-  </div>
+<nav class="navbar max-width-wrapper">
+  <a href="https://oppdalskisenter.no"><i class="fas fa-angle-left"></i> Tilbake til oppdalskisenter.no</a>
+  <img src="../../assets/logo.svg" alt="oppdalskisenter-logo"/>
 </nav>
 
 <style>
@@ -26,45 +8,26 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #004a7c;
-    padding: 1rem 3rem;
+    padding-top: 1rem;
   }
-
+  .navbar > a {
+    font-size: 1.25rem;
+    color: #2C3B6C;
+    font-family: Work Sans;
+	  font-style: normal;
+    font-weight: 600;
+  }
   .navbar > a:hover, a:visited, a:link, a:active {
     text-decoration: none;
   }
-
   .navbar > a:hover {
     cursor: pointer;
     opacity: 70%;
   }
-
-  .navbrand {
-    cursor: pointer; 
+  .navbar > img {
+    margin-right: 1rem;
   }
-
-  .camera-anchor {
-    color: #004a7c;
-  }
-
-  .div-circle{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 55px;
-    width: 55px;  
-    background-color: #FAFAFA;
-    border-radius: 50%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  }
-
-  .div-circle:hover {
-    opacity: 70%;
-  }
-
-  #webcam-icon {
-    width: 37px;
-    height: 37px;
-    margin-top: 7px;
-  }
+  @media only screen and (max-width: 1000px) {
+    .navbar {}
+}
 </style>

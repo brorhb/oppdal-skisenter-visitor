@@ -7,6 +7,10 @@
   import Skipatrulje from '../../components/Skipatrulje.svelte'
   import Transport from '../../components/Transport.svelte'
   import WebcamCard from '../../components/WebcamCard.svelte'
+  import Webcam from '../../components/Webcam.svelte'
+  import Zones from '../../components/Zones.svelte'
+import Weatherstations from "../../components/Weatherstations.svelte";
+import Links from "../../components/Links.svelte"
   export let tracks = []
   export let lifts = []
   export let zones = []
@@ -18,6 +22,28 @@
 </script>
 
 <div class="main-container">
+  <div class="webcam-container">
+    <Webcam/>
+  </div>
+  <div class="weatherstations-container">
+    <Weatherstations/>
+  </div>
+  <div class="map-container">
+    <Map items={[...tracks, ...lifts]} />
+  </div>
+  <div class="zone-container">
+    <Zones/>
+  </div>
+  <div class="skipatrulje-container">
+    <Skipatrulje/>
+  </div>
+  <div class="avalanche-container">
+    <Avalanche />
+  </div>
+  <div class="links-container">
+    <Links/>
+  </div>
+<!---
   <div class="map-container card" >
     <div class="map-div">
       <Map items={[...tracks, ...lifts]} />
@@ -36,30 +62,34 @@
   <div class="webcam-container"><WebcamCard/></div>
   <div class="skipatrulje-container"><Skipatrulje on:openMap={openMap}/></div>
   <FullscreenMap on:close={() => showMap = false} show={showMap} items={[...tracks, ...lifts]}/>
+
+  -->
 </div>
 
 <style>
    .main-container {
     display: grid;
     grid-template-areas:
-      "map map weather weather"
-      "map map transport transport"
-      "zones zones zones zones"
-      "avalanche avalanche skipatrulje webcam";
-    grid-template-columns: 1fr 1fr 1fr 1fr; 
-    column-gap: 2rem;
-    row-gap: 2rem;
+      "webcam webcam weather"
+      "map map zones"
+      "skipatrulje avalanche avalanche"
+      "links links links";
+    grid-template-columns: 1fr 1fr 1fr; 
+    column-gap: 1rem;
+    row-gap: 1rem;
   }
-
+  .webcam-container {
+    grid-area: webcam;
+  }
   .map-container {
     grid-area: map;
-    display: flex;
+    /*display: flex;
     height: 100%;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    padding: 1rem;*/
   }
-  .map-div { 
+  /*.map-div { 
     width: 100%;
     position: relative;
   }
@@ -67,19 +97,13 @@
     position: absolute;
     bottom: 5%;
     right: 5%;
-  }
+  }*/
 
-  .weather-container {
+  .weatherstations-container {
     grid-area: weather;
   }
-  .transport-container {
-    grid-area: transport;
-  }
-  .zones-container {
-    display: flex;
-    flex-wrap: wrap;
+  .zone-container {
     grid-area: zones;
-    justify-content: space-between;
   }
   .avalanche-container {
     grid-area: avalanche;
@@ -87,21 +111,21 @@
   .skipatrulje-container {
     grid-area: skipatrulje;
   }
-  .webcam-container {
-    grid-area: webcam;
+  .links-container {
+    grid-area: links;
   }
 
-  @media only screen and (max-width: 1400px) {
+  @media only screen and (max-width: 1000px) {
     .main-container {
       grid-template-areas:
-        "map map" 
-        "weather weather "
-        "transport transport"
-        "zones zones"
-        "zones zones"
-        "avalanche avalanche"
-        "skipatrulje skipatrulje";
-      grid-template-columns: 1fr 1fr; 
+        "map" 
+        "weather"
+        "webcam"
+        "zones"
+        "avalanche"
+        "skipatrulje"
+        "links";
+      grid-template-columns: 1fr; 
       column-gap: 10px;
     }
   }

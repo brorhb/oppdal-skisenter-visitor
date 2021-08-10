@@ -17,10 +17,10 @@ export const difficultyToInt = {
 }
 
 export const difficultyIntToColor = {
-  1: "green",
-  2: "blue",
-  3: "red",
-  4: "black",
-  6: "black",
-  7: "orange"
+  1: "#10A458",
+  2: "#009FE3",
+  3: "#E63027",
+  4: "#040603",
+  6: "#040603",
+  7: "#F3942D"
 }
