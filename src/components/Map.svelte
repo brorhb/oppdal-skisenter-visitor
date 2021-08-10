@@ -4,7 +4,7 @@
   export let items = []
   export let panAndZoom = false;
   import { map_focus } from '../stores/MapFocusStore';
-  import { selected_zone } from '../stores/SelectedZoneStore';
+  import { selected_zone } from '../stores/SelectedZoneStore'; /** Needed for zoning */
   
   let map;
   let svgObj;
@@ -129,6 +129,9 @@ function get_length(text) {
     width: 100%;
     position: relative;
   }
+  .map > svg {
+    border-radius: 9px;
+  }
   .zoom-buttons {
     display: flex;
     flex-direction: column;
@@ -206,6 +209,13 @@ function get_length(text) {
   @media only screen and (max-width: 1000px) {
       .map {
           height: 100%;
+          padding: 0 1rem 0 1rem;
+      }
+      .live-overlay {
+        right: 3%;
+      }
+      .information-overlay {
+        left: 3%;
       }
   }
 </style>

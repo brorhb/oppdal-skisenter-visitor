@@ -45,5 +45,8 @@ import Webcam from "../components/Webcam.svelte";
             "webcam";
             grid-template-columns: 1fr;
         }
+        .weather-view > h2 {
+            padding: 1rem;
+        }
     }
 </style>

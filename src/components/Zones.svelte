@@ -22,7 +22,7 @@
     $: tracksInZone = updateTracksZone(activeZoneID, tracks); 
     $: liftsInZone = updateLiftsZone(activeZoneID, lifts);
 
-    onMount(async () => {
+    onMount(() => {
         unsubscribe = trackStore.subscribe(data => {
             tracks = data;
         });

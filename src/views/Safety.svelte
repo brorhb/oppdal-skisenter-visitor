@@ -41,8 +41,10 @@ import Skipatrulje from "../components/Skipatrulje.svelte";
             grid-template-areas: 
             "skipatrulje"
             "avalanche";
-            grid-template-columns: 1fr;  
-                      
+            grid-template-columns: 1fr;           
+        }
+        .safety > h2 {
+            padding: 1rem;
         }
     }
 </style>

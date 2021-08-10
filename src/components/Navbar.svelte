@@ -28,13 +28,12 @@
     margin-right: 1rem;
   }
   @media only screen and (max-width: 1000px) {
-    .navbar {
-      padding: 1rem 5rem 0 5rem;
-      display: flex;
-      justify-content: space-evenly;
-    }
     .navbar > img {
-      margin-right: 0;
+      margin-right: 1rem;
     }
+    .navbar > * {
+      padding: 1rem;
+    }
+    
 }
 </style>

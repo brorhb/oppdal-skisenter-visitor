@@ -140,7 +140,7 @@
         grid-area: border;
         height: 100%;
         border: 0.840336px solid #A0B2DC;
-        margin: 0 1rem 0 0.3rem; 
+        margin: 0 2rem 0 1rem;
     }
 
     .bg-green {

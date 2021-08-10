@@ -104,7 +104,10 @@ function findWeatherIcon(rainDataItem) {
 <div class="weather">
 
   <div class="card weather-card">
-    <div class="paragraph-bold">Værpredikasjon</div>
+    <div class="flex">
+      <div class="paragraph-bold">Værpredikasjon</div>
+      <p class="smallinfo">Basert på data fra <a href="https://api.met.no/" target="_blank">MET</a></p>
+    </div>
     <div class="current-weather">
       {#if rainData.length}
         <div class="current-weather-header"><h4>Oppdal skisenter</h4></div>
@@ -169,6 +172,10 @@ function findWeatherIcon(rainDataItem) {
 <style>
   .weather {
     height: 100%;
+  }
+  .flex {
+    display: flex;
+    justify-content: space-between;
   }
   .current-weather {
     width: 90%;
