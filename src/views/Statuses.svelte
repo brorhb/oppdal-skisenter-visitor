@@ -71,7 +71,9 @@
             max-height: 100%;
         }
         .statuses-view > h2, p {
+            margin: 0;
             padding: 0 0 0 1rem;
+            max-width: 85%;
         }
         #zones-wrapper {
             max-height: auto;

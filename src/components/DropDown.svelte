@@ -13,7 +13,7 @@
     if (options) {
       const wrapper = root.querySelector('.custom-select-wrapper');
       wrapper.addEventListener('click', function() {
-      this.querySelector('.custom-select').classList.toggle('open');
+        this.querySelector('.custom-select').classList.toggle('open');
       });
 
       for (const option of document.querySelectorAll(".custom-option")) {
@@ -68,6 +68,7 @@
           <div class="custom-select__trigger"><div class="mobile-h3 selected-text">{selected_option}</div>
               <div class="arrow"></div>
           </div>
+          {#if lifts.length > 0}
           <div class="custom-options">
               <div class="custom-option selected paragraph" data-value={init_option} on:click={() => handleClick(init_option)}><div>{init_option}</div><div style={get_status(init_option) == "Åpen" ? "color: #2FC93E" : "color: #A0B2DC"}>{get_status(init_option)}</div></div>
               {#each options as option}
@@ -80,6 +81,7 @@
                 {/if}
               {/each}
           </div>
+          {/if}
       </div>
     </div>
   {/if}
