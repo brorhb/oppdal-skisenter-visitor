@@ -72,7 +72,12 @@
                 "POST", newCondition
             );
             toast.setToast('Ny melding lagret', 'success');
-            loadSnowConditions();
+            await loadSnowConditions();
+            toggleIsLive(snowConditions.find(object => object.message == newCondition.message)) //ØNSKER VI AT NY MELDING SKAL TOGGLES AUTOMATISK? 
+            
+            newCondition = {
+                message: ''
+            };
         } catch (error) {
             console.warn(error);
             toast.setToast('En feil har oppstått', 'error');
@@ -110,36 +115,33 @@
         var count = document.getElementById('remain-count');
         count.innerHTML = "Bokstaver igjen: " + charactersLeft;
     }
+
+    async function handleClick(message) {
+        await createSnowCondition();
+    }
 </script>
 
-
-<div class="admin-add">
+<div class="admin-add snow-top-section">
     <h1 class="sub-header">Oppdater snøforhold</h1>
-    <p>Snøforhold publiseres på oppdalskisenter.no/loypestatus</p>
+    <p class="snow-subheader">Snøforhold publiseres på <a href="https://beta.oppdalskisenter.no">oppdalskisenter.no/loypestatus</a></p>
     <textarea class="oppdal-input" type="text" name="message" placeholder="Skriv litt om snøforhold her (max 150 tegn)" maxlength="150" on:keypress={get_char_left} bind:value={newCondition.message}></textarea>
     <p id="remain-count"></p>
-    <button class="admin-button" on:click={createSnowCondition}>Oppdater</button>
+    <button class="admin-button" on:click={() => handleClick(newCondition.message)}>Oppdater</button>
 </div>
 
 {#if snowConditions}
 <div class="admin-snowconditions">
     <h3>Meldinger</h3>
     <table class="admin-table">
-        <thead class="admin-table-header">
-            <tr class="admin-table-row">
-                <th>Dato</th>
-                <th style="width: 580px">Melding</th>
-                <th>Live</th>
-                <th>Endre</th>
-                <th>Slett</th>
-            </tr>
-        </thead>
         <tbody>
-        {#each snowConditions as condition}
+        {#each snowConditions.reverse() as condition}
             <tr class="admin-table-row">
             <th>{get_publish_date(condition.timestamp)}</th>
-            <th>{condition.message}</th>
-            <th><input on:change="{() => toggleIsLive(condition)}" bind:checked={condition.is_live} type="checkbox"/></th>
+            <th class="snow-message">{condition.message}</th>
+            <th class="toggle-col">
+                <div class="toggle-text" style={condition.is_live ? 'color: #22A830' : 'color: #BABABA'}>{condition.is_live ? "Aktiv" : "Ikke aktiv"}</div>
+                <div><label class="toggle-switch"><input type="checkbox" on:change="{() => toggleIsLive(condition)}" bind:checked={condition.is_live}><span class="slider"></span></label></div>
+            </th>
             <th on:click="{() => editItem = condition}"><i class="fas fa-edit"></i></th>
             <th on:click="{() => deleteSnowCondition(condition)}"><i class="fas fa-trash-alt"></i></th>
             </tr>
@@ -154,11 +156,6 @@
     <div class="admin-edit">
         <h1 class="sub-header">Endre melding om snøforhold</h1>
         <input class="oppdal-input" type="text" name="message" bind:value={editItem.message} />
-        <select id="zone" class="oppdal-select" bind:value={editItem.zone}>
-            {#each zones as zone}
-            <option value={zone.id}>{zone.name}</option>
-            {/each}
-        </select>
         <div>
             <button class="admin-button" on:click={editSnowCondition}>Lagre endring</button>
             <button class="admin-button" on:click={() => editItem = undefined}>Avbryt</button>
@@ -168,7 +165,74 @@
 
 
 <style>
-    .admin-snowconditions > table{
-        margin-bottom: 5rem;
+    table {
+        border-collapse: collapse;
+    }
+    .snow-top-section {
+        margin-top: 5rem;
+    }
+    .snow-subheader {
+        margin: 0.5rem 0 3rem 0; 
+    }
+    .snow-message{
+        text-align: left;
+    }
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 30px;
+    }
+
+    .toggle-switch input { 
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+        border-radius: 34px;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 22px;
+        width: 22px;
+        left: 4px;
+        top: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+        border-radius: 50%;
+    }
+
+    input:checked + .slider {
+        background-color: #2FC93E;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(30px);
+        -ms-transform: translateX(30px);
+        transform: translateX(30px);
+    }
+    .toggle-col {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        padding-right: 4rem;
+    }
+    .toggle-text {
+        padding-right: 1rem;
     }
 </style>
