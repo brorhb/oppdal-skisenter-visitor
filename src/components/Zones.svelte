@@ -85,7 +85,7 @@
     };
 
     function activateFocus() {
-        map_focus.update(name => name = this.querySelector('.attraction-name').innerText.split(" ")[0]);
+        map_focus.update(name => name = this.querySelector('.attraction-name').innerText.split("(")[0].trim());
     }
 
     function deactivateFocus() {
