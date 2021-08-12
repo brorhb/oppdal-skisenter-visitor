@@ -11,9 +11,19 @@
 <div>
   <Navbar />
   <Header />
-  <Alert/>
+  <div class="alert-wrapper">
+    <Alert/>
+  </div>
   <section>
     <Route {currentRoute}  {params} />
   </section>
   <Footer />
 </div>
+
+<style>
+  @media only screen and (max-width: 1000px) {
+    .alert-wrapper {
+      padding: 0 1rem 0 1rem;
+    }
+  }
+</style>

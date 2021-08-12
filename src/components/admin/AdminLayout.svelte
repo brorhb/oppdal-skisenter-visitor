@@ -7,8 +7,8 @@
 </script>
 
 <div class="admin-layout">
-  <Navbar {currentRoute}/>
   <section>
+    <Navbar {currentRoute}/>
     <Route {currentRoute}  {params} />
   </section>
   <Toast />
@@ -18,6 +18,7 @@
     .admin-layout {
         width: 100%;
         height: 100%;
+        max-width: 1100px;
     }
     .admin-layout > section {
         max-width: 1100px;

@@ -87,44 +87,61 @@
             toast.setToast('Noe gikk galt', 'error');
         }
     };
-
 </script>
 
-<div bind:this={root}>
+<div bind:this={root} class="admin-status">
+    <h2 class="admin-status-h2">Skredvarsel på tavler</h2>
     {#each zones as zone}
     <div class="custom-select-wrapper">
         <div class={`${zone.name} custom-select`}>
             <div class="custom-select__trigger" on:click={() => handleClick(zone)}>
-                <h2>{zone.name}</h2>
-                <div class="custom-select__trigger-right">
-                    {#if lifts.length > 0}
-                    <div class="trigger-status-text"><p>{`${(lifts.filter((lift) => lift.zone == zone.id && lift.status == "open")).length}/${(lifts.filter((lift) => lift.zone == zone.id)).length} heiser`}</p></div>
-                    <div class="trigger-status-text"><p>{`${(tracks.filter((track) => track.zone == zone.id && track.status == "open")).length}/${(tracks.filter((track) => track.zone == zone.id)).length} løyper`}</p></div>
-                    {/if}
-                </div>
-                <div class="arrow"></div>    
+                <h3>{zone.name}</h3>
+                {#if lifts.length > 0}
+                    <p>{`${(lifts.filter((lift) => lift.zone == zone.id && lift.status == "open")).length}/${(lifts.filter((lift) => lift.zone == zone.id)).length} heiser`}</p>
+                    <p>{`${(tracks.filter((track) => track.zone == zone.id && track.status == "open")).length}/${(tracks.filter((track) => track.zone == zone.id)).length} løyper`}</p>
+                {/if}
+                <div><i class="fas fa-angle-down"></i></div>    
             </div>
             <div  class="custom-options">
-                <div class="status-button-container">
-                    <div class="status-button" on:click="{() => setStatusByZone("open", zone.id)}"><p class="status-button-text">Åpne alt i {zone.name}</p></div>
-                    <div class="status-button small-info" on:click="{() => setStatusByZone("closed", zone.id)}"><p class="status-button-text">Steng alt i {zone.name}</p></div>
+                <div class="header-wrapper">
+                    <button class="admin-text-button bg-white" on:click="{() => setStatusByZone("open", zone.id)}">Åpne alle</button>
+                    <button class="admin-text-button bg-white" on:click="{() => setStatusByZone("maintanence", zone.id)}">Deaktiver alle</button>
                 </div>
                 <div class="table-container">
-                    <div>
+                    <div class="table-wrapper">
                         {#if zone.name != "Transport"}
                         <h3>Heiser i {zone.name}</h3>
                         <table class="admin-table">
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th><p class="smallinfo text-center">Stengt</p></th>
+                                <th><p class="smallinfo text-center">Åpen</p></th>
+                                <th><p class="smallinfo text-center">Blank</p></th>
+                            </tr>
                             <tbody>
                             {#each lifts as lift}
                                 {#if lift.zone == zone.id}
                                 <tr class="admin-table-row">
                                 <th><div class="information-bold">{(lift.map_name).toUpperCase()}</div></th>
-                                <th class="item-name information">{lift.name}</th>
+                                <th><p>{lift.name}</p></th>
+
+                                {#if lift.status == "open"}
+                                <th><p class="color-open">Åpen</p></th>
+                                {:else if lift.status == "closed"}
+                                <th><p class="color-closed">Stengt</p></th>
+                                {:else}
+                                <th><p class="color-blank">Blank</p></th>
+                                {/if}
                                 <th>
-                                    <div class="item-status">
-                                        <div class="item-status-text information" style={lift.status == "open" ? "color: #22A830;" : "color: #BABABA;" }>{lift.status == "open" ? "Åpen" : "Stengt"}</div>
-                                        <div><label class="toggle-switch"><input type="checkbox" on:change={lift.status == "open" ? () => setLiftStatus(lift, 2) : () => setLiftStatus(lift, 1)} checked={lift.status === "open"}></label></div>
-                                    </div>
+                                    <input on:change="{() => setLiftStatus(lift, 2)}" type="checkbox" checked={lift.status == "closed"}/>
+                                </th>
+                                <th>
+                                    <input on:change="{() => setLiftStatus(lift, 1)}" type="checkbox" checked={lift.status == "open"}/>
+                                </th>
+                                <th>
+                                    <input on:change="{() => setLiftStatus(lift, 3)}" type="checkbox" checked={lift.status == "maintanence"}/>
                                 </th>
                                 </tr>
                                 {/if}
@@ -133,21 +150,40 @@
                         </table>
                         {/if}
                     </div>
-                    <div>
+                    <div class="table-wrapper">
                         <h3>Løyper i {zone.name}</h3>
                         <table class="admin-table">
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th><p class="smallinfo text-center">Stengt</p></th>
+                                <th><p class="smallinfo text-center">Åpen</p></th>
+                                <th><p class="smallinfo text-center">Blank</p></th>
+                            </tr>
                             <tbody>
                             {#each tracks as track}
                                 {#if track.zone == zone.id}
                                 <tr class="admin-table-row">
                                 <th class="information-bold">{track.id}</th>
-                                <th class="item-name information">{track.name}</th>
+                                <th><p>{track.name}</p></th>
+                                {#if track.status == "open"}
+                                <th><p class="color-open">Åpen</p></th>
+                                {:else if track.status == "closed"}
+                                <th><p class="color-closed">Stengt</p></th>
+                                {:else}
+                                <th><p class="color-blank">Blank</p></th>
+                                {/if}
                                 <th>
-                                    <div class="item-status">
-                                        <div class="item-status-text information" style={track.status == "open" ? "color: #22A830;" : "color: #BABABA;" }>{track.status == "open" ? "Åpen" : "Stengt"}</div>
-                                        <div><label class="toggle-switch"><input type="checkbox" on:change={track.status == "open" ? () => setTrackStatus(track, 2) : () => setTrackStatus(track, 1)} checked={track.status === "open"}></label></div>
-                                    </div>
+                                    <input on:change="{() => setTrackStatus(track, 2)}" type="checkbox" checked={track.status == "closed"}/>
                                 </th>
+                                <th>
+                                    <input on:change="{() => setTrackStatus(track, 1)}" type="checkbox" checked={track.status == "open"}/>
+                                </th>
+                                <th>
+                                    <input on:change="{() => setTrackStatus(track, 3)}" type="checkbox" checked={track.status == "maintanence"}/>
+                                </th>
+                            
                                 </tr>
                                 {/if}
                             {/each}
@@ -164,8 +200,8 @@
 
 
 <style>
-    table {
-        border-collapse: collapse;
+    .admin-status {
+        margin: 2rem 0 0 0;
     }
     .custom-select-wrapper {
         position: relative;
@@ -174,41 +210,29 @@
         margin: 2rem 0;
     }
     .custom-select {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+        position: relative;
+        display: flex;
+        flex-direction: column;
     }
     .custom-select__trigger {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 0 1rem 2rem;
-    font-size: 20px;
-    font-weight: 300;
-    line-height: 60px;
-    background: #FFFFFF;
-    cursor: pointer;
-    border-radius:4px;
-    }
-    .custom-select__trigger-right {
+        position: relative;
         display: flex;
-        flex-direction: row;
-        padding-right: 5rem;
-    }
-    .trigger-status-text {
-        padding-right: 5rem;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        background: #FFFFFF;
+        cursor: pointer;
+        border-radius:4px;
     }
     .custom-options {
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: #FFFFFF;
-    transition: all 0.5s;
-    display: none;
-    visibility: hidden;
-    pointer-events: none;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #FFFFFF;
+        transition: all 0.5s;
+        display: none;
+        visibility: hidden;
+        pointer-events: none;
     }
     :global(.open-container .custom-options) {  /*Global is needed to ensure that the Svelte compiler does not remove the CSS rule */
         display: block;
@@ -216,18 +240,15 @@
         pointer-events: all;
     }
     .status-button-container{
-        display: flex; 
-        flex-direction: row;
+        display: flex;
+        padding: 1rem;
+        background: #ffffff;
     }
-    .status-button{
-        border: none;
-        background-color: white;
-        margin-left: 2rem;
-        
-    }
-    .status-button-text {
-        color: #2C3B6C;
-        border-bottom: 1px solid #2C3B6C;
+    .header-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 0 1rem;
     }
     .status-button-text:hover {
         color: #E48D42;
@@ -245,42 +266,6 @@
     .item-name{
         text-align: left;
     }
-    .admin-table {
-        margin-right: 4rem;
-        min-width: 390px;
-    }
-    .arrow {
-    position: absolute;
-    right: 20px;
-    height: 10px;
-    width: 10px;
-    }
-    .arrow::before, .arrow::after {
-    content: "";
-    position: absolute;
-    bottom: 0px;
-    width: 0.15rem;
-    height: 100%;
-    transition: all 0.5s;
-    }
-    .arrow::before {
-    left: -3px;
-    transform: rotate(-45deg);
-    background-color: #2C3B6C;
-    }
-    .arrow::after {
-    left: 3px;
-    transform: rotate(45deg);
-    background-color: #2C3B6C;
-    }
-    :global(.open .arrow::before) {
-    left: -3px;
-    transform: rotate(45deg);
-    }
-    :global(.open .arrow::after) {
-    left: 3px;
-    transform: rotate(-45deg);
-    }
     .item-status {
         display: flex;
         flex-direction: row;
@@ -292,7 +277,36 @@
         padding-right: 1rem;
     }
     input[type="checkbox"]{
-    width: 20px;
-    height: 20px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .color-open {
+        color: #2FC93E;
+    }
+    .color-closed {
+        color: #C92F2F; 
+    }
+    .color-blank {
+        color: #2C3B6C;
+    }
+    .text-center {
+        text-align: center;
+    }
+    .bg-white {
+        background: #fff;
+    }
+    @media only screen and (max-width: 600px) {
+        .table-container {
+            display: flex;
+            flex-direction: column;
+        }
+        .admin-status-h2 {
+            padding: 1rem;
+        }
+        .table-wrapper {
+            width: 100%;
+            padding: 0 0 2rem 0;
+        }
     }
 </style>

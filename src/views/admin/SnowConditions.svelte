@@ -57,7 +57,6 @@
                 toast.setToast('En feil har oppstått', 'error');
             }
         }
-        loadSnowConditions();
         toast.setToast('Endring lagret', 'success');
         
     }
@@ -72,9 +71,7 @@
                 "POST", newCondition
             );
             toast.setToast('Ny melding lagret', 'success');
-            await loadSnowConditions();
-            toggleIsLive(snowConditions.find(object => object.message == newCondition.message)) //ØNSKER VI AT NY MELDING SKAL TOGGLES AUTOMATISK? 
-            
+            await loadSnowConditions();            
             newCondition = {
                 message: ''
             };
@@ -120,26 +117,26 @@
         await createSnowCondition();
     }
 </script>
-
+<div class="admin-snowconditions">
 <div class="admin-add snow-top-section">
-    <h1 class="sub-header">Oppdater snøforhold</h1>
-    <p class="snow-subheader">Snøforhold publiseres på <a href="https://beta.oppdalskisenter.no">oppdalskisenter.no/loypestatus</a></p>
+    <h2>Oppdater snøforhold</h2>
+    <p>Snøforhold publiseres på <a href="https://beta.oppdalskisenter.no">oppdalskisenter.no/loypestatus</a></p>
     <textarea class="oppdal-input" type="text" name="message" placeholder="Skriv litt om snøforhold her (max 150 tegn)" maxlength="150" on:keypress={get_char_left} bind:value={newCondition.message}></textarea>
-    <p id="remain-count"></p>
-    <button class="admin-button" on:click={() => handleClick(newCondition.message)}>Oppdater</button>
+    <!--<p id="remain-count"></p>-->
+    <div class="button-wrapper"><button class="admin-button" on:click={() => handleClick(newCondition.message)}>Oppdater</button></div>
 </div>
 
 {#if snowConditions}
-<div class="admin-snowconditions">
-    <h3>Meldinger</h3>
+<div class="history">
+    <h3>Historikk</h3>
     <table class="admin-table">
         <tbody>
-        {#each snowConditions.reverse() as condition}
+        {#each snowConditions as condition}
             <tr class="admin-table-row">
-            <th>{get_publish_date(condition.timestamp)}</th>
-            <th class="snow-message">{condition.message}</th>
+            <th><p class="table-timestamp">{get_publish_date(condition.timestamp)}</p></th>
+            <th class="snow-message"><p>{condition.message}</p></th>
             <th class="toggle-col">
-                <div class="toggle-text" style={condition.is_live ? 'color: #22A830' : 'color: #BABABA'}>{condition.is_live ? "Aktiv" : "Ikke aktiv"}</div>
+                <div class="toggle-text" style={condition.is_live ? 'color: #22A830' : 'color: #BABABA'}><p>{condition.is_live ? "Aktiv" : "Ikke aktiv"}</p></div>
                 <div><label class="toggle-switch"><input type="checkbox" on:change="{() => toggleIsLive(condition)}" bind:checked={condition.is_live}><span class="slider"></span></label></div>
             </th>
             <th on:click="{() => editItem = condition}"><i class="fas fa-edit"></i></th>
@@ -154,25 +151,25 @@
 {#if editItem}
     <div class="admin-blur" on:click="{() => editItem = undefined}"></div>
     <div class="admin-edit">
-        <h1 class="sub-header">Endre melding om snøforhold</h1>
+        <h3>Endre melding om snøforhold</h3>
         <input class="oppdal-input" type="text" name="message" bind:value={editItem.message} />
         <div>
-            <button class="admin-button" on:click={editSnowCondition}>Lagre endring</button>
             <button class="admin-button" on:click={() => editItem = undefined}>Avbryt</button>
+            <button class="admin-button" on:click={editSnowCondition}>Lagre endring</button>
         </div>
     </div>
 {/if}
-
+</div>
 
 <style>
+    .admin-snowconditions {
+        margin: 1rem 0 0 0;
+    }
+    .history {
+        overflow: scroll;
+    }
     table {
         border-collapse: collapse;
-    }
-    .snow-top-section {
-        margin-top: 5rem;
-    }
-    .snow-subheader {
-        margin: 0.5rem 0 3rem 0; 
     }
     .snow-message{
         text-align: left;
@@ -234,5 +231,10 @@
     }
     .toggle-text {
         padding-right: 1rem;
+    }
+    @media only screen and (max-width: 600px) {
+        .admin-snowconditions {
+            padding: 1rem;
+        }
     }
 </style>

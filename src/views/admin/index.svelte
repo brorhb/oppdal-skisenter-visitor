@@ -5,6 +5,7 @@
   import config from '../../helpers/config';
   import Navbar from '../../components/admin/Navbar.svelte';
   import { Route } from 'svelte-router-spa'
+import Toast from '../../components/admin/Toast.svelte';
   export let currentRoute
   export const params = {} 
   function logout() {
@@ -13,9 +14,10 @@
   }
   async function testAvalanche() {
     try {
+      console.log("TEST AVALANCHE")
             const res = await OFetch(
                 `${config.BASE_URL}/admin/panoramasign/avalanche`,
-                "PATCH", 1
+                "PATCH", 0
             )
             console.log(res)
             
@@ -25,6 +27,7 @@
   }
   async function testRelays() {
     try {
+      console.log("TEST RELAYS")
             const res = await OFetch(
                 `${config.BASE_URL}/admin/panoramasign/relays`,
                 "PATCH"
@@ -42,22 +45,16 @@
   <section class="max-width-wrapper">
     <Route {currentRoute}  {params} />
   </section>
-  <!----
-  <NavigationButton navigate={"/admin/meldinger"} faIcon={"info-circle"} title="Viktige meldinger"/>
-  <NavigationButton navigate={"/admin/loyper"} faIcon={"route"} title="Løyper"/>
-  <NavigationButton navigate={"/admin/heiser"} faIcon={"skiing"} title="Heiser"/>
-  <NavigationButton navigate={"/admin/webkamera"} faIcon={"video"} title="Webkamera"/>
-  <NavigationButton navigate={"/admin/snoforhold"} faIcon={"snowflake"} title="Snøforhold"/>
-  <NavigationButton onclick={logout} faIcon={"sign-out-alt"} title="Logg av" /> 
-  <button on:click={testAvalanche}>avalanche test</button>
-  <button on:click={testRelays}>relays test</button>
-  -->
+  <Toast/>
 </div>
 
 <style>
   .admin-index {
     min-width: 100%;
     height: 100%;
+    background: #F5F2F2;
+  }
+  .admin-index > * {
     background: #F5F2F2;
   }
   @media only screen and (max-width: 600px) {

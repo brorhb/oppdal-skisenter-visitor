@@ -4,6 +4,7 @@
   import { makeSnowConditionsStore } from '../stores/SnowConditionsStore';
   import { onDestroy } from 'svelte';
   import get_publish_date from '../helpers/publishedDate';
+  import { utcToZonedTime, format } from 'date-fns-tz'
 
   let weatherStore = makeWeatherStore();
   let weatherStations = [];
@@ -55,18 +56,9 @@
   }
 
   function createDate(timeAdd = 0) {
-    const today = new Date();
-    const year = today.getFullYear();
-    let month = today.getMonth() + 1;
-    let day = today.getDate();
-    let time = today.getHours();
-    if (timeAdd !== 0) {
-      time = (time + timeAdd) % 24;
-    }
-    if (month < 10) month = `0${month}`;
-    if (day < 10) day = `0${day}`;
-    if (time < 10) time = `0${time}`;
-    return `${year}-${month}-${day}T${time}:00:00Z`;
+    const date = utcToZonedTime(Date.now(), 'Europe/Oslo');
+    const time = `${format(date, 'yyyy-MM-dd')}T${format(date, 'HH')}:00:00Z`;
+    return time;
   }
 
 function setCurrentRainData(rainData) {
@@ -82,12 +74,14 @@ function setFutureRainData(rainData) {
   let futureRainDataArray = []
   if (rainData.length > 0) {
     let currentIndex = rainData.findIndex(item => item.time == `${createDate()}`);
-    for (let i=currentIndex+1; i<=currentIndex+5; i++) { //Show weather for next five hours 
+    for (let i=currentIndex+1; i<=currentIndex+5; i++) { //Show weather for next five hours, use index to handle times at the end of the month, year, etc. 
       if (i < rainData.length) {
-        futureRainDataArray.push(rainData[i].data)
+        futureRainDataArray.push(rainData[i])
       }
     }
+    console.log(futureRainDataArray)
     return futureRainDataArray;
+    
   } else {
     return [];
   };
@@ -120,13 +114,13 @@ function findWeatherIcon(rainDataItem) {
       {/if}
     </div>
     <div class="future-weather">
-      {#if futureRainData.length}
+      {#if futureRainData.length > 0}
         {#each futureRainData as futureRainDataItem, i}
           <div class="future-weather-card">
-            <div class="small-info">{"kl. " + createDate(i+1).split("T")[1].split(":")[0]}</div>
-            <div class="future-weather-icon"><img src={findWeatherIcon(futureRainDataItem)} alt="Værikon"></div>
-            <div class="paragraph-bold">{`${futureRainDataItem.instant.details.air_temperature} ${decodeURI('%C2%B0')}C`}</div>
-            <div class="small-info">{`${futureRainDataItem.next_1_hours.details.precipitation_amount} mm`}</div>
+            <div class="small-info">{"kl. " + futureRainDataItem.time.split("T")[1].split(":")[0]}</div>
+            <div class="future-weather-icon"><img src={findWeatherIcon(futureRainDataItem.data)} alt="Værikon"></div>
+            <div class="paragraph-bold">{`${futureRainDataItem.data.instant.details.air_temperature} ${decodeURI('%C2%B0')}C`}</div>
+            <div class="small-info">{`${futureRainDataItem.data.next_1_hours.details.precipitation_amount} mm`}</div>
           </div>
         {/each}
       {/if}

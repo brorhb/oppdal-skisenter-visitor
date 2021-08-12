@@ -65,7 +65,7 @@
   {#if options} 
     <div class="custom-select-wrapper">
       <div class="custom-select">
-          <div class="custom-select__trigger"><div class="mobile-h3 selected-text">{selected_option}</div>
+          <div class="custom-select__trigger"><h3 class="selected-text">{selected_option}</h3>
               <div class="arrow"></div>
           </div>
           {#if lifts.length > 0}
@@ -116,6 +116,12 @@
   cursor: pointer;
   border-radius:4px;
 }
+@media only screen and (max-width: 800px) {
+  .custom-select__trigger {
+    padding: 0.5rem;
+  }
+}
+
 .custom-options {
   position: absolute;
   display: block;
@@ -141,7 +147,7 @@
 .custom-option {
   position: relative;
   display: block;
-  padding: 0.5rem 0.5rem 0.3rem 0.5rem;
+  padding: 1rem;
   cursor: pointer;
   transition: all 0.5s;
   display: flex;

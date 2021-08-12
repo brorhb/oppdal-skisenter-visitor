@@ -4,13 +4,15 @@
     import { makeLiftsStore } from '../stores/LiftsStore'
     import { onDestroy, onMount } from 'svelte'
     import Zones from "../components/Zones.svelte";
+    import FullscreenMap from "../components/FullscreenMap.svelte";
+    import tr from "date-fns/locale/tr";
 
     let unsubscribe
     let tracksStore = makeTracksStore()
     let liftsStore = makeLiftsStore()
     let tracks = []
     let lifts = []
-
+    let showFullscreen = false;
 
     onDestroy(() => {
         if(unsubscribe) {
@@ -34,12 +36,14 @@
     <p class="smallinfo">Åpningstidene varierer etter klokkeslett, sesong og værforhold. <a href="https://www.oppdalskisenter.no/%C3%A5pningstider" target="_blank">Gå til informasjon om åpningstider ></a></p>
     <div class="statuses-grid">
         <div id="map-wrapper">
-            <Map items={[...tracks, ...lifts]} panAndZoom={false}/>
+            <Map on:open={() => showFullscreen = true} items={[...tracks, ...lifts]} panAndZoom={false}/>
         </div> 
         <div id="zones-wrapper">
             <Zones/>
         </div>
     </div>
+    <!--<FullscreenMap on:close={() => showFullscreen = false} items={[...tracks, ...lifts]} show={showFullscreen}/>-->
+    <!-- Remove fullscreen map as it does not work properly on mobile -->
 </div>
 
 <style>
@@ -69,11 +73,6 @@
     @media only screen and (max-width: 1000px) {
         .statuses-view { 
             max-height: 100%;
-        }
-        .statuses-view > h2, p {
-            margin: 0;
-            padding: 0 0 0 1rem;
-            max-width: 85%;
         }
         #zones-wrapper {
             max-height: auto;

@@ -3,9 +3,12 @@
   import svgPanZoom from 'svg-pan-zoom'
   export let items = []
   export let panAndZoom = false;
+  export let isFullscreen = false;
+  import {createEventDispatcher} from 'svelte'
   import { map_focus } from '../stores/MapFocusStore';
   import { selected_zone } from '../stores/SelectedZoneStore'; /** Needed for zoning */
-  
+  const dispatch = createEventDispatcher();
+  const openFullscreen = () => dispatch('open')
   let map;
   let svgObj;
   let height;
@@ -61,7 +64,6 @@ function get_length(text) {
   var width = ctx.measureText(text).width;
   return width;
 }
-
 </script>
 <div class="map">
   <svg id="map"  width="{width ? width : null}" height="{height ? height : null}" viewBox="0 0 1209 767" preserveAspectRatio="xMinYMin meet" bind:this="{map}" >
@@ -74,21 +76,21 @@ function get_length(text) {
             cx={parseInt(item.coords.x)}
             cy={parseInt(item.coords.y)}
             opacity="1"
-            fill={`${item.status === "closed" ? "red" : "green"}`}
+            fill={`${item.status === "open" ? "green" : "red"}`}
             r="5"
-        ></circle>
+          ></circle>
           <circle
             class="pointer"
             cx={parseInt(item.coords.x) + 7}
             cy={parseInt(item.coords.y) + 7}
             opacity="0"
-            fill={`${item.status === "closed" ? "red" : "green"}`}
             r="14"
             on:click={() => clicked(item)}
             on:mouseover={() => clicked(item)}
             on:mouseout={() => clicked()}
-          >
-        </circle>
+          ></circle>
+          
+        
         <polygon points={`${parseInt(item.coords.x)+get_length(item.name)/2+10},${parseInt(item.coords.y)-20} ${parseInt(item.coords.x)+10},${parseInt(item.coords.y)-20} ${parseInt(item.coords.x)},${parseInt(item.coords.y)} ${parseInt(item.coords.x)-10},${parseInt(item.coords.y)-20} ${parseInt(item.coords.x)-get_length(item.name)/2-10},${parseInt(item.coords.y)-20} ${parseInt(item.coords.x)-get_length(item.name)/2-10},${parseInt(item.coords.y)-50} ${parseInt(item.coords.x)+get_length(item.name)/2+10},${parseInt(item.coords.y)-50}`} style={infoBox == item ? "fill: #2C3B6C": 'display:none'} />
         <text x={parseInt(item.coords.x)-get_length(item.name)/2} y={parseInt(item.coords.y)-30} style={infoBox == item ? 'display: border-box; font: bold 18px sans-serif; fill: #F4F8FF': 'display:none'}>{item.name}</text>  <!---ADD HOVER HERE-->   
         </g>
@@ -107,8 +109,13 @@ function get_length(text) {
     <button on:click="{zoomOut}"><i class="fas fa-minus"></i></button>
   </div>
   {/if}
+  <div class="fullscreen-button">
+    {#if !isFullscreen && false} <!-- Remove temp. as it does not work properly on mobile yet -->
+    <button on:click="{openFullscreen}"><p>Åpne kart i fullskjerm</p></button>
+    {/if}
+  </div>
   <div class="live-overlay">
-    <div class="overlay-circle red"></div>
+    <div class="direct-circle"></div>
     <p class="smallbold">DIREKTE</p>
   </div>
   <div class="information-overlay">
@@ -136,14 +143,15 @@ function get_length(text) {
     display: flex;
     flex-direction: column;
     position: absolute;
-    bottom: 15%;
-    right: 5%;
+    bottom: 4rem;
+    right: 2rem;
   }
   .zoom-buttons > button {
     width: 38px;
     height: 38px;
     padding: 11px;
-    background: #FAFAFA;
+    background: rgba(255, 255, 255, 0.81);
+    color: #2C3B6C;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -197,6 +205,15 @@ function get_length(text) {
     border-radius: 50%;
     margin-bottom: 4px;
   }
+  .direct-circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    margin-bottom: 4px;
+    background: #FB3F3F;
+    border: 1.3px solid rgba(0, 0, 0, 0.42);
+    box-sizing: border-box;
+  }
   .red {
     background: #FB3F3F;
     border: 1.3px solid rgba(0, 0, 0, 0.42);
@@ -209,16 +226,24 @@ function get_length(text) {
     box-sizing: border-box;
     box-shadow: 0px 1px 6px #74FF82;
   }
+  .fullscreen-button {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .fullscreen-button > button {
+    border: none;
+    background: rgba(244, 248, 255, 0.9);
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+  }
   @media only screen and (max-width: 1000px) {
       .map {
           height: 100%;
-          padding: 0 1rem 0 1rem;
-      }
-      .live-overlay {
-        right: 2rem;
-      }
-      .information-overlay {
-        left: 2rem;
       }
   }
 </style>
