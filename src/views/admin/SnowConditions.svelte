@@ -122,10 +122,10 @@
 </script>
 <div class="admin-snowconditions">
 <div class="admin-add snow-top-section">
-    <h1 class="sub-header">Oppdater snøforhold</h1>
-    <p class="snow-subheader">Snøforhold publiseres på <a href="https://beta.oppdalskisenter.no">oppdalskisenter.no/loypestatus</a></p>
+    <h2>Oppdater snøforhold</h2>
+    <p>Snøforhold publiseres på <a href="https://beta.oppdalskisenter.no">oppdalskisenter.no/loypestatus</a></p>
     <textarea class="oppdal-input" type="text" name="message" placeholder="Skriv litt om snøforhold her (max 150 tegn)" maxlength="150" on:keypress={get_char_left} bind:value={newCondition.message}></textarea>
-    <p id="remain-count"></p>
+    <!--<p id="remain-count"></p>-->
     <div class="button-wrapper"><button class="admin-button" on:click={() => handleClick(newCondition.message)}>Oppdater</button></div>
 </div>
 
@@ -173,9 +173,6 @@
     }
     table {
         border-collapse: collapse;
-    }
-    .snow-subheader {
-        margin: 0.5rem 0 3rem 0; 
     }
     .snow-message{
         text-align: left;

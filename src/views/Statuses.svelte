@@ -42,7 +42,8 @@
             <Zones/>
         </div>
     </div>
-    <FullscreenMap on:close={() => showFullscreen = false} items={[...tracks, ...lifts]} show={showFullscreen}/>
+    <!--<FullscreenMap on:close={() => showFullscreen = false} items={[...tracks, ...lifts]} show={showFullscreen}/>-->
+    <!-- Remove fullscreen map as it does not work properly on mobile -->
 </div>
 
 <style>

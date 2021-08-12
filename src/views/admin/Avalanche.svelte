@@ -38,34 +38,34 @@ const updateAvalanche = async () => {
 </script>
 
 <div class="admin-avalanche">
-    <h1>Skredvarsel på tavler</h1>
+    <h2>Skredvarsel på tavler</h2>
     <!--<p>Nullstilles hver natt</p>-->
     <div class="settings-container">
         <div class="avalanche-setting" on:click="{() => check(0)}">
             <div class="wrapper">
                 <input type="checkbox"  bind:checked="{checked[0]}"/>
-                <h3>Grønn (trygt)</h3>
+                <h4>Grønn (trygt)</h4>
             </div>
             <div class="avalanche-color green"></div>
         </div>
         <div class="avalanche-setting" on:click="{() => check(1)}">
             <div class="wrapper">
                 <input type="checkbox" bind:checked="{checked[1]}"/>
-                <h3>Gul (litt farlig)</h3>
+                <h4>Gul (litt farlig)</h4>
             </div>
             <div class="avalanche-color yellow"></div>
         </div>
         <div class="avalanche-setting" on:click="{() => check(2)}">
             <div class="wrapper">
                 <input type="checkbox" bind:checked="{checked[2]}"/>
-                <h3>Rødt (utrygt)</h3>
+                <h4>Rødt (utrygt)</h4>
             </div>
             <div class="avalanche-color red"></div>
         </div>
         <div class="avalanche-setting" on:click="{() => check(3)}">
             <div class="wrapper">
                 <input type="checkbox" bind:checked="{checked[3]}"/>
-                <h3>Slå av</h3>
+                <h4>Slå av</h4>
             </div>
             <div class="avalanche-color gray"></div>
         </div>
@@ -77,7 +77,7 @@ const updateAvalanche = async () => {
     .admin-avalanche {
         display: flex;
         flex-direction: column;
-        padding: 1rem;
+        margin: 2rem 0 0 0;
     }
     .settings-container {
         margin: 2rem 0 2rem 0;
@@ -127,5 +127,10 @@ const updateAvalanche = async () => {
         border-radius: 25px;
         color: #FFFFFF;
         border: none;
+    }
+    @media only screen and (max-width: 800px) {
+        .admin-avalanche {
+            padding: 1rem;
+        }
     }
 </style>

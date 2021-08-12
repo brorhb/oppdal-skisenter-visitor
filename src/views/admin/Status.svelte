@@ -89,7 +89,8 @@
     };
 </script>
 
-<div bind:this={root}>
+<div bind:this={root} class="admin-status">
+    <h2>Skredvarsel på tavler</h2>
     {#each zones as zone}
     <div class="custom-select-wrapper">
         <div class={`${zone.name} custom-select`}>
@@ -200,6 +201,9 @@
 
 
 <style>
+    .admin-status {
+        margin: 2rem 0 0 0;
+    }
     table {
         border-collapse: collapse;
     }
