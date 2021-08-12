@@ -155,6 +155,11 @@ p {
 	font-weight: 600;
 	color: #2C3B6C;
 }
+.big-paragraph {
+	font-size: 1.25rem; /*20px*/
+	font-weight: 300;
+	color: #2C3B6C;
+}
 
 button {
 	font-family: Work Sans;

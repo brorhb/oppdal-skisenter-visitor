@@ -93,7 +93,7 @@
     }
 </script> 
 
-<div class="card zones-card"> <!-- ADD GRID TO zones-card and use 2/3 rows-->
+<div class="card zones-card">
 
     <div>
         <div class="smallbold">Tilgjengelige løyper</div>
