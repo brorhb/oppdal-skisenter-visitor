@@ -72,7 +72,7 @@
     .admin-home {
         display: flex;
         flex-direction: column;
-        margin: 4rem 1rem 1rem 1rem;
+        padding: 4rem 1rem 1rem 1rem;
     }
     .admin-home > h1 {
         font-family: Work Sans;
@@ -146,5 +146,13 @@
         text-decoration-line: underline;
         color: #2C3B6C;
         cursor: pointer;
+    }
+    @media only screen and (max-width: 800px) {
+        .home-button {
+            min-width: auto;
+            width: 100%;
+            margin: 0.5rem 0;
+            padding: 1rem;
+        }
     }
 </style>

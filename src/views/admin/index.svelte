@@ -54,6 +54,9 @@ import Toast from '../../components/admin/Toast.svelte';
     height: 100%;
     background: #F5F2F2;
   }
+  .admin-index > * {
+    background: #F5F2F2;
+  }
   @media only screen and (max-width: 600px) {
     .admin-index {
       justify-content: space-evenly;

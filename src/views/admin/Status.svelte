@@ -90,7 +90,7 @@
 </script>
 
 <div bind:this={root} class="admin-status">
-    <h2>Skredvarsel på tavler</h2>
+    <h2 class="admin-status-h2">Skredvarsel på tavler</h2>
     {#each zones as zone}
     <div class="custom-select-wrapper">
         <div class={`${zone.name} custom-select`}>
@@ -103,10 +103,12 @@
                 <div><i class="fas fa-angle-down"></i></div>    
             </div>
             <div  class="custom-options">
-                <button class="admin-text-button" on:click="{() => setStatusByZone("open", zone.id)}">Åpne alle</button>
-                <button class="admin-text-button" on:click="{() => setStatusByZone("maintanence", zone.id)}">Deaktiver alle</button>
+                <div class="header-wrapper">
+                    <button class="admin-text-button bg-white" on:click="{() => setStatusByZone("open", zone.id)}">Åpne alle</button>
+                    <button class="admin-text-button bg-white" on:click="{() => setStatusByZone("maintanence", zone.id)}">Deaktiver alle</button>
+                </div>
                 <div class="table-container">
-                    <div>
+                    <div class="table-wrapper">
                         {#if zone.name != "Transport"}
                         <h3>Heiser i {zone.name}</h3>
                         <table class="admin-table">
@@ -148,7 +150,7 @@
                         </table>
                         {/if}
                     </div>
-                    <div>
+                    <div class="table-wrapper">
                         <h3>Løyper i {zone.name}</h3>
                         <table class="admin-table">
                             <tr>
@@ -201,9 +203,6 @@
     .admin-status {
         margin: 2rem 0 0 0;
     }
-    table {
-        border-collapse: collapse;
-    }
     .custom-select-wrapper {
         position: relative;
         user-select: none;
@@ -248,8 +247,9 @@
     .header-wrapper {
         display: flex;
         flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 0 1rem;
     }
-
     .status-button-text:hover {
         color: #E48D42;
         border-bottom: 1px solid #E48D42;
@@ -266,42 +266,6 @@
     .item-name{
         text-align: left;
     }
-    .admin-table {
-        margin-right: 4rem;
-        max-width: 100%;
-    }
-    .arrow {
-    position: absolute;
-    right: 20px;
-    height: 10px;
-    width: 10px;
-    }
-    .arrow::before, .arrow::after {
-    content: "";
-    position: absolute;
-    bottom: 0px;
-    width: 0.15rem;
-    height: 100%;
-    transition: all 0.5s;
-    }
-    .arrow::before {
-    left: -3px;
-    transform: rotate(-45deg);
-    background-color: #2C3B6C;
-    }
-    .arrow::after {
-    left: 3px;
-    transform: rotate(45deg);
-    background-color: #2C3B6C;
-    }
-    :global(.open .arrow::before) {
-    left: -3px;
-    transform: rotate(45deg);
-    }
-    :global(.open .arrow::after) {
-    left: 3px;
-    transform: rotate(-45deg);
-    }
     .item-status {
         display: flex;
         flex-direction: row;
@@ -313,8 +277,8 @@
         padding-right: 1rem;
     }
     input[type="checkbox"]{
-    width: 20px;
-    height: 20px;
+        width: 20px;
+        height: 20px;
     }
 
     .color-open {
@@ -329,15 +293,20 @@
     .text-center {
         text-align: center;
     }
+    .bg-white {
+        background: #fff;
+    }
     @media only screen and (max-width: 600px) {
-        .custom-select__trigger {
-        }
         .table-container {
-            
-            justify-content: left;
+            display: flex;
+            flex-direction: column;
         }
-        .admin-table > th {
-            min-width: 100%;
+        .admin-status-h2 {
+            padding: 1rem;
+        }
+        .table-wrapper {
+            width: 100%;
+            padding: 0 0 2rem 0;
         }
     }
 </style>

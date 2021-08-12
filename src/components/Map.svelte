@@ -115,7 +115,7 @@ function get_length(text) {
     {/if}
   </div>
   <div class="live-overlay">
-    <div class="overlay-circle red"></div>
+    <div class="direct-circle"></div>
     <p class="smallbold">DIREKTE</p>
   </div>
   <div class="information-overlay">
@@ -204,6 +204,15 @@ function get_length(text) {
     height: 12px;
     border-radius: 50%;
     margin-bottom: 4px;
+  }
+  .direct-circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    margin-bottom: 4px;
+    background: #FB3F3F;
+    border: 1.3px solid rgba(0, 0, 0, 0.42);
+    box-sizing: border-box;
   }
   .red {
     background: #FB3F3F;
