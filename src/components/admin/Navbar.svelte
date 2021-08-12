@@ -26,7 +26,8 @@
         display: flex;
         align-content: space-around;
         justify-content: space-between;
-        align-items: flex-end;        
+        align-items: flex-end;   
+        overflow: scroll;     
     }
     .nav-right {
         display: flex;

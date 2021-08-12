@@ -13,8 +13,10 @@ body {
 }
 .oppdal-input {
 	min-width: 300px;
-	min-height: 75px;
-	padding: 1rem;
+	padding: 0.5rem 1rem;
+	border: 1px solid #2C3B6C;
+	border-radius: 5px;
+	color: #2C3B6C;
 }
 ::placeholder {
 	font-size: 0.8125rem; /*13px*/
@@ -184,6 +186,7 @@ button {
 
 .admin-table {
 	width: 100%;
+	min-width: 100%;
 	text-align: left;
 	border-collapse: collapse;
 }
@@ -317,5 +320,13 @@ button {
 	}
 	.max-width-wrapper {
 		margin: 0 0rem 0 0rem;
+	}
+	.admin-edit {
+		max-width: 100%;
+		padding: 1rem;
+	}
+	.admin-table-row > th {
+		padding: 1rem 0 1rem 0.2rem;
+		
 	}
 }

@@ -120,7 +120,7 @@
         await createSnowCondition();
     }
 </script>
-
+<div class="admin-snowconditions">
 <div class="admin-add snow-top-section">
     <h1 class="sub-header">Oppdater snøforhold</h1>
     <p class="snow-subheader">Snøforhold publiseres på <a href="https://beta.oppdalskisenter.no">oppdalskisenter.no/loypestatus</a></p>
@@ -162,9 +162,15 @@
         </div>
     </div>
 {/if}
-
+</div>
 
 <style>
+    .admin-snowconditions {
+        margin: 1rem 0 0 0;
+    }
+    .history {
+        overflow: scroll;
+    }
     table {
         border-collapse: collapse;
     }
@@ -231,5 +237,10 @@
     }
     .toggle-text {
         padding-right: 1rem;
+    }
+    @media only screen and (max-width: 600px) {
+        .admin-snowconditions {
+            padding: 1rem;
+        }
     }
 </style>
