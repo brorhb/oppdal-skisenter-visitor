@@ -87,7 +87,6 @@
             toast.setToast('Noe gikk galt', 'error');
         }
     };
-
 </script>
 
 <div bind:this={root}>
@@ -106,25 +105,44 @@
             </div>
             <div  class="custom-options">
                 <div class="status-button-container">
-                    <div class="status-button" on:click="{() => setStatusByZone("open", zone.id)}"><p class="status-button-text">Åpne alt i {zone.name}</p></div>
-                    <div class="status-button small-info" on:click="{() => setStatusByZone("closed", zone.id)}"><p class="status-button-text">Steng alt i {zone.name}</p></div>
+                    <div class="status-button" on:click="{() => setStatusByZone("open", zone.id)}"><p class="status-button-text">Aktiver alt i {zone.name}</p></div>
+                    <div class="status-button small-info" on:click="{() => setStatusByZone("maintanence", zone.id)}"><p class="status-button-text">Deaktiver alt i {zone.name}</p></div>
                 </div>
                 <div class="table-container">
                     <div>
                         {#if zone.name != "Transport"}
                         <h3>Heiser i {zone.name}</h3>
                         <table class="admin-table">
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th><p class="smallinfo text-center">Stengt</p></th>
+                                <th><p class="smallinfo text-center">Åpen</p></th>
+                                <th><p class="smallinfo text-center">Blank</p></th>
+                            </tr>
                             <tbody>
                             {#each lifts as lift}
                                 {#if lift.zone == zone.id}
                                 <tr class="admin-table-row">
                                 <th><div class="information-bold">{(lift.map_name).toUpperCase()}</div></th>
                                 <th class="item-name information">{lift.name}</th>
+
+                                {#if lift.status == "open"}
+                                <th><p class="color-open">Åpen</p></th>
+                                {:else if lift.status == "closed"}
+                                <th><p class="color-closed">Stengt</p></th>
+                                {:else}
+                                <th><p class="color-blank">Blank</p></th>
+                                {/if}
                                 <th>
-                                    <div class="item-status">
-                                        <div class="item-status-text information" style={lift.status == "open" ? "color: #22A830;" : "color: #BABABA;" }>{lift.status == "open" ? "Åpen" : "Stengt"}</div>
-                                        <div><label class="toggle-switch"><input type="checkbox" on:change={lift.status == "open" ? () => setLiftStatus(lift, 2) : () => setLiftStatus(lift, 1)} checked={lift.status === "open"}></label></div>
-                                    </div>
+                                    <input on:change="{() => setLiftStatus(lift, 2)}" type="checkbox" checked={lift.status == "closed"}/>
+                                </th>
+                                <th>
+                                    <input on:change="{() => setLiftStatus(lift, 1)}" type="checkbox" checked={lift.status == "open"}/>
+                                </th>
+                                <th>
+                                    <input on:change="{() => setLiftStatus(lift, 3)}" type="checkbox" checked={lift.status == "maintanence"}/>
                                 </th>
                                 </tr>
                                 {/if}
@@ -142,12 +160,23 @@
                                 <tr class="admin-table-row">
                                 <th class="information-bold">{track.id}</th>
                                 <th class="item-name information">{track.name}</th>
+                                {#if track.status == "open"}
+                                <th><p class="color-open">Åpen</p></th>
+                                {:else if track.status == "closed"}
+                                <th><p class="color-closed">Stengt</p></th>
+                                {:else}
+                                <th><p class="color-blank">Blank</p></th>
+                                {/if}
                                 <th>
-                                    <div class="item-status">
-                                        <div class="item-status-text information" style={track.status == "open" ? "color: #22A830;" : "color: #BABABA;" }>{track.status == "open" ? "Åpen" : "Stengt"}</div>
-                                        <div><label class="toggle-switch"><input type="checkbox" on:change={track.status == "open" ? () => setTrackStatus(track, 2) : () => setTrackStatus(track, 1)} checked={track.status === "open"}></label></div>
-                                    </div>
+                                    <input on:change="{() => setTrackStatus(track, 2)}" type="checkbox" checked={track.status == "closed"}/>
                                 </th>
+                                <th>
+                                    <input on:change="{() => setTrackStatus(track, 1)}" type="checkbox" checked={track.status == "open"}/>
+                                </th>
+                                <th>
+                                    <input on:change="{() => setTrackStatus(track, 3)}" type="checkbox" checked={track.status == "maintanence"}/>
+                                </th>
+                            
                                 </tr>
                                 {/if}
                             {/each}
@@ -294,5 +323,18 @@
     input[type="checkbox"]{
     width: 20px;
     height: 20px;
+    }
+
+    .color-open {
+        color: #2FC93E;
+    }
+    .color-closed {
+        color: #C92F2F; 
+    }
+    .color-blank {
+        color: #2C3B6C;
+    }
+    .text-center {
+        text-align: center;
     }
 </style>

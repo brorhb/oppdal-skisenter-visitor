@@ -12,6 +12,7 @@ import AdminSnowConditions from './views/admin/SnowConditions.svelte'
 import index from './views/index.svelte'
 import AdminHome from './views/admin/AdminHome.svelte'
 import AdminStatus from './views/admin/Status.svelte'
+import AdminAvalanche from './views/admin/Avalanche.svelte'
 function userIsAdmin() {
   const user = localStorage.getItem("user")
   return user
@@ -32,6 +33,7 @@ export const routes = [
       { name: '/meldinger', component: AdminAlerts},
       { name: 'snoforhold', component: AdminSnowConditions},
       { name: '/status', component: AdminStatus },
+      { name: '/skredvarsel', component: AdminAvalanche },
       { 
         name: '/webkamera', 
         nestedRoutes: [

@@ -11,8 +11,8 @@
 {#if show}
 <div class="blur" on:click="{close}"></div>
 <div class="map-container">
-    <Map panAndZoom={true} items={items}/>
-    <button class="oppdal-button" on:click="{close}">Lukk</button>
+    <Map panAndZoom={true} items={items} isFullscreen={true}/>
+    <button on:click="{close}"><p>Lukk kart </p></button>
 </div>
 {/if}
 
@@ -25,26 +25,29 @@
         right: 0;
         z-index: 10;
         opacity: 0.9;
-        background: gray;
+        background: rgba(0, 0, 0, 0.47);
     }
     .map-container {
-        position: absolute;
+        position: fixed;
         z-index: 1000;
         min-width: 1209px;
         min-height: 767px;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        padding: 0 0 50px 0;
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-        background: #FAFAFA;
-        opacity: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
     }
-    .map-container > button {
-        max-width: 200px;
-        margin: 5px;
+    .map-container > button{
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        border: none;
+        background: rgba(244, 248, 255, 0.9);
+        border-radius: 25px;
+        padding: 0.5rem 1rem;
     }
 </style>

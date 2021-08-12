@@ -3,9 +3,12 @@
   import svgPanZoom from 'svg-pan-zoom'
   export let items = []
   export let panAndZoom = false;
+  export let isFullscreen = false;
+  import {createEventDispatcher} from 'svelte'
   import { map_focus } from '../stores/MapFocusStore';
   import { selected_zone } from '../stores/SelectedZoneStore'; /** Needed for zoning */
-  
+  const dispatch = createEventDispatcher();
+  const openFullscreen = () => dispatch('open')
   let map;
   let svgObj;
   let height;
@@ -61,7 +64,6 @@ function get_length(text) {
   var width = ctx.measureText(text).width;
   return width;
 }
-
 </script>
 <div class="map">
   <svg id="map"  width="{width ? width : null}" height="{height ? height : null}" viewBox="0 0 1209 767" preserveAspectRatio="xMinYMin meet" bind:this="{map}" >
@@ -107,6 +109,11 @@ function get_length(text) {
     <button on:click="{zoomOut}"><i class="fas fa-minus"></i></button>
   </div>
   {/if}
+  <div class="fullscreen-button">
+    {#if !isFullscreen}
+    <button on:click="{openFullscreen}"><p>Åpne kart i fullskjerm</p></button>
+    {/if}
+  </div>
   <div class="live-overlay">
     <div class="overlay-circle red"></div>
     <p class="smallbold">DIREKTE</p>
@@ -136,14 +143,15 @@ function get_length(text) {
     display: flex;
     flex-direction: column;
     position: absolute;
-    bottom: 15%;
-    right: 5%;
+    bottom: 4rem;
+    right: 2rem;
   }
   .zoom-buttons > button {
     width: 38px;
     height: 38px;
     padding: 11px;
-    background: #FAFAFA;
+    background: rgba(255, 255, 255, 0.81);
+    color: #2C3B6C;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -209,16 +217,24 @@ function get_length(text) {
     box-sizing: border-box;
     box-shadow: 0px 1px 6px #74FF82;
   }
+  .fullscreen-button {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .fullscreen-button > button {
+    border: none;
+    background: rgba(244, 248, 255, 0.9);
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+  }
   @media only screen and (max-width: 1000px) {
       .map {
           height: 100%;
-          padding: 0 1rem 0 1rem;
-      }
-      .live-overlay {
-        right: 2rem;
-      }
-      .information-overlay {
-        left: 2rem;
       }
   }
 </style>

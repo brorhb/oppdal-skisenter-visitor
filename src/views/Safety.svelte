@@ -41,7 +41,7 @@ import Skipatrulje from "../components/Skipatrulje.svelte";
             grid-template-columns: 1fr;           
         }
         .safety > h2 {
-            padding: 1rem;
+            padding: 1rem 0 1rem 0;
         }
     }
 </style>
