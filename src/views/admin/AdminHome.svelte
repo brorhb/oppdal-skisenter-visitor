@@ -55,7 +55,7 @@
     .admin-home {
         display: flex;
         flex-direction: column;
-        margin-top: 8rem;
+        margin: 8rem 1rem 1rem 1rem;
     }
     .admin-home > h1 {
         font-family: Work Sans;
@@ -75,7 +75,7 @@
         margin: 1rem 0 8rem 0;
     }
     .home-button {
-        min-width: 38%;
+        min-width: 400px;
         min-height: 70px;
         display: flex;
         justify-content: space-between;
@@ -118,6 +118,7 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
+        padding-bottom: 4rem;
     }
     .small-button {
         font-family: Work Sans;
