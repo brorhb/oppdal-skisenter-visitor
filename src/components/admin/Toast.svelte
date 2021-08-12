@@ -27,15 +27,16 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 90%;
-      min-height: 131px;
+      width: 50%;
+      min-height: 100px;
       position: fixed;
       z-index: 1000;
       bottom: 1rem;
-      left: 5%;
+      left: 25%;
       background: #2C3B6C;
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
       border-radius: 3px;
+      opacity: 75%;
     }
     .snackbar > h3 {
       color: #fff;
@@ -43,6 +44,7 @@
     }
     .snackbar > i {
       font-size: 48px;
+      padding: 0 0 1rem 0;
     }
     .snackbar-error > i {
       color: #C92F2F;
@@ -70,5 +72,11 @@
     @keyframes fadeout {
       from {bottom: 30px; opacity: 1;}
       to {bottom: 0; opacity: 0;}
+    }
+    @media only screen and (max-width: 800px) {
+      .snackbar {
+        width: 90%;
+        left: 5%;
+      }
     }
 </style>

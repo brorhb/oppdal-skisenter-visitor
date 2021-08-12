@@ -45,14 +45,6 @@ import Toast from '../../components/admin/Toast.svelte';
   <section class="max-width-wrapper">
     <Route {currentRoute}  {params} />
   </section>
-  <!----
-  <NavigationButton navigate={"/admin/meldinger"} faIcon={"info-circle"} title="Viktige meldinger"/>
-  <NavigationButton navigate={"/admin/loyper"} faIcon={"route"} title="Løyper"/>
-  <NavigationButton navigate={"/admin/heiser"} faIcon={"skiing"} title="Heiser"/>
-  <NavigationButton navigate={"/admin/webkamera"} faIcon={"video"} title="Webkamera"/>
-  <NavigationButton navigate={"/admin/snoforhold"} faIcon={"snowflake"} title="Snøforhold"/>
-  <NavigationButton onclick={logout} faIcon={"sign-out-alt"} title="Logg av" /> 
-  --->
   <Toast/>
 </div>
 

@@ -103,15 +103,12 @@
                 <div><i class="fas fa-angle-down"></i></div>    
             </div>
             <div  class="custom-options">
+                <button class="admin-text-button" on:click="{() => setStatusByZone("open", zone.id)}">Åpne alle</button>
+                <button class="admin-text-button" on:click="{() => setStatusByZone("maintanence", zone.id)}">Deaktiver alle</button>
                 <div class="table-container">
                     <div>
                         {#if zone.name != "Transport"}
-                        <div class="header-wrapper">
-                            <h3>Heiser i {zone.name}</h3>
-                            <button class="admin-text-button" on:click="{() => setStatusByZone("open", zone.id)}">Åpne alle</button>
-                            <button class="admin-text-button" on:click="{() => setStatusByZone("maintanence", zone.id)}">Deaktiver alle</button>
-                        </div>
-                        
+                        <h3>Heiser i {zone.name}</h3>
                         <table class="admin-table">
                             <tr>
                                 <th></th>

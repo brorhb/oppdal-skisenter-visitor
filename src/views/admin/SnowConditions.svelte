@@ -57,7 +57,6 @@
                 toast.setToast('En feil har oppstått', 'error');
             }
         }
-        loadSnowConditions();
         toast.setToast('Endring lagret', 'success');
         
     }
@@ -72,9 +71,7 @@
                 "POST", newCondition
             );
             toast.setToast('Ny melding lagret', 'success');
-            await loadSnowConditions();
-            toggleIsLive(snowConditions.find(object => object.message == newCondition.message)) //ØNSKER VI AT NY MELDING SKAL TOGGLES AUTOMATISK? 
-            
+            await loadSnowConditions();            
             newCondition = {
                 message: ''
             };
@@ -134,7 +131,7 @@
     <h3>Historikk</h3>
     <table class="admin-table">
         <tbody>
-        {#each snowConditions.reverse() as condition}
+        {#each snowConditions as condition}
             <tr class="admin-table-row">
             <th><p class="table-timestamp">{get_publish_date(condition.timestamp)}</p></th>
             <th class="snow-message"><p>{condition.message}</p></th>

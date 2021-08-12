@@ -34,7 +34,7 @@
                 `${config.BASE_URL}/admin/alert/${alert.id}`,
                 "PATCH", alert
             );
-            await fetchAllAlerts();
+            //await fetchAllAlerts();
             toast.setToast('Ny endring lagret', 'success');
         } catch (error) {
             console.warn(error);

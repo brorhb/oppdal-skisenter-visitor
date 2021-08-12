@@ -93,7 +93,7 @@
     }
 </script> 
 
-<div class="card zones-card"> <!-- ADD GRID TO zones-card and use 2/3 rows-->
+<div class="card zones-card">
 
     <div>
         <div class="smallbold">Tilgjengelige løyper</div>
@@ -122,12 +122,12 @@
                                     <span class="paragraph-bold" style={`color: ${difficultyIntToColor[difficultyToInt[track.difficulty]]}`}>{(difficulty[track.difficulty]).toLowerCase()}</span>
                                 </div>
                                 <div>
-                                    {#if track.status === "closed"}
-                                        <span class="small-info">Stengt</span>
-                                        <i class="fas fa-times-circle closed-icon fa-lg"></i>
-                                    {:else}
+                                    {#if track.status === "open"}
                                         <span class="small-info">Åpen</span>
                                         <i class="fas fa-check-circle open-icon fa-lg"></i>
+                                    {:else}
+                                        <span class="small-info">Stengt</span>
+                                        <i class="fas fa-times-circle closed-icon fa-lg"></i>
                                     {/if}
                                 </div>
                             </div>
@@ -152,12 +152,12 @@
                                     <p class="paragraph attraction-name">{`${lift.name} (${(lift.map_name).toUpperCase()})`}</p>
                                 </div>
                                 <div>
-                                    {#if lift.status === "closed"}
-                                        <span class="small-info">Stengt</span>
-                                        <i class="fas fa-times-circle closed-icon fa-lg"></i>
-                                    {:else}
+                                    {#if lift.status === "open"}
                                         <span class="small-info">Åpen</span>
                                         <i class="fas fa-check-circle open-icon fa-lg"></i>
+                                    {:else}
+                                        <span class="small-info">Stengt</span>
+                                        <i class="fas fa-times-circle closed-icon fa-lg"></i>
                                     {/if}
                                 </div>
                             </div>

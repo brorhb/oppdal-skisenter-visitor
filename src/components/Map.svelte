@@ -76,21 +76,21 @@ function get_length(text) {
             cx={parseInt(item.coords.x)}
             cy={parseInt(item.coords.y)}
             opacity="1"
-            fill={`${item.status === "closed" ? "red" : "green"}`}
+            fill={`${item.status === "open" ? "green" : "red"}`}
             r="5"
-        ></circle>
+          ></circle>
           <circle
             class="pointer"
             cx={parseInt(item.coords.x) + 7}
             cy={parseInt(item.coords.y) + 7}
             opacity="0"
-            fill={`${item.status === "closed" ? "red" : "green"}`}
             r="14"
             on:click={() => clicked(item)}
             on:mouseover={() => clicked(item)}
             on:mouseout={() => clicked()}
-          >
-        </circle>
+          ></circle>
+          
+        
         <polygon points={`${parseInt(item.coords.x)+get_length(item.name)/2+10},${parseInt(item.coords.y)-20} ${parseInt(item.coords.x)+10},${parseInt(item.coords.y)-20} ${parseInt(item.coords.x)},${parseInt(item.coords.y)} ${parseInt(item.coords.x)-10},${parseInt(item.coords.y)-20} ${parseInt(item.coords.x)-get_length(item.name)/2-10},${parseInt(item.coords.y)-20} ${parseInt(item.coords.x)-get_length(item.name)/2-10},${parseInt(item.coords.y)-50} ${parseInt(item.coords.x)+get_length(item.name)/2+10},${parseInt(item.coords.y)-50}`} style={infoBox == item ? "fill: #2C3B6C": 'display:none'} />
         <text x={parseInt(item.coords.x)-get_length(item.name)/2} y={parseInt(item.coords.y)-30} style={infoBox == item ? 'display: border-box; font: bold 18px sans-serif; fill: #F4F8FF': 'display:none'}>{item.name}</text>  <!---ADD HOVER HERE-->   
         </g>
