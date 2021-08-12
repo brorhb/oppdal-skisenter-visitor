@@ -110,7 +110,7 @@ function get_length(text) {
   </div>
   {/if}
   <div class="fullscreen-button">
-    {#if !isFullscreen}
+    {#if !isFullscreen && false} <!-- Remove temp. as it does not work properly on mobile yet -->
     <button on:click="{openFullscreen}"><p>Åpne kart i fullskjerm</p></button>
     {/if}
   </div>

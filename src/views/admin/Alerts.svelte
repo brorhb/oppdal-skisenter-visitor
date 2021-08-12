@@ -95,8 +95,8 @@
 </script>
 <div class="admin-alerts">
     <div class="admin-add">
-        <h1 class="sub-header">Oppdater meldinger</h1>
-        <p class="snow-subheader">Meldingene publiseres på <a href="https://beta.oppdalskisenter.no">oppdalskisenter.no/loypestatus</a></p>
+        <h2>Oppdater meldinger</h2>
+        <p>Meldingene publiseres på <a href="https://beta.oppdalskisenter.no">oppdalskisenter.no/loypestatus</a></p>
         <textarea class="oppdal-input" type="text" name="message" placeholder="Skriv en oppdatering her (max 150 tegn)" maxlength="150" bind:value={newAlert}></textarea>
         <div class="button-wrapper"><button class="admin-button" on:click={createAlert}>Publiser</button></div>
     </div>
@@ -146,9 +146,6 @@
     }
     .admin-alerts > * {
         margin: 1rem 0 0 0;
-    }
-    .snow-subheader {
-        margin: 0.5rem 0 3rem 0; 
     }
     .toggle-switch {
         position: relative;

@@ -89,29 +89,29 @@
     };
 </script>
 
-<div bind:this={root}>
+<div bind:this={root} class="admin-status">
+    <h2>Skredvarsel på tavler</h2>
     {#each zones as zone}
     <div class="custom-select-wrapper">
         <div class={`${zone.name} custom-select`}>
             <div class="custom-select__trigger" on:click={() => handleClick(zone)}>
-                <h2>{zone.name}</h2>
-                <div class="custom-select__trigger-right">
-                    {#if lifts.length > 0}
-                    <div class="trigger-status-text"><p>{`${(lifts.filter((lift) => lift.zone == zone.id && lift.status == "open")).length}/${(lifts.filter((lift) => lift.zone == zone.id)).length} heiser`}</p></div>
-                    <div class="trigger-status-text"><p>{`${(tracks.filter((track) => track.zone == zone.id && track.status == "open")).length}/${(tracks.filter((track) => track.zone == zone.id)).length} løyper`}</p></div>
-                    {/if}
-                </div>
-                <div class="arrow"></div>    
+                <h3>{zone.name}</h3>
+                {#if lifts.length > 0}
+                    <p>{`${(lifts.filter((lift) => lift.zone == zone.id && lift.status == "open")).length}/${(lifts.filter((lift) => lift.zone == zone.id)).length} heiser`}</p>
+                    <p>{`${(tracks.filter((track) => track.zone == zone.id && track.status == "open")).length}/${(tracks.filter((track) => track.zone == zone.id)).length} løyper`}</p>
+                {/if}
+                <div><i class="fas fa-angle-down"></i></div>    
             </div>
             <div  class="custom-options">
-                <div class="status-button-container">
-                    <div class="status-button" on:click="{() => setStatusByZone("open", zone.id)}"><p class="status-button-text">Aktiver alt i {zone.name}</p></div>
-                    <div class="status-button small-info" on:click="{() => setStatusByZone("maintanence", zone.id)}"><p class="status-button-text">Deaktiver alt i {zone.name}</p></div>
-                </div>
                 <div class="table-container">
                     <div>
                         {#if zone.name != "Transport"}
-                        <h3>Heiser i {zone.name}</h3>
+                        <div class="header-wrapper">
+                            <h3>Heiser i {zone.name}</h3>
+                            <button class="admin-text-button" on:click="{() => setStatusByZone("open", zone.id)}">Åpne alle</button>
+                            <button class="admin-text-button" on:click="{() => setStatusByZone("maintanence", zone.id)}">Deaktiver alle</button>
+                        </div>
+                        
                         <table class="admin-table">
                             <tr>
                                 <th></th>
@@ -126,7 +126,7 @@
                                 {#if lift.zone == zone.id}
                                 <tr class="admin-table-row">
                                 <th><div class="information-bold">{(lift.map_name).toUpperCase()}</div></th>
-                                <th class="item-name information">{lift.name}</th>
+                                <th><p>{lift.name}</p></th>
 
                                 {#if lift.status == "open"}
                                 <th><p class="color-open">Åpen</p></th>
@@ -154,12 +154,20 @@
                     <div>
                         <h3>Løyper i {zone.name}</h3>
                         <table class="admin-table">
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th><p class="smallinfo text-center">Stengt</p></th>
+                                <th><p class="smallinfo text-center">Åpen</p></th>
+                                <th><p class="smallinfo text-center">Blank</p></th>
+                            </tr>
                             <tbody>
                             {#each tracks as track}
                                 {#if track.zone == zone.id}
                                 <tr class="admin-table-row">
                                 <th class="information-bold">{track.id}</th>
-                                <th class="item-name information">{track.name}</th>
+                                <th><p>{track.name}</p></th>
                                 {#if track.status == "open"}
                                 <th><p class="color-open">Åpen</p></th>
                                 {:else if track.status == "closed"}
@@ -193,6 +201,9 @@
 
 
 <style>
+    .admin-status {
+        margin: 2rem 0 0 0;
+    }
     table {
         border-collapse: collapse;
     }
@@ -203,41 +214,29 @@
         margin: 2rem 0;
     }
     .custom-select {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+        position: relative;
+        display: flex;
+        flex-direction: column;
     }
     .custom-select__trigger {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 0 1rem 2rem;
-    font-size: 20px;
-    font-weight: 300;
-    line-height: 60px;
-    background: #FFFFFF;
-    cursor: pointer;
-    border-radius:4px;
-    }
-    .custom-select__trigger-right {
+        position: relative;
         display: flex;
-        flex-direction: row;
-        padding-right: 5rem;
-    }
-    .trigger-status-text {
-        padding-right: 5rem;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        background: #FFFFFF;
+        cursor: pointer;
+        border-radius:4px;
     }
     .custom-options {
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: #FFFFFF;
-    transition: all 0.5s;
-    display: none;
-    visibility: hidden;
-    pointer-events: none;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #FFFFFF;
+        transition: all 0.5s;
+        display: none;
+        visibility: hidden;
+        pointer-events: none;
     }
     :global(.open-container .custom-options) {  /*Global is needed to ensure that the Svelte compiler does not remove the CSS rule */
         display: block;
@@ -245,19 +244,15 @@
         pointer-events: all;
     }
     .status-button-container{
-        display: flex; 
-        flex-direction: row;
+        display: flex;
+        padding: 1rem;
+        background: #ffffff;
     }
-    .status-button{
-        border: none;
-        background-color: white;
-        margin-left: 2rem;
-        
+    .header-wrapper {
+        display: flex;
+        flex-wrap: wrap;
     }
-    .status-button-text {
-        color: #2C3B6C;
-        border-bottom: 1px solid #2C3B6C;
-    }
+
     .status-button-text:hover {
         color: #E48D42;
         border-bottom: 1px solid #E48D42;
@@ -276,7 +271,7 @@
     }
     .admin-table {
         margin-right: 4rem;
-        min-width: 390px;
+        max-width: 100%;
     }
     .arrow {
     position: absolute;
@@ -336,5 +331,16 @@
     }
     .text-center {
         text-align: center;
+    }
+    @media only screen and (max-width: 600px) {
+        .custom-select__trigger {
+        }
+        .table-container {
+            
+            justify-content: left;
+        }
+        .admin-table > th {
+            min-width: 100%;
+        }
     }
 </style>

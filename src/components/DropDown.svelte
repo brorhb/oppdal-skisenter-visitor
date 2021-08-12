@@ -65,7 +65,7 @@
   {#if options} 
     <div class="custom-select-wrapper">
       <div class="custom-select">
-          <div class="custom-select__trigger"><div class="mobile-h3 selected-text">{selected_option}</div>
+          <div class="custom-select__trigger"><h3 class="selected-text">{selected_option}</h3>
               <div class="arrow"></div>
           </div>
           {#if lifts.length > 0}
