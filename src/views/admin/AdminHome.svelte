@@ -1,5 +1,10 @@
 <script>
     import { navigateTo } from 'svelte-router-spa';
+
+    const logout = () => {
+        localStorage.removeItem('user');
+        navigateTo(`/login`)
+    }
 </script>
 
 

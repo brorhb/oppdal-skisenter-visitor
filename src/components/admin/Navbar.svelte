@@ -105,7 +105,7 @@
         }
         .nav-text {
             display: none;
-        }
+        }        
     }
    
 </style>
