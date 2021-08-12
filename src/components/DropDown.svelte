@@ -116,6 +116,12 @@
   cursor: pointer;
   border-radius:4px;
 }
+@media only screen and (max-width: 800px) {
+  .custom-select__trigger {
+    padding: 0.5rem;
+  }
+}
+
 .custom-options {
   position: absolute;
   display: block;
@@ -141,7 +147,7 @@
 .custom-option {
   position: relative;
   display: block;
-  padding: 0.5rem 0.5rem 0.3rem 0.5rem;
+  padding: 1rem;
   cursor: pointer;
   transition: all 0.5s;
   display: flex;
