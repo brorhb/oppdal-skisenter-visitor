@@ -7,7 +7,6 @@
 
 <div class="main">
     <div class="grid">
-        
         <div class="weather-wrapper">
             <Weather/>
         </div>
@@ -56,6 +55,9 @@
             "weather"
             "safety"
             "links";
+        }
+        .weather-wrapper, .statuses-wrapper, .safety-wrapper {
+            padding: 0 1rem 0 1rem;
         }
     }
 </style>

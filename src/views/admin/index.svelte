@@ -5,6 +5,7 @@
   import config from '../../helpers/config';
   import Navbar from '../../components/admin/Navbar.svelte';
   import { Route } from 'svelte-router-spa'
+import Toast from '../../components/admin/Toast.svelte';
   export let currentRoute
   export const params = {} 
   function logout() {
@@ -13,9 +14,10 @@
   }
   async function testAvalanche() {
     try {
+      console.log("TEST AVALANCHE")
             const res = await OFetch(
                 `${config.BASE_URL}/admin/panoramasign/avalanche`,
-                "PATCH", 1
+                "PATCH", 0
             )
             console.log(res)
             
@@ -25,6 +27,7 @@
   }
   async function testRelays() {
     try {
+      console.log("TEST RELAYS")
             const res = await OFetch(
                 `${config.BASE_URL}/admin/panoramasign/relays`,
                 "PATCH"
@@ -49,9 +52,8 @@
   <NavigationButton navigate={"/admin/webkamera"} faIcon={"video"} title="Webkamera"/>
   <NavigationButton navigate={"/admin/snoforhold"} faIcon={"snowflake"} title="Snøforhold"/>
   <NavigationButton onclick={logout} faIcon={"sign-out-alt"} title="Logg av" /> 
-  <button on:click={testAvalanche}>avalanche test</button>
-  <button on:click={testRelays}>relays test</button>
-  -->
+  --->
+  <Toast/>
 </div>
 
 <style>
