@@ -8,6 +8,20 @@
   let selected_option = $selected_zone;
   let init_option = selected_option;
   let root;
+  $: update_event_listeners(lifts);
+
+  function update_event_listeners(lifts) {
+    if (lifts.length > 0) {
+      for (const option of document.querySelectorAll(".custom-option")) {
+        option.addEventListener('click', function() {
+            if (!this.classList.contains('selected')) {
+                this.parentNode.querySelector('.selected').classList.remove('selected');
+                this.classList.add('selected');
+            };
+        });
+      };
+    };
+  };
 
   onMount(async () => {
     if (options) {
@@ -15,15 +29,6 @@
       wrapper.addEventListener('click', function() {
         this.querySelector('.custom-select').classList.toggle('open');
       });
-
-      for (const option of document.querySelectorAll(".custom-option")) {
-        option.addEventListener('click', function() {
-            if (!this.classList.contains('selected')) {
-                this.parentNode.querySelector('.custom-option.selected').classList.remove('selected');
-                this.classList.add('selected');
-            };
-        });
-      };
     };
   });
 

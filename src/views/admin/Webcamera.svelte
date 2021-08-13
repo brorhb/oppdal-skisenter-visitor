@@ -151,6 +151,13 @@
     .pointer {
         cursor: pointer;
     }
+    .edit-webcamera {
+        padding: 1rem 0;
+    }
+    .edit-webcamera > h2, table, button {
+        margin: 1rem 0;
+    }
+    
     @media only screen and (max-width: 600px) {
         .edit-webcamera {
             padding: 1rem;

@@ -9,6 +9,7 @@
     onDestroy(unsubscribe);
 </script>
 
+{#if alerts.length > 0}
 <div class="alerts max-width-wrapper">
     <div class="alerts-wrapper">
         <h3>Oppdateringer fra oss</h3>
@@ -20,6 +21,7 @@
         {/each}
     </div> 
 </div>
+{/if}
 
 <style>
     .alerts {
