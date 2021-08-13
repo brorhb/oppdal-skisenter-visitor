@@ -87,6 +87,18 @@
             toast.setToast('Noe gikk galt', 'error');
         }
     };
+    const updatePanoramaSign = async () => {
+        try {
+            const res = await OFetch(
+                `${config.BASE_URL}/admin/panoramasign/relays`,
+                "PATCH"
+            )
+            toast.setToast('Tavle oppdatert', 'success')
+        } catch(err) {
+            console.warn(err)
+            toast.setToast('Noe gikk galt', 'error')
+        }
+    }
 </script>
 
 <div bind:this={root} class="admin-status">
@@ -106,6 +118,7 @@
                 <div class="header-wrapper">
                     <button class="admin-text-button bg-white" on:click="{() => setStatusByZone("open", zone.id)}">Åpne alle</button>
                     <button class="admin-text-button bg-white" on:click="{() => setStatusByZone("maintanence", zone.id)}">Deaktiver alle</button>
+                    <button class="admin-text-button bg-white" on:click="{() => updatePanoramaSign()}">Oppdater tavler</button>
                 </div>
                 <div class="table-container">
                     <div class="table-wrapper">

@@ -79,7 +79,6 @@ function setFutureRainData(rainData) {
         futureRainDataArray.push(rainData[i])
       }
     }
-    console.log(futureRainDataArray)
     return futureRainDataArray;
     
   } else {
@@ -127,19 +126,21 @@ function findWeatherIcon(rainDataItem) {
     </div>
   </div>
 
-  {#if snowCondition.length > 0} <!--CHANGE TO snowCondition when no longer list!-->
+  
   <div class="card snow-card">
     <div class="snow-icon"><img src="../../assets/snowflake.svg" alt="snøikon"></div>
     <div>
       <div class="paragraph-bold">Snøforhold i løypene</div>
       <div>
-        <p><span class="time-published small-info" >{get_publish_date(snowCondition[0].timestamp)}</span>{snowCondition[0].message ? snowCondition[0].message : "Det finnes ingen nylige oppdateringer om snøforholdene i skisenteret."}</p>
+        {#if snowCondition.length > 0} <!--CHANGE TO snowCondition when no longer list!-->
+        <p><span class="time-published small-info" >{get_publish_date(snowCondition[0].timestamp)}</span>{snowCondition[0].message}</p>
+        {:else}
+        <p><span class="time-published small-info" >{get_publish_date(Date.now())}</span>{"Det finnes ingen nylige oppdateringer om snøforholdene i skisenteret."}</p>
+        {/if}
       </div>
-      
-      
     </div>
   </div>
-  {/if}
+  
 
   <div class="card">
     <div class="paragraph-bold">Værstatus i løypene</div>

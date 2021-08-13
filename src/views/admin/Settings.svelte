@@ -4,10 +4,10 @@
 
 <div class="admin-settings">
     <h1>Instillinger</h1>
-    <div>  
+    <!--<div>  
         <h3>Åpne/steng løyper og heiser</h3>
         <button on:click="{() => navigateTo('/admin/instillinger/status')}" class="admin-text-button">Rediger forhåndsinstillinger</button>
-    </div>
+    </div>-->
     <div>
         <h3>Webkamera</h3>
         <button on:click="{() => navigateTo('/admin/instillinger/webkamera')}" class="admin-text-button">Rediger webkamera</button>
