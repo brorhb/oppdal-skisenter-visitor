@@ -98,7 +98,7 @@ function findWeatherIcon(rainDataItem) {
 
   <div class="card weather-card">
     <div class="flex">
-      <div class="paragraph-bold">Værpredikasjon</div>
+      <div class="paragraph-bold">Værmelding</div>
       <p class="smallinfo">Basert på data fra <a href="https://api.met.no/" target="_blank">MET</a></p>
     </div>
     <div class="current-weather">
