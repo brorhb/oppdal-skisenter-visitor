@@ -95,5 +95,7 @@
   .button {
     width: 100%;
     cursor: pointer;
+    color: #004A7C;
+    font-weight: 600;
   }
 </style>

@@ -1,5 +1,17 @@
+<script>
+  import { onMount } from 'svelte'
+  let isPwa = false
+
+  onMount(() => {
+    isPwa = window.navigator.standalone
+  })
+
+</script>
+
 <nav class="navbar max-width-wrapper">
-  <a href="https://oppdalskisenter.no"><i class="fas fa-angle-left"></i> Tilbake til oppdalskisenter.no</a>
+  {#if !isPwa}
+    <a href="https://oppdalskisenter.no">Gå til oppdalskisenter.no</a>
+  {/if}
   <img src="../../assets/logo.svg" alt="oppdalskisenter-logo"/>
 </nav>
 
@@ -16,9 +28,6 @@
     font-family: Work Sans;
 	  font-style: normal;
     font-weight: 600;
-  }
-  .navbar > a:hover, a:visited, a:link, a:active {
-    text-decoration: none;
   }
   .navbar > a:hover {
     cursor: pointer;
