@@ -1,15 +1,15 @@
 <script>
   import { onMount } from 'svelte'
-  let isPwa = false
+  let comesFromMainSite = false
 
   onMount(() => {
-    isPwa = window.navigator.standalone
+    comesFromMainSite = document.referrer.includes("oppdalskisenter")
   })
 
 </script>
 
 <nav class="navbar max-width-wrapper">
-  {#if !isPwa}
+  {#if comesFromMainSite}
     <a href="https://oppdalskisenter.no">Gå til oppdalskisenter.no</a>
   {/if}
   <img src="../../assets/logo.svg" alt="oppdalskisenter-logo"/>
