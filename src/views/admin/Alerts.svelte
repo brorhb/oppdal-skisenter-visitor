@@ -59,6 +59,27 @@
             toast.setToast('En feil har oppstått', 'error');
         }
     }
+
+    const updateBillboard = async () => {
+      const activeAlerts = alerts.filter(alert => alert.is_live);
+      const message = activeAlerts.map(alert => alert.message).join('\n');
+      const body = {
+        message: message
+      }
+      try {
+        const result = await OFetch(
+          `${config.BASE_URL}/admin/panoramasign/message`,
+          "POST",
+          body
+        );
+        console.log(result);
+        toast.setToast('Ny melding lagret', 'success');
+      } catch (error) {
+        console.warn(error);
+        toast.setToast('En feil har oppstått', 'error');
+      }
+    }
+
     const deleteAlert = async (alert) => {
         try {
             const result = await OFetch(
@@ -98,7 +119,10 @@
         <h2>Oppdater meldinger</h2>
         <p>Meldingene publiseres på <a href="https://beta.oppdalskisenter.no">oppdalskisenter.no/loypestatus</a></p>
         <textarea class="oppdal-input" type="text" name="message" placeholder="Skriv en oppdatering her (max 150 tegn)" maxlength="150" bind:value={newAlert}></textarea>
-        <div class="button-wrapper"><button class="admin-button" on:click={createAlert}>Publiser</button></div>
+        <div class="flex row justify-between">
+            <div class="button-wrapper"><button class="admin-button" on:click={createAlert}>Publiser</button></div>
+            <div class="button-wrapper"><button class="admin-button" on:click={updateBillboard}>Oppdater tavle</button></div>
+        </div>
     </div>
 
     <div class="history">
