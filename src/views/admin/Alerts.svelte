@@ -69,7 +69,7 @@
       try {
         const result = await OFetch(
           `${config.BASE_URL}/admin/panoramasign/message`,
-          "POST",
+          "PATCH",
           body
         );
         console.log(result);
