@@ -150,12 +150,9 @@ function findWeatherIcon(rainDataItem) {
           <div class="weather-station">
             <h2>{`${station.temperature} ${decodeURI('%C2%B0')}C`}</h2>
             <div class="big-paragraph-bold">
-              {#if station.stationName.split("_")[0] == "Vangshøa"} Topp - Vangslia
-              {:else if station.stationName.split("_")[0] == "Vangslia"} Bunn - Vangslia
-              {:else} Bunn - Stølen
-              {/if}
+              {station.stationName.split("_")[0]}
             </div>
-            <div class="small-info">{station.wind.speed} {station.wind.unit.toLowerCase()}</div>
+            <div class="small-info">{station.wind.speed} {station.wind.unit.toLowerCase()} fra {getWindDirection(station.wind.direction)}</div>
             <div class="small-info">{`Målt: ${station.dateTime.split(" ")[1].substring(0, station.dateTime.split(" ")[1].length - 3)}`}</div>
           </div>
         {/if}
