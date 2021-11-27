@@ -10,6 +10,7 @@
   let newAlert = '';
   let editItem = undefined;
   let get_char_left = 500;
+  let updatingBillboard = false;
 
   onMount(async () => {
     fetchAllAlerts();
@@ -60,6 +61,7 @@
   };
 
   const updateBillboard = async () => {
+    updatingBillboard = true;
     const activeAlerts = alerts.filter((alert) => alert.is_live);
     const message = activeAlerts.map((alert) => alert.message).join('\n');
     const now = new Date();
@@ -80,6 +82,7 @@
       console.warn(error);
       toast.setToast('En feil har oppstått', 'error');
     }
+    updatingBillboard = false;
   };
 
   const deleteAlert = async (alert) => {
@@ -122,7 +125,7 @@
   <div class="admin-add">
     <h2>Oppdater meldinger</h2>
     <p>
-      Meldingene publiseres på <a href="https://beta.oppdalskisenter.no"
+      Meldingene publiseres på <a href="https://tavle.oppdalskisenter.no"
         >oppdalskisenter.no/loypestatus</a
       >
     </p>
@@ -139,7 +142,7 @@
         <button class="admin-button" on:click={createAlert}>Publiser</button>
       </div>
       <div class="button-wrapper">
-        <button class="admin-button" on:click={updateBillboard}
+        <button class="admin-button" disabled={updatingBillboard} on:click={updateBillboard}
           >Oppdater tavle</button
         >
       </div>
