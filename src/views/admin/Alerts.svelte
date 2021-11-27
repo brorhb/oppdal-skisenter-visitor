@@ -65,7 +65,10 @@
     const activeAlerts = alerts.filter((alert) => alert.is_live);
     const message = activeAlerts.map((alert) => alert.message).join('\n');
     const now = new Date();
-    const time = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+    const time = `${hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds}`;
     const body = {
       message: message,
       time,
