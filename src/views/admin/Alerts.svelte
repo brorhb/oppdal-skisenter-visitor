@@ -63,7 +63,7 @@
   const updateBillboard = async () => {
     updatingBillboard = true;
     const activeAlerts = alerts.filter((alert) => alert.is_live);
-    const message = activeAlerts.map((alert) => alert.message).join('\n');
+    const message = activeAlerts.map((alert) => alert.message).join(' ');
     const now = new Date();
     const hours = now.getHours();
     const minutes = now.getMinutes();
@@ -145,7 +145,7 @@
         <button class="admin-button" on:click={createAlert}>Publiser</button>
       </div>
       <div class="button-wrapper">
-        <button class="admin-button" disabled={updatingBillboard} on:click={updateBillboard}
+        <button class={`admin-button`} style={updatingBillboard ? "background-color: gray;" : ""} disabled={updatingBillboard} on:click={updateBillboard}
           >Oppdater tavle</button
         >
       </div>
