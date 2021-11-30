@@ -27,10 +27,10 @@
   }
 </script>
 
-<div class="">
-  <input type="text" value={username} placeholder="Brukernavn">
-  <input type="text" value={password} placeholder="Passord">
-  <button on:click={save} disabled={saving}>Lagre</button>
+<div class="pa2">
+  <input type="text" bind:value={username} placeholder="Brukernavn">
+  <input type="password" bind:value={password} placeholder="Passord">
+  <button on:click={save} class="black" disabled={saving}>Lagre</button>
   {#if saving}
     <div>Lagrer...</div>
   {/if}
