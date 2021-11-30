@@ -9,10 +9,10 @@
 
   function save() {
     saving = true
-    OFetch.post("/api/admin/create", {
-      username,
-      password
-    }).then(res => {
+    OFetch(
+      `${config.BASE_URL}/admin/create`,
+      "POST"
+    ).then(res => {
       saving = false
       if (res.status !== 200) {
         alert(res.data.message)
