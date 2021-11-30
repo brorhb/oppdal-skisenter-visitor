@@ -25,4 +25,7 @@
   <input type="text" value={username} placeholder="Brukernavn">
   <input type="text" value={password} placeholder="Passord">
   <button on:click={save} disabled={saving}>Lagre</button>
+  {#if saving}
+    <div>Lagrer...</div>
+  {/if}
 </div>
