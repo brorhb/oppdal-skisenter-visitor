@@ -14,8 +14,8 @@
       `${config.BASE_URL}/admin/create`,
       "POST",
       {
-        username,
-        password,
+        username: username,
+        password: password,
         role: 1
       }
     ).then(res => {
