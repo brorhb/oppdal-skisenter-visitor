@@ -9,8 +9,23 @@
         <button on:click="{() => navigateTo('/admin/instillinger/status')}" class="admin-text-button">Rediger forhåndsinstillinger</button>
     </div>-->
     <div>
-        <h3>Webkamera</h3>
-        <button on:click="{() => navigateTo('/admin/instillinger/webkamera')}" class="admin-text-button">Rediger webkamera</button>
+        <div>
+            <h3>Webkamera</h3>
+            <button on:click="{() => navigateTo('/admin/instillinger/webkamera')}" class="admin-text-button">Rediger webkamera</button>
+        </div>
+        <div>
+            <h3>Brukere</h3>
+            <button on:click="{() => navigateTo('/admin/instillinger/brukere')}" class="admin-text-button">Rediger brukere</button>
+        </div>
+    </div>
+
+    <h1>Brukere</h1>
+    <!--<div>  
+        <h3>Åpne/steng løyper og heiser</h3>
+        <button on:click="{() => navigateTo('/admin/instillinger/status')}" class="admin-text-button">Rediger forhåndsinstillinger</button>
+    </div>-->
+    <div>
+        
     </div>
 </div>
 

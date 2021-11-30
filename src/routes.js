@@ -8,6 +8,7 @@ import AdminLifts from './views/admin/Lifts.svelte';
 import EditItem from './views/admin/EditItem.svelte';
 import AdminAlerts from './views/admin/Alerts.svelte';
 import AdminWebcamera from './views/admin/Webcamera.svelte';
+import AdminUsers from './views/admin/Users.svelte';
 import EditWebcamera from './views/admin/EditCamera.svelte';
 import AdminSnowConditions from './views/admin/SnowConditions.svelte';
 import index from './views/index.svelte';
@@ -46,6 +47,7 @@ export const routes = [
       { name: '/status', component: AdminStatus },
       { name: '/skredvarsel', component: AdminAvalanche },
       { name: '/instillinger', component: AdminSettings },
+      { name: '/instillinger/brukere', component: AdminUsers },
       { name: '/instillinger/webkamera', component: AdminWebcamera },
       {
         name: '/webkamera',

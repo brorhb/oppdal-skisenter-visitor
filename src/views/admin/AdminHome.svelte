@@ -1,5 +1,6 @@
 <script>
     import { navigateTo } from 'svelte-router-spa';
+    import OFetch from '../../helpers/fetch';
     import { toast } from '../../stores/Toast'
     const logout = () => {
         localStorage.removeItem('user');
