@@ -12,7 +12,12 @@
     saving = true
     OFetch(
       `${config.BASE_URL}/admin/create`,
-      "POST"
+      "POST",
+      {
+        username,
+        password,
+        role: 1
+      }
     ).then(res => {
       saving = false
       if (res.status !== 200) {
