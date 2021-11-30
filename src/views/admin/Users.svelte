@@ -21,7 +21,9 @@
     ).then(res => {
       saving = false
       if (res.status !== 200) {
-        alert(res.data.message)
+        alert("Detta gikk fint! Bruker er lagt til.")
+        username = ""
+        password = ""
       }
     })
   }
