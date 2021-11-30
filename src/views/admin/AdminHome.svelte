@@ -2,6 +2,7 @@
     import { navigateTo } from 'svelte-router-spa';
     import OFetch from '../../helpers/fetch';
     import { toast } from '../../stores/Toast'
+    import config from '../../helpers/config';
     const logout = () => {
         localStorage.removeItem('user');
         navigateTo(`/login`)

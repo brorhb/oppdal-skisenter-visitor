@@ -2,6 +2,7 @@
   import Navbar from '../../components/admin/Navbar.svelte';
   import { Route } from 'svelte-router-spa'
   import OFetch from '../../helpers/fetch';
+  import config from '../../helpers/config';
 
   let username = ""
   let password = ""
