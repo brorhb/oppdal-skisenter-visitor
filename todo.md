@@ -6,42 +6,43 @@ Nuxt is a more recognized framework, with more examples and better tooling for n
 TBH I'm afraid of software rot, also known as techincal dept.
 
 ## Todos
-- [] User site
+- [ ] User site
   ### Views
-  - [] Header
-  - [] Index
-  - [] Links
-  - [] Safety
-  - [] Statuses
-  - [] Weather
-  - [] Webcam fullscreen
+  - [x] Header
+  - [ ] Index
+  - [ ] Links
+  - [ ] Safety
+  - [ ] Statuses
+  - [ ] Weather
+  - [ ] Webcam fullscreen
   ### Components
-  - [] Alert
-  - [] Avalanche
-  - [] Dropdown
-  - [] Footer
-  - [] Fullscreen map
-  - [] Navbar
-  - [] Skipatrulje
-  - [] WeatherStations
-  - [] Webcam
-  - [] Zones
-- [] Admin site
+  - [x] Alert
+  - [x] Banner
+  - [ ] Avalanche
+  - [ ] Dropdown
+  - [ ] Footer
+  - [ ] Fullscreen map
+  - [x] Navbar
+  - [ ] Skipatrulje
+  - [ ] WeatherStations
+  - [ ] Webcam
+  - [ ] Zones
+- [ ] Admin site
   ### Views
-  - [] index
-  - [] Alerts
-  - [] Avalanche
-  - [] Editcamera
-  - [] EditItem
-  - [] Lifts
-  - [] Login
-  - [] Settings
-  - [] SnowConditions
-  - [] Status
-  - [] Tracks
-  - [] Users
-  - [] Webcam
+  - [ ] index
+  - [ ] Alerts
+  - [ ] Avalanche
+  - [ ] Editcamera
+  - [ ] EditItem
+  - [ ] Lifts
+  - [ ] Login
+  - [ ] Settings
+  - [ ] SnowConditions
+  - [ ] Status
+  - [ ] Tracks
+  - [ ] Users
+  - [ ] Webcam
   ### Components
-  - [] Navbar
-  - [] NavigationButton
-  - [] Toast
+  - [ ] Navbar
+  - [ ] NavigationButton
+  - [ ] Toast
