@@ -1,9 +1,10 @@
 <template>
-  <div v-if="activeCamera" class="w-full  h-full">
+  <div v-if="activeCamera" class="w-full h-full">
     <div class="flex flex-col items-start w-full">
       <iframe
       :title="activeCamera.name"
       :src="url"
+      class="rounded-2xl"
       frameborder="0"
       allowfullscreen="true"
       scrolling="no"

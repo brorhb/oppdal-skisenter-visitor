@@ -1,5 +1,13 @@
 <template>
-  <div class="blue rounded-2xl w-full p-4">
+  <div class="flex flex-col blue rounded-2xl w-full p-4">
+    <div class="flex flex-row justify-between items-center">
+      <div class="font-bold">Værmelding</div>
+      <div class="text-xs">
+        Basert på data fra
+        <a href="https://api.met.no/" class="text-blue-400">MET</a>
+      </div>
+    </div>
+    <div class="py-1"></div>
     <div v-if="futureRainData" class="flex flex-row justify-between">
       <div
         v-for="(data, index) in futureRainData"

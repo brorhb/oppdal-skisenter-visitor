@@ -8,6 +8,7 @@
       :weatherStations="weatherStations"
       :weatherPredictions="weatherPredictions"
     ></WeatherAndCameras>
+    <map-status :tracks="tracks" :lifts="lifts" :zones="zones"></map-status>
   </div>
 </template>
 
@@ -18,12 +19,18 @@ export default {
     weatherStations: [],
     cameras: [],
     weatherPredictions: [],
+    tracks: [],
+    lifts: [],
+    zones: [],
   }),
   async fetch() {
     this.fetchAlerts();
     this.fetchWeather();
     this.fetchCameras();
     this.fetchYR();
+    this.fetchTracks();
+    this.fetchLifts();
+    this.fetchZones();
   },
   mounted() {
     /*
@@ -63,6 +70,27 @@ export default {
         .then((res) => res.json())
         .then((res) => {
           this.weatherPredictions = res;
+        });
+    },
+    fetchTracks() {
+      fetch(process.env.BASE_URL + "/tracks")
+        .then((res) => res.json())
+        .then((res) => {
+          this.tracks = res;
+        });
+    },
+    fetchLifts() {
+      fetch(process.env.BASE_URL + "/lifts")
+        .then((res) => res.json())
+        .then((res) => {
+          this.lifts = res;
+        });
+    },
+    fetchZones() {
+      fetch(process.env.BASE_URL + "/zones")
+        .then((res) => res.json())
+        .then((res) => {
+          this.zones = res;
         });
     },
   },
