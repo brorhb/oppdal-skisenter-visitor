@@ -32,6 +32,13 @@
             </div>
             <i class="fas fa-angle-right"></i>
         </div>
+        <div class="home-button" on:click="{() => navigateTo("/admin/facilities")}">
+            <div class="home-button-left">
+                <img src="../../../assets/toggle.svg" class="home-icons" alt="toggle-ikon">
+                <div class="big-paragraph">Åpne/steng fasiliteter</div>
+            </div>
+            <i class="fas fa-angle-right"></i>
+        </div>
         <div class="home-button" on:click="{() => navigateTo("/admin/snoforhold")}">
             <div class="home-button-left">
                 <img src="../../../assets/snowflake.svg" class="home-icons" alt="snowflake-ikon">

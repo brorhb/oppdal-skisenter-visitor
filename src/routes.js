@@ -4,6 +4,7 @@ import WebcamFullscreen from './views/WebcamFullscreen.svelte';
 import Login from './views/admin/Login.svelte';
 import AdminIndex from './views/admin/index.svelte';
 import AdminTracks from './views/admin/Tracks.svelte';
+import AdminFacilities from './views/admin/Facilities.svelte';
 import AdminLifts from './views/admin/Lifts.svelte';
 import EditItem from './views/admin/EditItem.svelte';
 import AdminAlerts from './views/admin/Alerts.svelte';
@@ -72,6 +73,15 @@ export const routes = [
           {
             name: '/:id',
             component: EditItem,
+          },
+        ],
+      },
+      {
+        name: '/facilities',
+        nestedRoutes: [
+          {
+            name: 'index',
+            component: AdminFacilities,
           },
         ],
       },

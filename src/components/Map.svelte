@@ -76,7 +76,7 @@ function get_length(text) {
             cx={parseInt(item.coords.x)}
             cy={parseInt(item.coords.y)}
             opacity="1"
-            fill={`${item.status === "open" ? "green" : "red"}`}
+            fill={`${item.status === "open" ? "green" : item.status === "closed" ? "red" : "gray"}`}
             r="5"
           ></circle>
           <circle
