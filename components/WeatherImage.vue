@@ -1,5 +1,5 @@
 <template>
-  <img :src="image" :alt="alt" />
+  <img :src="image" alt="Vær illustrasjon" />
 </template>
 <script>
 export default {

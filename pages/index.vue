@@ -9,6 +9,7 @@
       :weatherPredictions="weatherPredictions"
     ></WeatherAndCameras>
     <map-status :tracks="tracks" :lifts="lifts" :zones="zones"></map-status>
+    <security></security>
   </div>
 </template>
 
