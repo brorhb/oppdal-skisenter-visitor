@@ -8,10 +8,7 @@
 </template>
 <script>
 import { utcToZonedTime, format } from "date-fns-tz";
-import WeatherImage from "./WeatherImage.vue";
-import WeatherStations from './WeatherStations.vue';
 export default {
-  components: { WeatherImage, WeatherStations },
   props: ["weatherStations", "weatherPredictions"],
   computed: {},
   methods: {
@@ -23,8 +20,3 @@ export default {
   },
 };
 </script>
-<style>
-.blue {
-  background-color: #f4f8ff;
-}
-</style>

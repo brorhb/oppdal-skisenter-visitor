@@ -4,7 +4,9 @@
       <div v-if="comesFromMainSite">
         <a class="text-xl font-semibold hover:opacity-70 cursor-pointer" href="https://oppdalskisenter.no">Gå til oppdalskisenter.no</a>
       </div>
-      <img class="mr-4" src="/assets/logo.svg" alt="oppdalskisenter-logo"/>
+      <div class="p-2 rounded-xl dark:bg-gray-500">
+        <img class="mr-4" src="/assets/logo.svg" alt="oppdalskisenter-logo"/>
+      </div>
     </nav>
   </MaxWrapper>
 </template>

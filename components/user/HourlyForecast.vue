@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col blue rounded-2xl w-full p-4">
+  <div class="flex flex-col bg-accent-color dark:bg-gray-900 rounded-2xl w-full p-4">
     <div class="flex flex-row justify-between items-center">
       <div class="font-bold">Værmelding</div>
       <div class="text-xs">
@@ -38,9 +38,7 @@
 </template>
 <script>
 import { utcToZonedTime, format } from "date-fns-tz";
-import WeatherImage from './WeatherImage.vue';
 export default {
-  components: { WeatherImage },
   props: ["weatherPredictions"],
   computed: {
     futureRainData() {

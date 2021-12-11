@@ -23,10 +23,6 @@ export default {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap",
       },
-      {
-        rel: "stylesheet",
-        href: "/global.css",
-      },
     ],
   },
 
@@ -37,7 +33,9 @@ export default {
   plugins: ["~/plugins/click-outside"],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: {
+    dirs: ["~/components", "~/components/user", "~/components/admin"],
+  },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -45,6 +43,9 @@ export default {
     "@nuxtjs/tailwindcss",
     "@nuxtjs/dotenv",
   ],
+  tailwindcss: {
+    configPath: "./tailwind.config.js",
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [],

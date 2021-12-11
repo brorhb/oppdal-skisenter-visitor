@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div ref="Map">
     <svg
       class="rounded-2xl"
       id="map"
@@ -36,6 +36,13 @@
 <script>
 export default {
   props: ["tracks", "lifts", "focusedItem"],
+  watch: {
+    content() {
+      this.$nextTick(() => {
+        console.log("Map height", this.$refs.Map.clientHeight);
+      });
+    }
+  },
   computed: {
     items() {
       if (!this.tracks || !this.lifts) return false;

@@ -1,14 +1,14 @@
 <template>
   <div class="flex flex-col w-full items-start" v-click-outside="onClickOutside">
     <button
-      class="flex flex-row w-full bg-blue-800 text-white font-bold text-lg p-2 rounded-xl justify-between items-center"
+      class="flex flex-row w-full bg-blue-800 dark:bg-gray-800 text-white font-bold text-lg p-2 rounded-xl justify-between items-center"
       @click="showDropdown = !showDropdown"
     >
       <div v-if="value">{{ value.name }}</div>
       <chevron-down v-if="!showDropdown"></chevron-down>
       <chevron-up v-else></chevron-up>
     </button>
-    <div v-if="showDropdown" class="mt-2 bg-white rounded-xl p-2 w-full">
+    <div v-if="showDropdown" class="mt-2 bg-white dark:bg-gray-800 rounded-xl p-2 w-full">
       <div v-for="(option, index) in options" :key="index" class="w-full">
         <button @click="() => select(option)" class="w-full">
           <div>

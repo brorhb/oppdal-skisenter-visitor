@@ -1,6 +1,6 @@
 <template>
   <max-wrapper class="pb-2">
-    <div class="blue rounded-2xl w-full p-4">
+    <div class="bg-accent-color dark:bg-gray-900 rounded-2xl w-full p-4">
       <div>
         <h1 class="font-bold text-4xl">Hvilke heiser og løyper er åpne nå?</h1>
         <div class="text-sm">
@@ -14,8 +14,8 @@
         >
       </div>
       <div class="py-1"></div>
-      <div class="flex md:flex-row flex-col w-full">
-        <div class="w-full md:w-2/3 rounded-2xl">
+      <div class="flex lg:flex-row flex-col w-full h-full">
+        <div class="w-full lg:w-2/3">
           <Map
             :tracks="tracks"
             :lifts="lifts"
@@ -24,7 +24,7 @@
           ></Map>
         </div>
         <div class="px-2"></div>
-        <div class="w-full md:w-1/3">
+        <div class="w-full lg:w-1/3 lg:max-h-521px">
           <item-statuses
             :focusedItem="focusedItem"
             @onFocus="(value) => (focusedItem = value)"

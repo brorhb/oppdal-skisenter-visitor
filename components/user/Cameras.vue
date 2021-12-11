@@ -16,7 +16,7 @@
       v-for="(camera, index) in cameras"
       :key="index"
       @click="() => (activeCamera = camera)"
-      :class="`py-2 px-4 m-2 rounded-full ${camera.id === activeCamera.id ? 'orange text-white' : 'bg-gray-200'}`"
+      :class="`py-2 px-4 m-2 rounded-full ${camera.id === activeCamera.id ? 'bg-yellow-600 dark:bg-yellow-700 text-white' : 'bg-gray-200 dark:bg-gray-900'}`"
     >
       {{ camera.name }}
     </button>

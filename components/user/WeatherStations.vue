@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-full blue rounded-2xl w-full p-4">
+  <div class="flex flex-col bg-accent-color dark:bg-gray-900 rounded-2xl w-full p-4">
     <div v-if="currentRainData" class="flex flex-row justify-center">
       <WeatherImage
           class="w-20 items-center"
@@ -8,7 +8,7 @@
     </div>
     <div class="flex flex-wrap">
       <div
-        v-for="station in stations"
+        v-for="station in computedStations"
         :key="station.id"
         class="p-2 w-full md:w-1/2"
       >
@@ -33,6 +33,9 @@ import { utcToZonedTime, format } from "date-fns-tz";
 export default {
   props: ["stations", "weatherPredictions"],
   computed: {
+    computedStations() {
+      return this.stations.filter(station => !station.error);
+    },
     currentRainData() {
       if (this.weatherPredictions.length > 0) {
         const currentRainData = this.weatherPredictions.find(

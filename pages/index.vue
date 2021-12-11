@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center h-full w-full font-sans">
+  <div class="flex flex-col items-center h-full w-full font-sans dark:bg-gray-800 bg-white dark:text-white">
     <Navbar></Navbar>
     <Banner></Banner>
     <Alerts :alerts="alerts"></Alerts>

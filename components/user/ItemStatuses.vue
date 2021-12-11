@@ -1,9 +1,8 @@
 <template>
-  <div class="flex flex-col w-full">
-    <div class="flex flex-col blue rounded-2xl w-full p-4">
-      <div class="text-xs font-bold pb-4">Tilgjenglige løyper</div>
+  <div class="flex flex-col w-full h-full">
+    <div class="flex flex-col bg- rounded-2xl w-full pb-4 pt-4 lg:pt-0">
       <div class="flex flex-col">
-        <div class="text-xs">Område</div>
+        <div class="text-xs font-bold">Område</div>
         <div class="py-1"></div>
         <div class="w-full flex flex-row">
           <map-items-dropdown
@@ -15,28 +14,28 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-col blue rounded-2xl w-full p-4 mt-2 md:h-50">
-      <div class="text-xs font-bold pb-4">Løyper</div>
-      <item-list
-        :focusedItem="focusedItem"
-        @onFocus="(val) => $emit('onFocus', val)"
-        :items="tracksInActiveZone"
-      ></item-list>
-    </div>
-    <div class="flex flex-col blue rounded-2xl w-full p-4 mt-2 md:h-50">
-      <div class="text-xs font-bold pb-4">Heiser</div>
-      <item-list
-        :focusedItem="focusedItem"
-        @onFocus="(val) => $emit('onFocus', val)"
-        :items="liftsInActiveZone"
-      ></item-list>
+    <div class="h-full overflow-scroll overscroll-contain bg-white dark:bg-gray-800 rounded-2xl">
+      <div class="flex flex-col w-full p-4 mt-2">
+        <div class="text-xs font-bold pb-4">Heiser</div>
+        <item-list
+          :focusedItem="focusedItem"
+          @onFocus="(val) => $emit('onFocus', val)"
+          :items="liftsInActiveZone"
+        ></item-list>
+      </div>
+      <div class="flex flex-col w-full p-4">
+        <div class="text-xs font-bold pb-4">Løyper</div>
+        <item-list
+          :focusedItem="focusedItem"
+          @onFocus="(val) => $emit('onFocus', val)"
+          :items="tracksInActiveZone"
+        ></item-list>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import MapItemsDropdown from "./MapItemsDropdown.vue";
 export default {
-  components: { MapItemsDropdown },
   props: ["items", "selectedZone", "zones", "focusedItem"],
   methods: {
     onSelect(zone) {
