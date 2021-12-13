@@ -9,10 +9,9 @@
 </script>
 
 <nav class="navbar max-width-wrapper">
-  {#if comesFromMainSite}
-    <a href="https://oppdalskisenter.no">Gå til oppdalskisenter.no</a>
-  {/if}
-  <img src="../../assets/logo.svg" alt="oppdalskisenter-logo"/>
+  <a href="https://oppdalskisenter.no">
+    <img src="../../assets/logo.svg" alt="oppdalskisenter-logo"/>
+  </a>
 </nav>
 
 <style>
