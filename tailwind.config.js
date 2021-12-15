@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         "accent-color": "#F4F8FF",
         alert: "#FFF0E4",
+        "dark-accent": "#4C546D",
       },
     },
   },

@@ -1,9 +1,8 @@
 <template>
-  <div class="flex flex-col p-4 w-full">
+  <div class="flex flex-col md:pl-4 w-full">
     <weather-stations :stations="weatherStations" :weatherPredictions="weatherPredictions"></weather-stations>
     <div class="py-2"></div>
     <hourly-forecast :weatherPredictions="weatherPredictions"></hourly-forecast>
-    <div class="py-2"></div>
   </div>
 </template>
 <script>

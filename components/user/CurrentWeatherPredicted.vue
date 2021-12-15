@@ -51,6 +51,10 @@ export default {
     },
   },
   methods: {
+    tempBelowZero(temp) {
+      temp = parseFloat(temp);
+      return temp < 0;
+    },
     createDate(timeAdd = 0) {
       const date = utcToZonedTime(Date.now(), "Europe/Oslo");
       const time = `${format(date, "yyyy-MM-dd")}T${format(date, "HH")}:00:00Z`;

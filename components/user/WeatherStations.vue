@@ -10,9 +10,9 @@
       <div
         v-for="station in computedStations"
         :key="station.id"
-        class="p-2 w-full md:w-1/2"
+        class="p-2 lg:w-1/2 items-center"
       >
-        <h1 class="text-4xl font-bold">{{ station.temperature }}</h1>
+        <h1 :class="`text-4xl font-bold ${tempBelowZero(station.temperature) ? 'text-blue-500' : 'text-red-500'}`">{{ station.temperature }}</h1>
         <h2 class="text-xl font-bold">{{ cleanName(station.stationName) }}</h2>
         <div class="flex flex-row text-sm text-gray-600">
           {{ station.wind.speed }} m/s fra
@@ -48,6 +48,10 @@ export default {
     },
   },
   methods: {
+    tempBelowZero(temp) {
+      temp = parseFloat(temp);
+      return temp < 0;
+    },
     cleanName(name) {
       name = name.split(" ")[0];
       return name.replace("_", "");

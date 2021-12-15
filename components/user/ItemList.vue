@@ -58,7 +58,6 @@ export default {
           text = "Terrengpark";
           break;
       }
-      console.log(color, text);
       return {
         color: color,
         text: text,

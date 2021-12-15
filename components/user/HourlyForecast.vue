@@ -20,7 +20,7 @@
         <div>
           <weather-image :name="data.data.next_1_hours.summary.symbol_code"></weather-image>
         </div>
-        <div class="font-bold">
+        <div :class="`font-bold ${tempBelowZero(data.data.instant.details.air_temperature) ? 'text-blue-500' : 'text-red-500'}`">
           {{
             `${
               data.data.instant.details.air_temperature
@@ -59,6 +59,10 @@ export default {
     },
   },
   methods: {
+    tempBelowZero(temp) {
+      temp = parseFloat(temp);
+      return temp < 0;
+    },
     createDate(timeAdd = 0) {
       const date = utcToZonedTime(Date.now(), "Europe/Oslo");
       const time = `${format(date, "yyyy-MM-dd")}T${format(date, "HH")}:00:00Z`;

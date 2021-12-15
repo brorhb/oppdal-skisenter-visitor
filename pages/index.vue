@@ -9,7 +9,9 @@
       :weatherPredictions="weatherPredictions"
     ></WeatherAndCameras>
     <map-status :tracks="tracks" :lifts="lifts" :zones="zones"></map-status>
-    <security></security>
+    <security :avalancheWarnings="avalancheWarnings"></security>
+    <div class="pt-4"></div>
+    <Footer></Footer>
   </div>
 </template>
 
@@ -23,6 +25,7 @@ export default {
     tracks: [],
     lifts: [],
     zones: [],
+    avalancheWarnings: [],
   }),
   async fetch() {
     this.fetchAlerts();
@@ -32,6 +35,7 @@ export default {
     this.fetchTracks();
     this.fetchLifts();
     this.fetchZones();
+    this.fetchAvalancheWarnings();
   },
   mounted() {
     /*
@@ -94,6 +98,13 @@ export default {
           this.zones = res;
         });
     },
+    fetchAvalancheWarnings() {
+      fetch(process.env.BASE_URL + "/avalanche-warning")
+        .then((res) => res.json())
+        .then((res) => {
+          this.avalancheWarnings = res;
+        });
+    }
   },
 };
 </script>

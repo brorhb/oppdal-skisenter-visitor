@@ -1,5 +1,5 @@
 <template>
-  <div v-if="activeCamera" class="w-full h-full">
+  <div v-if="activeCamera" class="w-full h-full dark:bg-gray-900 rounded-xl px-2">
     <div class="flex flex-col items-start w-full">
       <iframe
       :title="activeCamera.name"
@@ -16,7 +16,7 @@
       v-for="(camera, index) in cameras"
       :key="index"
       @click="() => (activeCamera = camera)"
-      :class="`py-2 px-4 m-2 rounded-full ${camera.id === activeCamera.id ? 'bg-yellow-600 dark:bg-yellow-700 text-white' : 'bg-gray-200 dark:bg-gray-900'}`"
+      :class="`py-2 px-4 mt-2 rounded-full ${camera.id === activeCamera.id ? 'bg-yellow-600 dark:bg-yellow-700 text-white' : 'bg-gray-200 dark:bg-gray-900'}`"
     >
       {{ camera.name }}
     </button>

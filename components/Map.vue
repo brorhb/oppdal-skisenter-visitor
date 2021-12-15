@@ -36,13 +36,6 @@
 <script>
 export default {
   props: ["tracks", "lifts", "focusedItem"],
-  watch: {
-    content() {
-      this.$nextTick(() => {
-        console.log("Map height", this.$refs.Map.clientHeight);
-      });
-    }
-  },
   computed: {
     items() {
       if (!this.tracks || !this.lifts) return false;
@@ -50,9 +43,6 @@ export default {
     },
   },
   methods: {
-    didEnter(item) {
-      console.log(item);
-    },
     isFocused(item) {
       const itemAsString = JSON.stringify(item);
       const focusedItemAsString = JSON.stringify(this.focusedItem);

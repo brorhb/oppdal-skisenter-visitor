@@ -1,5 +1,5 @@
 <template>
-  <max-wrapper class="pb-2">
+  <max-wrapper class="pb-2 md:px-0 px-4">
     <div class="bg-accent-color dark:bg-gray-900 rounded-2xl w-full p-4">
       <div>
         <h1 class="font-bold text-4xl">Hvilke heiser og løyper er åpne nå?</h1>
