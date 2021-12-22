@@ -2,8 +2,29 @@
   <div
     class="absolute flex flex-col items-center h-full w-full font-sans dark:bg-gray-800 bg-white dark:text-white"
   >
-    <max-wrapper>
-      Hello
+    <max-wrapper class="w-full h-full">
+      <div class="flex flex-col justify-center w-full h-full">
+        <div class="flex flex-row justify-center items-center w-full h-full">
+          <div class="w-full p-4 md:w-1/3 bg-gray-700 rounded-xl">
+            <div class="p-2 flex flex-row w-full justify-center font-bold text-2xl">Logg inn</div>
+            <div class="font-bold">Brukernavn</div>
+            <input
+              class="w-full p-2 rounded-lg text-gray-100 bg-gray-500"
+              placeholder="Brukernavn"
+              type="text"
+              v-model="username"
+            />
+            <div class="py-1"></div>
+            <div class="font-bold">Passord</div>
+            <input
+              class="w-full p-2 rounded-lg text-gray-100 bg-gray-500"
+              placeholder="Brukernavn"
+              type="text"
+              v-model="password"
+            />
+          </div>
+        </div>
+      </div>
     </max-wrapper>
   </div>
 </template>
