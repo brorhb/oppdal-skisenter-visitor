@@ -3,6 +3,30 @@
     import Safety from "./Safety.svelte";
     import Statuses from "./Statuses.svelte";
     import Weather from "./Weather.svelte";
+    import { onMount } from "svelte";
+    import config from "../helpers/config";
+
+    const getUUID = () => {
+        const uuid = localStorage.getItem("uuid");
+        if (uuid) {
+            return uuid;
+        }
+        const newUUID = uuidv4();
+        localStorage.setItem("uuid", newUUID);
+        return newUUID;
+    };
+
+    onMount(() => {
+        fetch(`${config.BASE_URL}/v1/analytics`, {
+            method: "POST",
+            body: {
+                url: window.location.href,
+                uuid: getUUID(),
+                referrer: window.document.referrer,
+            }
+        })
+    })
+    
 </script>
 
 <div class="main">
