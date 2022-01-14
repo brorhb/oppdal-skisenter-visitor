@@ -30,7 +30,7 @@
   };
 
   onMount(() => {
-    fetch(`${config.BASE_URL}/v1/analytics`, {
+    fetch(`${config.BASE_URL}/analytics`, {
       method: "POST",
       body: {
         url: window.location.href,
