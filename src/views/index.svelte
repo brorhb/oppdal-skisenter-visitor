@@ -32,11 +32,11 @@
   onMount(() => {
     fetch(`${config.BASE_URL}/analytics`, {
       method: "POST",
-      body: {
+      body: JSON.stringify({
         url: window.location.href,
         uuid: getUUID(),
         referrer: window.document.referrer,
-      },
+      }),
     });
   });
 </script>
