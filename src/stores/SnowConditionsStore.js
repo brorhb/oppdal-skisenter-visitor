@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import config from '../helpers/config';
+import OFetch from '../helpers/fetch';
 
 let cache
 const store = writable([])
@@ -28,15 +29,10 @@ export const makeSnowConditionsStore = () => {
 
 const fetchData = async (data, set) => {
   try {
-    const response = await fetch(`${config.BASE_URL}/snow-conditions`)
-    if(response.ok) {
-      return await response.json()
-    } else {
-      const text = response.text()
-      throw new Error(text);
-    }
-    
-  } catch(error) {
+    const response = await OFetch(`${config.BASE_URL}/snow-conditions`)
+    return response
+
+  } catch (error) {
     return error
   }
 }

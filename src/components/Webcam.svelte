@@ -1,78 +1,86 @@
 <script>
-import { onMount, onDestroy } from "svelte"
-import { makeZoneStore } from '../stores/ZoneStore'
-import { makeCamerasStore } from '../stores/CamerasStore'
+    import { onMount, onDestroy } from "svelte";
+    import { makeZoneStore } from "../stores/ZoneStore";
+    import { makeCamerasStore } from "../stores/CamerasStore";
 
-let zonesWithCamera = [];
-let formattedCameras = [];
-let selectedZoneId = 1;
+    let zonesWithCamera = [];
+    let formattedCameras = [];
+    let selectedZoneId = 1;
 
-let camerasStore = makeCamerasStore()
-let cameras = []
+    let camerasStore = makeCamerasStore();
+    let cameras = [];
 
-let zoneStore = makeZoneStore()
-let zones = []
+    let zoneStore = makeZoneStore();
+    let zones = [];
 
-let unsubscribe
+    let unsubscribe;
 
-$: formattedCameras = cameras.map(camera => {
-    if(camera.url.includes("${PARENT}")) camera.url = camera.url.replace("${PARENT}", window.location.host)
-    return camera
-})
+    $: formattedCameras = cameras.map((camera) => {
+        if (camera.url.includes("${PARENT}"))
+            camera.url = camera.url.replace("${PARENT}", window.location.host);
+        return camera;
+    });
 
-$: zonesWithCamera = cameras.reduce((acc, curr) => {
-    const exists = acc.find((item) => item?.id === curr.zone)
-    if (exists) return acc
-    else {
-        acc.push(zones.find((zone) => zone.id === curr.zone))
-        return acc
-    }
-}, [])
+    $: zonesWithCamera = cameras.reduce((acc, curr) => {
+        const exists = acc.find((item) => item?.id === curr.zone);
+        if (exists) return acc;
+        else {
+            acc.push(zones.find((zone) => zone.id === curr.zone));
+            return acc;
+        }
+    }, []);
 
-onMount(() => {
-    zoneStore.subscribe((data) => {
-        zones = data
-    })
-    unsubscribe = camerasStore.subscribe((data) => {
-        cameras = data
-    })
-})
+    onMount(() => {
+        zoneStore.subscribe((data) => {
+            console.log(data);
+            zones = data;
+        });
+        unsubscribe = camerasStore.subscribe((data) => {
+            console.log(data);
+            cameras = data;
+        });
+    });
 
-onDestroy(() => {
-    if(unsubscribe) {
-        unsubscribe()
-        unsubscribe = null
-    }
-})
-
+    onDestroy(() => {
+        if (unsubscribe) {
+            unsubscribe();
+            unsubscribe = null;
+        }
+    });
 </script>
+
 {#if zonesWithCamera.length > 0}
-<div class="webcamera-container">   
-    <div class="webcamera">
-        {#each formattedCameras as camera}
-        {#if camera.zone == selectedZoneId}
-            <div class="embed">
-                <iframe
-                title={camera.title}
-                src={camera.url}
-                frameborder="0"
-                allowfullscreen="true"
-                scrolling="no"
-                height="100%"
-                width="100%"
-                ></iframe>   
-            </div>
-        {/if}
-        {/each}
-        <div class="buttons"> 
-            {#each zonesWithCamera as zone}
-                {#if zone} <!-- TODO: Find out why zone can be undefined ...-->
-                <button on:click="{() => selectedZoneId = zone.id}" class="{zone.id == selectedZoneId ? "active" : ""}"><i class="fas fa-video"></i> {zone.name}</button>
+    <div class="webcamera-container">
+        <div class="webcamera">
+            {#each formattedCameras as camera}
+                {#if camera.zone == selectedZoneId}
+                    <div class="embed">
+                        <iframe
+                            title={camera.title}
+                            src={camera.url}
+                            frameborder="0"
+                            allowfullscreen="true"
+                            scrolling="no"
+                            height="100%"
+                            width="100%"
+                        />
+                    </div>
                 {/if}
             {/each}
+            <div class="buttons">
+                {#each zonesWithCamera as zone}
+                    {#if zone}
+                        <!-- TODO: Find out why zone can be undefined ...-->
+                        <button
+                            on:click={() => (selectedZoneId = zone.id)}
+                            class={zone.id == selectedZoneId ? "active" : ""}
+                            ><i class="fas fa-video" /> {zone.name}</button
+                        >
+                    {/if}
+                {/each}
+            </div>
         </div>
     </div>
-</div>
 {/if}
 
 <style>
@@ -105,32 +113,31 @@ onDestroy(() => {
     .buttons > button {
         width: 125px;
         height: 40px;
-        background: #F4F8FF;
+        background: #f4f8ff;
         border: none;
         box-sizing: border-box;
         border-radius: 25px;
         margin-right: 11px;
-        color: #2C3B6C;
+        color: #2c3b6c;
     }
-    .buttons > button:hover   {
-        background: #2C3B6C;
-        color: #F4F8FF;
+    .buttons > button:hover {
+        background: #2c3b6c;
+        color: #f4f8ff;
     }
     .buttons > .active {
-        background: #E48D42;
-        border: 2px solid #F08532;
-        color: #F4F8FF;
-    }   
+        background: #e48d42;
+        border: 2px solid #f08532;
+        color: #f4f8ff;
+    }
     .buttons > .active:hover {
-        background: #E48D42;
-        border: 2px solid #F08532;
-        color: #F4F8FF;
-    }   
+        background: #e48d42;
+        border: 2px solid #f08532;
+        color: #f4f8ff;
+    }
     @media only screen and (max-width: 1000px) {
         .webcamera-container {
             width: 100%;
             min-height: 500px;
         }
     }
-
 </style>

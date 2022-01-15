@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import config from '../helpers/config';
+import OFetch from '../helpers/fetch';
 
 let cache
 const store = writable([])
@@ -9,7 +10,7 @@ export const makeRainStore = () => {
         if (cache) {
             store.set(cache)
             setTimeout(() => {
-                cache=false
+                cache = false
                 load()
             }, 300000)
             return
@@ -27,14 +28,9 @@ export const makeRainStore = () => {
 
 const fetchData = async (data, set) => {
     try {
-        const response = await fetch(`${config.BASE_URL}/rain-report`)
-        if(response.ok) {
-            return await response.json()
-        } else {
-            const text = response.text()
-            throw new Error(text)
-        }
-    } catch(error) {
+        const response = await OFetch(`${config.BASE_URL}/rain-report`)
+        return response
+    } catch (error) {
         return error
     }
 }

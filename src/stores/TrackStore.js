@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import config from '../helpers/config';
+import OFetch from '../helpers/fetch';
 
 let cache
 const store = writable([])
@@ -35,13 +36,9 @@ export async function updateTracks() {
 
 const fetchData = async () => {
   try {
-    const response = await fetch(`${config.BASE_URL}/tracks`);
-    if(response.ok) {
-      return await response.json()
-    } else {
-      throw new Error(response)
-    }
-  } catch(error) {
+    const response = await OFetch(`${config.BASE_URL}/tracks`);
+    return response
+  } catch (error) {
     return error
   }
 }
