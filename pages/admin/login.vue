@@ -18,10 +18,14 @@
             <div class="font-bold">Passord</div>
             <input
               class="w-full p-2 rounded-lg text-gray-100 bg-gray-500"
-              placeholder="Brukernavn"
-              type="text"
+              placeholder="Passord"
+              type="password"
               v-model="password"
             />
+            <div class="py-1"></div>
+            <div class="flex flex-row justify-end">
+              <button class="p-2 bg-blue-400 rounded-xl" @click="login">Logg inn</button>
+            </div>
           </div>
         </div>
       </div>
@@ -50,7 +54,7 @@ export default {
       })
         .then((res) => res.json())
         .then((res) => {
-          if (res.success) {
+          if (res.token) {
             window.localStorage.setItem("token", res.token);
             this.$router.push("/admin");
           } else {

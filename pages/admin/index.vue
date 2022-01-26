@@ -1,6 +1,6 @@
 <template>
-  <div>
-    hello admin
+  <div class="absolute flex flex-col items-center h-full w-full font-sans dark:bg-gray-700 bg-white dark:text-white">
+    <admin-navbar></admin-navbar>
   </div>
 </template>
 <script>

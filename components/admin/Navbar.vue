@@ -1,0 +1,22 @@
+<template>
+  <MaxWrapper>
+    <nav class="flex justify-between align-center py-4 w-full max-w-screen-xl bg-gray-800">
+      <nuxt-link to="/admin" class="p-2 rounded-xl dark:bg-gray-500">
+        <img class="mr-4" src="/assets/logo.svg" alt="oppdalskisenter-logo"/>
+      </nuxt-link>
+    </nav>
+  </MaxWrapper>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      comesFromMainSite: false
+    }
+  },
+  mounted() {
+    this.comesFromMainSite = document.referrer.includes('oppdalskisenter')
+  }
+}
+</script>
