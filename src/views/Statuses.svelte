@@ -23,7 +23,7 @@
 
     onMount(async () => {
         tracksStore.subscribe((data) => {
-            tracks = data
+            tracks = data.filter((item) => item["hide_for_user"] !== 1)
         })
         unsubscribe = liftsStore.subscribe((data) => {
             lifts = data

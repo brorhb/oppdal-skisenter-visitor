@@ -28,7 +28,7 @@
 
   onMount(() => {
     unsubscribe = trackStore.subscribe((data) => {
-      tracks = data;
+      tracks = data.filter((item) => item["hide_for_user"] !== 1)
     });
     unsubscribe = liftStore.subscribe((data) => {
       lifts = data;
