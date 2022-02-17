@@ -30,7 +30,8 @@
     </div>
 </div>
 <div class="hamburger-div responsive" id="hamburger">
-    <div class="hamburger-text" on:click="{() => handle_hamburger_click("/admin/status")}"><img src="../../../assets/toggle_light.svg" alt="toggle-ikon">Åpne/steng løyper, heiser og fasiliteter</div>
+    <div class="hamburger-text" on:click="{() => handle_hamburger_click("/admin/status")}"><img src="../../../assets/toggle_light.svg" alt="toggle-ikon">Løyper/Heiser</div>
+    <div class="hamburger-text" on:click="{() => handle_hamburger_click("/admin/facilities")}"><img src="../../../assets/toggle_light.svg" alt="toggle-ikon">Fasiliteter</div>
     <div class="hamburger-text" on:click="{() => handle_hamburger_click("/admin/meldinger")}"><img src="../../../assets/message_light.svg" alt="message-ikon">Oppdater meldinger</div>
     <div class="hamburger-text" on:click="{() => handle_hamburger_click("/admin/snoforhold")}"><img src="../../../assets/snowflake_light.svg" alt="snowflake-ikon">Oppdater snøforhold</div>
     <div class="hamburger-text" on:click="{() => handle_hamburger_click("/admin/skredvarsel")}"><img src="../../../assets/table_light.svg" alt="table-ikon">Skredvarsel på tavler</div>
