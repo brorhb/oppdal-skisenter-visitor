@@ -21,7 +21,8 @@
             <div class="nav-text" on:click="{() => navigateTo("/admin/skredvarsel")}">Skredvarsel</div>
             <div class="nav-text" on:click="{() => navigateTo("/admin/snoforhold")}">Snøforhold</div>
             <div class="nav-text" on:click="{() => navigateTo("/admin/meldinger")}">Meldinger</div>
-            <div class="nav-text" on:click="{() => navigateTo("/admin/status")}">Åpne/steng</div>
+            <div class="nav-text" on:click="{() => navigateTo("/admin/facilities")}">Fasiliteter</div>
+            <div class="nav-text" on:click="{() => navigateTo("/admin/status")}">Løyper/Heise</div>
             <div class="icon" on:click={open_hamburger}>
                 <i class="fas fa-bars fa-lg"></i>
             </div>
