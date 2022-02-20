@@ -114,10 +114,10 @@ function get_length(text) {
     <button on:click="{openFullscreen}"><p>Åpne kart i fullskjerm</p></button>
     {/if}
   </div>
-  <div class="live-overlay">
+  <!--<div class="live-overlay">
     <div class="direct-circle"></div>
     <p class="smallbold">DIREKTE</p>
-  </div>
+  </div>-->
   <div class="information-overlay">
     <div>
       <div class="overlay-circle green"></div>
