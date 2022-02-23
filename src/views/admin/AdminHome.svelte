@@ -62,10 +62,10 @@
         </div>
     </div>
 
-    <div class="medium-button" on:click="{panoramaSignTurnOff}">
-        <img src="../../../assets/onoff.svg" alt="toggle-ikon">
-        <div class="small-info">Sett tavler på mørk</div>
-    </div>
+    <button class="medium-button ba b--black-20 white br2" style="background-color: #2C3B6C" on:click="{panoramaSignTurnOff}">
+        <img src="../../../assets/onoff.svg" class="white" alt="toggle-ikon">
+        <div class="white">Skru av tavler</div>
+    </button>
     <div class="small-button-container">
         <div class="small-button" on:click="{() => navigateTo('/admin/instillinger')}">
             Innstillinger
@@ -131,7 +131,6 @@
         max-width: 200px;
         display: flex;
         justify-content: flex-start;
-        background: #FFFFFF;
         padding: 22px;
         margin-bottom: 4rem;
         cursor: pointer;
