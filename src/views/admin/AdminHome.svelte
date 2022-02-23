@@ -62,9 +62,9 @@
         </div>
     </div>
 
-    <div class="medium-button">
+    <div class="medium-button" on:click="{panoramaSignTurnOff}">
         <img src="../../../assets/onoff.svg" alt="toggle-ikon">
-        <div class="small-info" on:click="{panoramaSignTurnOff}">Sett tavler på mørk</div>
+        <div class="small-info">Sett tavler på mørk</div>
     </div>
     <div class="small-button-container">
         <div class="small-button" on:click="{() => navigateTo('/admin/instillinger')}">
