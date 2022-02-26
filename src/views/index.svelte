@@ -34,6 +34,9 @@
   onMount(() => {
     PullToRefresh.init({
       mainElement: "body",
+      instructionsPullToRefresh: "Dra ned for å oppdatere",
+      instructionsReleaseToRefresh: "Slipp for å oppdatere",
+      instructionsRefreshing: "Oppdaterer...",
       onRefresh() {
         window.location.reload();
       },
