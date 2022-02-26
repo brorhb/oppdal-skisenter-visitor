@@ -6,6 +6,7 @@
   import { onMount } from "svelte";
   import config from "../helpers/config";
   import AddToHomeScreen from "a2hs.js";
+  import PullToRefresh from "pulltorefreshjs";
 
   const createUUID = () => {
     var dt = new Date().getTime();
@@ -31,6 +32,12 @@
   };
 
   onMount(() => {
+    PullToRefresh.init({
+      mainElement: "body",
+      onRefresh() {
+        window.location.reload();
+      },
+    });
     AddToHomeScreen({
       brandName: "Oppdal Skisenter",
       logoImage: `
@@ -38,8 +45,9 @@
           <image height="50" width="50" href="../../assets/512x512.png"></image>
         </svg>
       `,
-      htmlContent: 'Installer <strong>Løypetavla</strong> på iOS enheten din: Trykk på "del" og "Legg til på Hjem-skjermen"'
-    })
+      htmlContent:
+        'Installer <strong>Løypetavla</strong> på iOS enheten din: Trykk på "del" og "Legg til på Hjem-skjermen"',
+    });
     fetch(`${config.BASE_URL}/analytics`, {
       method: "POST",
       body: JSON.stringify({
