@@ -42,6 +42,7 @@ export default {
     // https://go.nuxtjs.dev/tailwindcss
     "@nuxtjs/tailwindcss",
     "@nuxtjs/dotenv",
+    '@nuxtjs/pwa',
   ],
   tailwindcss: {
     configPath: "./tailwind.config.js",

@@ -81,7 +81,7 @@ export default {
       fetch(process.env.BASE_URL + "/tracks")
         .then((res) => res.json())
         .then((res) => {
-          this.tracks = res;
+          this.tracks = res.filter(item => item["hide_for_user"] !== 1);
         });
     },
     fetchLifts() {
