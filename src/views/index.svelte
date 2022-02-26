@@ -5,6 +5,7 @@
   import Weather from "./Weather.svelte";
   import { onMount } from "svelte";
   import config from "../helpers/config";
+  import AddToHomeScreen from "a2hs.js";
 
   const createUUID = () => {
     var dt = new Date().getTime();
@@ -30,6 +31,15 @@
   };
 
   onMount(() => {
+    AddToHomeScreen({
+      brandName: "Oppdal Skisenter",
+      logoImage: `
+        <svg width="50" height="50" viewport="0 0 50 50" preserveAspectRatio="xMinYMin meet">
+          <image height="50" width="50" href="../../assets/512x512.png"></image>
+        </svg>
+      `,
+      htmlContent: 'Installer <strong>Løypetavla</strong> på iOS enheten din: Trykk på "del" og "Legg til på Hjem-skjermen"'
+    })
     fetch(`${config.BASE_URL}/analytics`, {
       method: "POST",
       body: JSON.stringify({
