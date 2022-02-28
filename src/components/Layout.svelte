@@ -8,12 +8,10 @@
   export const params = {}
 </script>
 
-<div>
+<div class="flex flex-col items-center h-full w-full font-sans dark:bg-gray-800 bg-white dark:text-white">
   <Navbar />
   <Header />
-  <div class="alert-wrapper">
-    <Alert/>
-  </div>
+  <Alert/>
   <section>
     <Route {currentRoute}  {params} />
   </section>

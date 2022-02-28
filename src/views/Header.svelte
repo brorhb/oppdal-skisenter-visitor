@@ -1,22 +1,10 @@
-<div class="banner">
-    <div class="max-width-wrapper">
-        <h3>Siste løypestatus</h3>
-        <h1>Forhold i løypene akkurat nå</h1>
-    </div>
-</div>
+<script>
+    import Wrapper from '../components/max-wrapper.svelte';
+</script>
 
-<style>
-    .banner {
-        background-color: #F4F8FF;
-        width: 100%;
-        min-height: 150px;  
-        display: flex;
-        align-items: center;  
-        margin: 1rem 0 1rem 0;
-    }
-    @media only screen and (max-width: 1000px) {
-        .banner > div {
-            margin: 0 1rem 0 1rem;
-        }
-    }
-</style>
+<Wrapper class="bg-accent-color dark:bg-gray-900 p-4">
+    <div class="w-full">
+        <h3 class="font-semibold text-2xl text-black-900">Siste løypestatus</h3>
+        <h1 class="text-4xl font-bold text-black-900">Forhold i løypene akkurat nå</h1>
+    </div>
+</Wrapper>
