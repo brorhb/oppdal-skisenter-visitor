@@ -23,7 +23,7 @@ const updateAvalanche = async () => {
         try {
             const res = await OFetch(
                 `${config.BASE_URL}/admin/panoramasign/avalanche`,
-                "PATCH", index
+                "PATCH", { color: index }
             )
             console.log(res);
             // TODO: handle response - vis hvilke tavler som ble og ikke ble oppdatert
