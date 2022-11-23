@@ -138,7 +138,7 @@
               >
                 <div>
                   <p class="paragraph attraction-name">
-                    {`${track.name} (${track.id}) `}
+                    {`${track.name} (${track.map_name}) `}
                   </p>
                   <span
                     class="paragraph-bold"

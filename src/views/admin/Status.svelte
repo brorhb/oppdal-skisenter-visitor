@@ -225,7 +225,7 @@
                   {#each tracks as track}
                     {#if track.zone == zone.id}
                       <tr class="admin-table-row">
-                        <th class="information-bold">{track.id}</th>
+                        <th class="information-bold">{track.map_name}</th>
                         <th><p>{track.name}</p></th>
                         {#if track.status == 'open'}
                           <th><p class="color-open">Åpen</p></th>

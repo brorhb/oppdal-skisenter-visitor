@@ -161,7 +161,7 @@
         <tbody>
         {#each tracks as track}
             <tr class="admin-table-row">
-            <th>{track.id}</th>
+            <th>{track.map_name}</th>
             <th>{track.name}</th>
             <th><input checked={track.status === "open"} type="radio" value="open" name={track.id} on:click="{() => setStatus(track, 1)}"/></th>
             <th><input checked={track.status === "closed"} type="radio" value="open" name={track.id} on:click="{() => setStatus(track, 2)}"/></th>
