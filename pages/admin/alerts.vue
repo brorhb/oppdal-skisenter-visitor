@@ -1,7 +1,15 @@
 <template>
   <div>
     <div class="dark:bg-gray-800 bg-white dart:text-white">
-      <admin-navbar>Snøforhold</admin-navbar>
+      <admin-navbar>
+        <span>Meldinger</span>
+        <template v-slot:actions>
+          <button
+            class="py-2 px-4 mt-2 rounded-full bg-yellow-600 dark:bg-yellow-700 text-white"
+            @click="() => {}"
+          >Oppdater tavle</button>
+        </template>
+      </admin-navbar>
     </div>
     <div class="flex flex-col items-center font-sans dark:bg-gray-700 bg-white dark:text-white">
       <max-wrapper>

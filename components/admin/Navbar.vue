@@ -7,6 +7,9 @@
       <div class="flex flex-col justify-center">
         <h1 class="text-xl font-bold text-white"><slot></slot></h1>
       </div>
+      <div class="flex flex-row items-center">
+        <slot name="actions"></slot>
+      </div>
     </nav>
   </MaxWrapper>
 </template>

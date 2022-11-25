@@ -13,7 +13,7 @@
           <admin-home-card name="👩‍🍳 Fasiliteter" @click="() => $router.push('admin/facilities')"></admin-home-card>
           <admin-home-card name="❄️ Snøforhold" @click="() => $router.push('admin/conditions')"></admin-home-card>
           <admin-home-card name="📨 Meldinger" @click="() => $router.push('admin/alerts')"></admin-home-card>
-          <admin-home-card name="⚠️ Skredvarsel (Tavle)"></admin-home-card>
+          <admin-home-card name="⚠️ Skredvarsel (Tavle)" @click="() => $router.push('admin/avalanche')"></admin-home-card>
           <admin-home-card name="⚠️ Skru av tavler"></admin-home-card>
         </div>
       </max-wrapper>
