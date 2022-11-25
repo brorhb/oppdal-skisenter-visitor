@@ -42,7 +42,7 @@ export default {
   }),
   methods: {
     login() {
-      fetch(process.env.BASE_URL + "/admin/login", {
+      fetch(BASE_URL + "/admin/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

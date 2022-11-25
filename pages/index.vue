@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import BASE_URL from '../helpers/baseurl';
 export default {
   data: () => ({
     alerts: [],
@@ -50,56 +51,56 @@ export default {
   },
   methods: {
     fetchAlerts() {
-      fetch(process.env.BASE_URL + "/alert")
+      fetch(BASE_URL + "/alert")
         .then((res) => res.json())
         .then((res) => {
           this.alerts = res;
         });
     },
     fetchWeather() {
-      fetch(process.env.BASE_URL + "/weather-report")
+      fetch(BASE_URL + "/weather-report")
         .then((res) => res.json())
         .then((res) => {
           this.weatherStations = res;
         });
     },
     fetchCameras() {
-      fetch(process.env.BASE_URL + "/cameras")
+      fetch(BASE_URL + "/cameras")
         .then((res) => res.json())
         .then((res) => {
           this.cameras = res;
         });
     },
     fetchYR() {
-      fetch(process.env.BASE_URL + "/rain-report")
+      fetch(BASE_URL + "/rain-report")
         .then((res) => res.json())
         .then((res) => {
           this.weatherPredictions = res;
         });
     },
     fetchTracks() {
-      fetch(process.env.BASE_URL + "/tracks")
+      fetch(BASE_URL + "/tracks")
         .then((res) => res.json())
         .then((res) => {
           this.tracks = res.filter(item => item["hide_for_user"] !== 1);
         });
     },
     fetchLifts() {
-      fetch(process.env.BASE_URL + "/lifts")
+      fetch(BASE_URL + "/lifts")
         .then((res) => res.json())
         .then((res) => {
           this.lifts = res;
         });
     },
     fetchZones() {
-      fetch(process.env.BASE_URL + "/zones")
+      fetch(BASE_URL + "/zones")
         .then((res) => res.json())
         .then((res) => {
           this.zones = res;
         });
     },
     fetchAvalancheWarnings() {
-      fetch(process.env.BASE_URL + "/avalanche-warning")
+      fetch(BASE_URL + "/avalanche-warning")
         .then((res) => res.json())
         .then((res) => {
           this.avalancheWarnings = res;

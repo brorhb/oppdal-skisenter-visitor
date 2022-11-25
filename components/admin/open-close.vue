@@ -5,8 +5,9 @@
         <div class="py-4">
           <div :class="`py-2 px-4 rounded-xl dark:bg-gray-900 bg-gray-100`">
             <div class="w-full flex flex-row justify-between">
-              <button class="underline">Åpne alle</button>
-              <button class="underline">Steng alle</button>
+              <button class="underline" @click="() => updateAllWithStatus('open', getZone(key).id)">Åpne alle</button>
+              <button class="underline" @click="() => updateAllWithStatus('closed', getZone(key).id)">Steng alle</button>
+              <button class="underline" @click="() => updateAllWithStatus('maintanence', getZone(key).id)">Deaktiver alle</button>
               <button @click="() => toggleZone(getZone(key).id)">
                 <span v-if="expandedZones.includes(getZone(key).id)">⬆️</span>
                 <span v-else>⬇️</span>
@@ -28,13 +29,13 @@
                     <td class="p-4 pl-8 border-b border-gray-100 dark:border-gray-700 text-left">{{ item["name"] }}</td>
                     <td :class="`p-4 pl-8 border-b border-gray-100 dark:border-gray-700 text-left ${item['status'] == 'open' ? 'text-green-600' : 'text-red-600' }`">{{ item["status"] == "open" ? "Åpen" : "Stengt" }}</td>
                     <td class="p-4 pl-8 border-b border-gray-100 dark:border-gray-700 text-left">
-                      <input type="checkbox" :checked="item.status == 'open'" />
+                      <input type="radio" :checked="item.status == 'open'" :name="item.id" @click="() => itemStatusClicked(item, 1)" />
                     </td>
                     <td class="p-4 pl-8 border-b border-gray-100 dark:border-gray-700 text-left">
-                      <input type="checkbox" :checked="item.status == 'closed'" />
+                      <input type="radio" :checked="item.status == 'closed'" :name="item.id" @click="() => itemStatusClicked(item, 2)" />
                     </td>
                     <td class="p-4 pl-8 border-b border-gray-100 dark:border-gray-700 text-left">
-                      <input type="checkbox" :checked="item.status == 'maintanence'" />
+                      <input type="radio" :checked="item.status == 'maintanence'" :name="item.id" @click="() => itemStatusClicked(item, 3)" />
                     </td>
                   </tr>
                 </tbody>
@@ -51,12 +52,9 @@ export default {
   data: () => ({
     expandedZones: [],
   }),
-  mounted() {
-    console.log(this.items)
-  },
   computed: {
     reduceIntoZones() {
-      return this.items.reduce((acc, item) => {
+      const zones = this.items.reduce((acc, item) => {
         if (item.zone) {
           if (!acc[item.zone]) {
             acc[item.zone] = [];
@@ -65,6 +63,7 @@ export default {
         }
         return acc;
       }, {});
+      return zones
     },
   },
   methods: {
@@ -78,6 +77,12 @@ export default {
         this.expandedZones.push(id);
       }
     },
+    itemStatusClicked(item, status) {
+      this.$emit('itemChanged', item, status)
+    },
+    updateAllWithStatus(status, zone) {
+      this.$emit('updatedAllWithStatus', status, zone)
+    }
   }
 }
 </script>

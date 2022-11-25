@@ -9,10 +9,10 @@
       <max-wrapper>
         <div class="flex flex-wrap">
           <admin-home-card name="⛷ Løyper" @click="() => $router.push('admin/tracks')"></admin-home-card>
-          <admin-home-card name="🚡 Heiser"></admin-home-card>
-          <admin-home-card name="👩‍🍳 Fasiliteter"></admin-home-card>
-          <admin-home-card name="❄️ Snøforhold"></admin-home-card>
-          <admin-home-card name="📨 Meldinger"></admin-home-card>
+          <admin-home-card name="🚡 Heiser" @click="() => $router.push('admin/lifts')"></admin-home-card>
+          <admin-home-card name="👩‍🍳 Fasiliteter" @click="() => $router.push('admin/facilities')"></admin-home-card>
+          <admin-home-card name="❄️ Snøforhold" @click="() => $router.push('admin/conditions')"></admin-home-card>
+          <admin-home-card name="📨 Meldinger" @click="() => $router.push('admin/alerts')"></admin-home-card>
           <admin-home-card name="⚠️ Skredvarsel (Tavle)"></admin-home-card>
           <admin-home-card name="⚠️ Skru av tavler"></admin-home-card>
         </div>

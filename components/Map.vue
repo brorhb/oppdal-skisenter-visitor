@@ -12,7 +12,7 @@
         <image
           width="100%"
           height="100%"
-          href="/assets/map.svg"
+          href="/assets/map-2.svg"
           alt="Løypekart"
         ></image>
 

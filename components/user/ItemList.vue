@@ -9,7 +9,7 @@
         @mouseleave="() => $emit('onFocus', false)"
       >
         <div class="flex flex-row items-end">
-          <div class="text-sm">{{ item.name }}</div>
+          <div class="text-sm">({{ item.map_name }}) {{ item.name }}</div>
           <div v-if="item.difficulty" :class="`font-bold text-xs pl-3 ${itemDifficulty(item).color}`">{{ itemDifficulty(item).text }}</div>
         </div>
         <div class="text-xs font-bold">
