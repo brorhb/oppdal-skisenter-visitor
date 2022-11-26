@@ -12,7 +12,7 @@
               <div :class="`w-16 h-16 ${getColor(index)} rounded-full`"></div>
               <h1 class="px-2">{{ getText(index) }}</h1>
               <div class="flex-1"></div>
-              <button class="py-2 px-4 mt-2 rounded-full bg-yellow-600 dark:bg-yellow-700 text-white" @click="() => sendAvalanche(index)">
+              <button :disabled="updating" :class="`py-2 px-4 mt-2 rounded-full ${!updating ? 'bg-yellow-600 dark:bg-yellow-700' : 'bg-gray-400 dark:bg-gray-300'} text-white`" @click="() => sendAvalanche(index)">
                 Send
               </button>
             </div>
@@ -31,6 +31,9 @@ export default {
       redirect("/admin/login");
     }
   },
+  data: () => ({
+    updating: false
+  }),
   methods: {
     getColor(num) {
       switch (num) {
@@ -68,11 +71,13 @@ export default {
       this.fetchAlerts()
     },
     async sendAvalanche(byte) {
-      const res = await AuthFetch(
+      this.updating = true
+      await AuthFetch(
           `${BASE_URL}/admin/panoramasign/avalanche`,
           "PATCH",
           { color: byte }
       )
+      this.updating = false
     }
   }
 }
