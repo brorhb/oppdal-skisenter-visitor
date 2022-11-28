@@ -40,7 +40,7 @@ export default {
   },
   mounted() {
     /*
-    const client = new WebSocket(`wss://${process.env.BASE_URL}`)
+    const client = new WebSocket(`wss://${BASE_URL}`)
     client.onopen = () => {
       console.log('Connected to server')
     }
@@ -50,61 +50,53 @@ export default {
     */
   },
   methods: {
-    fetchAlerts() {
-      fetch(BASE_URL + "/alert")
-        .then((res) => res.json())
-        .then((res) => {
-          this.alerts = res;
-        });
+    async fetchAlerts() {
+      let res = await fetch(BASE_URL + "/alert")
+      res = await res.json()
+      this.alerts = res
+      setTimeout(this.fetchAlerts, 300000)
     },
-    fetchWeather() {
-      fetch(BASE_URL + "/weather-report")
-        .then((res) => res.json())
-        .then((res) => {
-          this.weatherStations = res;
-        });
+    async fetchWeather() {
+      let res = await fetch(BASE_URL + "/weather-report")
+      res = await res.json()
+      this.weatherStations = res
+      setTimeout(this.fetchWeather, 300000)
     },
-    fetchCameras() {
-      fetch(BASE_URL + "/cameras")
-        .then((res) => res.json())
-        .then((res) => {
-          this.cameras = res;
-        });
+    async fetchCameras() {
+      let res = await fetch(BASE_URL + "/cameras")
+      res = await res.json()
+      this.cameras = res
+      setTimeout(this.fetchCameras, 300000)
     },
-    fetchYR() {
-      fetch(BASE_URL + "/rain-report")
-        .then((res) => res.json())
-        .then((res) => {
-          this.weatherPredictions = res;
-        });
+    async fetchYR() {
+      let res = await fetch(BASE_URL + "/rain-report")
+      res = await res.json()
+      this.weatherPredictions = res
+      setTimeout(this.fetchYR, 300000)
     },
-    fetchTracks() {
-      fetch(BASE_URL + "/tracks")
-        .then((res) => res.json())
-        .then((res) => {
-          this.tracks = res.filter(item => item["hide_for_user"] !== 1);
-        });
+    async fetchTracks() {
+      let res = await fetch(BASE_URL + "/tracks")
+      res = await res.json()
+      this.tracks = res.filter(item => item["hide_for_user"] !== 1);
+      setTimeout(this.fetchTracks, 300000)
     },
-    fetchLifts() {
-      fetch(BASE_URL + "/lifts")
-        .then((res) => res.json())
-        .then((res) => {
-          this.lifts = res;
-        });
+    async fetchLifts() {
+      let res = await fetch(BASE_URL + "/lifts")
+      res = await res.json()
+      this.lifts = res
+      setTimeout(this.fetchLifts, 300000)
     },
-    fetchZones() {
-      fetch(BASE_URL + "/zones")
-        .then((res) => res.json())
-        .then((res) => {
-          this.zones = res;
-        });
+    async fetchZones() {
+      let res = await fetch(BASE_URL + "/zones")
+      res = await res.json()
+      this.zones = res
+      setTimeout(this.fetchZones, 300000)
     },
-    fetchAvalancheWarnings() {
-      fetch(BASE_URL + "/avalanche-warning")
-        .then((res) => res.json())
-        .then((res) => {
-          this.avalancheWarnings = res;
-        });
+    async fetchAvalancheWarnings() {
+      let res = await fetch(BASE_URL + "/avalanche-warning")
+      res = await res.json()
+      this.avalancheWarnings = res
+      setTimeout(this.fetchAvalancheWarnings, 300000)
     }
   },
 };
