@@ -34,6 +34,7 @@
 </template>
 <script>
 import MaxWrapper from '../../components/user/MaxWrapper.vue';
+import BASE_URL from '../../helpers/baseurl'
 export default {
   components: { MaxWrapper },
   data: () => ({
