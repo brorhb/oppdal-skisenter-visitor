@@ -27,9 +27,15 @@
             <div>
               <div v-for="(item, index) in alerts"
                 :class="`flex w-full justify-between py-3 px-2 rounded-2xl ${index % 2 && 'dark:bg-gray-800 bg-gray-200'}`">
-                <span class="w-48">{{ get_publish_date(item.timestamp) }}</span>
+                <span class="w-48" v-if="item.timestamp">{{ item.timestamp && get_publish_date(item.timestamp) }}</span>
                 <span class="flex-1 justify-start">{{ item.message }}</span>
-                <div>
+                <select name="billboard" id="billboard" class="text-gray-800" :value="item.billboard" @change="(e) => limitToBillboard(item, e)">
+                  <optgroup>
+                    <option :value="null">Alle tavler</option>
+                    <option v-for="billboard in billboards" :value="billboard.id">{{ billboard.name }}</option>
+                  </optgroup>
+                </select>
+                <div class="pl-2">
                   <input type="checkbox" :checked="!!item.is_live" @change="() => toggleAlert(item)" />
                 </div>
               </div>
@@ -54,9 +60,11 @@ export default {
     input: '',
     alerts: [],
     updatingBillboard: false,
-    updating: false
+    updating: false,
+    billboards: []
   }),
   async fetch() {
+    await this.fetchBillboards()
     await this.fetchAlerts()
   },
   methods: {
@@ -71,6 +79,13 @@ export default {
         }
       )
       this.fetchAlerts()
+    },
+    async fetchBillboards() {
+      let res = await AuthFetch(
+        BASE_URL + "/admin/billboards",
+        'GET'
+      )
+      this.billboards = res
     },
     fetchAlerts() {
       fetch(BASE_URL + "/admin/alert", {
@@ -101,27 +116,63 @@ export default {
       )
       this.updating = false
     },
+    async limitToBillboard(item, e) {
+      this.updating = true
+      const billboard = parseInt(e.target.value)
+      await AuthFetch(
+        `${BASE_URL}/admin/alert/${item.id}`,
+        'PATCH',
+        {
+          ...item,
+          ...{
+            billboard: billboard
+          }
+        }
+      )
+      this.updating = false
+    },
     async updateBillboard() {
       this.updateBillboard = true
       const activeAlerts = this.alerts.filter(item => item.is_live)
-      const message = activeAlerts.map(item => item.message).join(' ')
       const now = new Date()
       const hours = now.getHours()
       const minutes = now.getMinutes()
       const seconds = now.getSeconds()
       const time = `${hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds}`
-      const body = {
-        message: message,
-        time,
-      }
-      try {
-        await AuthFetch(
-          `${BASE_URL}/admin/panoramasign/message`,
-          'PATCH',
-          body
-        )
-      } catch (error) {
-        console.warn(error)
+      if (activeAlerts.some(item => item.billboard)) {
+        for (var i = 0; i < this.billboards.length; i++) {
+          const billboard = this.billboards[i]
+          let message = ''
+          for (let activeAlert in activeAlerts) {
+            if (!activeAlert.billboard || activeAlert.billboard == billboard.id) {
+              message += `${activeAlert.message} `
+            }
+          }
+          const body = {
+            message: message,
+            time,
+          }
+          await AuthFetch(
+            `${BASE_URL}/admin/panoramasign/message/${billboard.id}`,
+            'PATCH',
+            body
+          )
+        }
+      } else {
+        let message = ''
+        const body = {
+          message: message,
+          time,
+        }
+        try {
+          await AuthFetch(
+            `${BASE_URL}/admin/panoramasign/message`,
+            'PATCH',
+            body
+          )
+        } catch (error) {
+          console.warn(error)
+        }
       }
       this.updateBillboard = false
     }
