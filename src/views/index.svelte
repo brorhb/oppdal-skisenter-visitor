@@ -51,14 +51,14 @@
       htmlContent:
         'Installer <strong>Løypetavla</strong> på iOS enheten din: Trykk på "del" og "Legg til på Hjem-skjermen"',
     });
-    fetch(`${config.BASE_URL}/analytics`, {
+    /* fetch(`${config.BASE_URL}/analytics`, {
       method: "POST",
       body: JSON.stringify({
         url: window.location.href,
         uuid: getUUID(),
         referrer: window.document.referrer,
       }),
-    });
+    }); */
   });
 </script>
 
