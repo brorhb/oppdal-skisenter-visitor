@@ -152,7 +152,7 @@ export default {
             time,
           }
           await AuthFetch(
-            `${BASE_URL}/admin/panoramasign/message/${billboard.id}`,
+            `${BASE_URL}/admin/panoramasign/message/${billboard.port}`,
             'PATCH',
             body
           )
