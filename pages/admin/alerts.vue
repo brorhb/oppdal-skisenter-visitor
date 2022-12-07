@@ -78,7 +78,7 @@ export default {
           message: input
         }
       )
-      this.fetchAlerts()
+      await this.fetchAlerts()
     },
     async fetchBillboards() {
       let res = await AuthFetch(
@@ -87,17 +87,15 @@ export default {
       )
       this.billboards = res
     },
-    fetchAlerts() {
-      fetch(BASE_URL + "/admin/alert", {
+    async fetchAlerts() {
+      let res = await fetch(BASE_URL + "/admin/alert", {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`
         }
       })
-        .then((res) => res.json())
-        .then((res) => {
-          this.alerts = res
-          this.updating = false
-        })
+      res = await res.json()
+      this.alerts = res
+      this.updating = false
     },
     get_publish_date,
     async toggleAlert(item) {
@@ -114,7 +112,7 @@ export default {
           }
         }
       )
-      this.updating = false
+      await this.fetchAlerts()
     },
     async limitToBillboard(item, e) {
       this.updating = true
@@ -129,7 +127,7 @@ export default {
           }
         }
       )
-      this.updating = false
+      await this.fetchAlerts()
     },
     async updateBillboard() {
       this.updateBillboard = true
@@ -142,12 +140,13 @@ export default {
       if (activeAlerts.some(item => item.billboard)) {
         for (var i = 0; i < this.billboards.length; i++) {
           const billboard = this.billboards[i]
-          let message = ''
+          let messages = []
           for (let activeAlert in activeAlerts) {
             if (!activeAlert.billboard || activeAlert.billboard == billboard.id) {
-              message += `${activeAlert.message} `
+              messages.push(activeAlert.message)
             }
           }
+          const message = messages.join(' ')
           const body = {
             message: message,
             time,
@@ -159,7 +158,7 @@ export default {
           )
         }
       } else {
-        let message = ''
+        let message = activeAlerts.map((alert) => alert.message).join(' ')
         const body = {
           message: message,
           time,
