@@ -141,8 +141,9 @@ export default {
         for (var i = 0; i < this.billboards.length; i++) {
           const billboard = this.billboards[i]
           let messages = []
-          for (let activeAlert in activeAlerts) {
-            if (!activeAlert.billboard || activeAlert.billboard == billboard.id) {
+          for (var y = 0; y < activeAlerts.length; y++) {
+            let activeAlert = activeAlerts[y]
+            if (activeAlert.billboard == billboard.id) {
               messages.push(activeAlert.message)
             }
           }
