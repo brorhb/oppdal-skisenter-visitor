@@ -49,7 +49,9 @@
       const result = await OFetch(
         `${config.BASE_URL}/admin/alert`,
         'POST',
-        newAlert
+        {
+          message: newAlert
+        }
       );
       toast.setToast('Ny melding lagret', 'success');
       await fetchAllAlerts();
