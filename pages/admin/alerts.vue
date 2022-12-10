@@ -82,7 +82,7 @@ export default {
     },
     async fetchBillboards() {
       let res = await AuthFetch(
-        BASE_URL + "/admin/billboards",
+        BASE_URL + "/billboards",
         'GET'
       )
       this.billboards = res

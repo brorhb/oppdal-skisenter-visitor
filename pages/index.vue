@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center h-full w-full font-sans dark:bg-gray-800 bg-white dark:text-white">
     <Navbar></Navbar>
     <Banner></Banner>
-    <Alerts :alerts="alerts"></Alerts>
+    <Alerts :alerts="alerts" :billboards="billboards"></Alerts>
     <WeatherAndCameras
       :cameras="cameras"
       :weatherStations="weatherStations"
@@ -27,8 +27,10 @@ export default {
     lifts: [],
     zones: [],
     avalancheWarnings: [],
+    billboards: [],
   }),
   async fetch() {
+    await this.fetchBillboards()
     this.fetchAlerts();
     this.fetchWeather();
     this.fetchCameras();
@@ -97,6 +99,11 @@ export default {
       res = await res.json()
       this.avalancheWarnings = res
       setTimeout(this.fetchAvalancheWarnings, 300000)
+    },
+    async fetchBillboards() {
+      let res = await fetch(BASE_URL + "/billboards")
+      res = await res.json()
+      this.billboards = res
     }
   },
 };
