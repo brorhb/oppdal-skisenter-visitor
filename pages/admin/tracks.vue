@@ -1,11 +1,15 @@
 <template>
   <div>
+    <div v-if="isLoading" class="absolute w-full h-full flex justify-center items-center">
+      <div class="w-full h-full absolute bg-gray-800 z-10 opacity-70" />
+      <loading class="z-20" :active="isLoading" is-full-page />
+    </div>
     <div class="dark:bg-gray-800 bg-white dart:text-white">
       <admin-navbar>
         <span>Løyper</span>
         <template v-slot:actions>
-          <button :disabled="updatingBillboard || updating"
-            :class="`py-2 px-4 mt-2 rounded-full text-white ${!updatingBillboard || !updating ? 'bg-yellow-600 dark:bg-yellow-700' : 'bg-gray-400 dark:bg-gray-300'}`"
+          <button :disabled="isLoading"
+            :class="`py-2 px-4 mt-2 rounded-full text-white ${!isLoading ? 'bg-yellow-600 dark:bg-yellow-700' : 'bg-gray-400 dark:bg-gray-300'}`"
             @click="updateBillboard">Oppdater tavle</button>
         </template>
       </admin-navbar>
@@ -20,6 +24,7 @@
   </div>
 </template>
 <script>
+import Loading from 'vue-loading-overlay';
 import BASE_URL from '../../helpers/baseurl';
 import AuthFetch from '../../helpers/fetch'
 export default {
@@ -28,15 +33,25 @@ export default {
       redirect("/admin/login");
     }
   },
+  components: {
+    Loading
+  },
   data: () => ({
     zones: [],
     tracks: [],
     updatingBillboard: false,
-    updating: false
+    updating: true
   }),
   async fetch() {
     this.fetchZones();
     this.fetchTracks();
+  },
+  computed: {
+    isLoading() {
+      if (this.updating === true) return true
+      if (this.updateBillboard === true) return true
+      return false
+    }
   },
   methods: {
     fetchZones() {
@@ -59,6 +74,7 @@ export default {
         .then((res) => res.json())
         .then((res) => {
           this.tracks = res;
+          this.updating = false
         });
     },
     async itemChanged(item, status) {
@@ -67,7 +83,7 @@ export default {
         `${BASE_URL}/admin/toggle-status/tracks/${item.id}/${status}`,
         'PATCH'
       )
-      this.updating = false
+      this.fetchTracks()
     },
     async updatedAllWithStatus(type, zone) {
       this.updating = true
@@ -79,7 +95,7 @@ export default {
           zone
         }
       )
-      this.updating = false
+      this.fetchTracks()
     },
     async updateBillboard() {
       this.updatingBillboard = true

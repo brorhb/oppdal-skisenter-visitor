@@ -33,6 +33,9 @@ export default {
   data: () => ({
     turningOff: false
   }),
+  mounted() {
+    document.body.className = "dark:bg-gray-800 bg-white"
+  },
   methods: {
     async turnOffBillboards() {
       this.turningOff = true

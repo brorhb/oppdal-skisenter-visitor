@@ -1,11 +1,15 @@
 <template>
   <div>
+    <div v-if="isLoading" class="absolute w-full h-full flex justify-center items-center">
+      <div class="w-full h-full absolute bg-gray-800 z-10 opacity-70" />
+      <loading class="z-20" :active="isLoading" is-full-page />
+    </div>
     <div class="dark:bg-gray-800 bg-white dart:text-white">
       <admin-navbar>
         <span>Meldinger</span>
         <template v-slot:actions>
-          <button :disabled="updatingBillboard || updating"
-            :class="`py-2 px-4 mt-2 rounded-full text-white ${!updatingBillboard || updating ? 'bg-yellow-600 dark:bg-yellow-700' : 'bg-gray-400 dark:bg-gray-300'}`"
+          <button :disabled="isLoading"
+            :class="`py-2 px-4 mt-2 rounded-full text-white ${!isLoading ? 'bg-yellow-600 dark:bg-yellow-700' : 'bg-gray-400 dark:bg-gray-300'}`"
             @click="updateBillboard">Oppdater tavle</button>
         </template>
       </admin-navbar>
@@ -25,11 +29,13 @@
           <h1 class="text-l font-bold">Historikk</h1>
           <div class="w-full max-w-screen-xl text-left">
             <div>
-              <div v-for="(item, index) in alerts"
+              <div v-for="(item, index) in alerts" :key="item.id"
                 :class="`flex w-full justify-between py-3 px-2 rounded-2xl ${index % 2 && 'dark:bg-gray-800 bg-gray-200'}`">
-                <span class="w-48" v-if="item.timestamp">{{ item.timestamp && get_publish_date(item.timestamp) }}</span>
+                <span class="w-48" v-if="item.timestamp">{{ item.timestamp && get_publish_date(item.timestamp)
+                }}</span>
                 <span class="flex-1 justify-start">{{ item.message }}</span>
-                <select name="billboard" id="billboard" class="text-gray-800" :value="item.billboard" @change="(e) => limitToBillboard(item, e)">
+                <select name="billboard" id="billboard" class="text-gray-800" :value="item.billboard"
+                  @change="(e) => limitToBillboard(item, e)">
                   <optgroup>
                     <option :value="null">Alle tavler</option>
                     <option v-for="billboard in billboards" :value="billboard.id">{{ billboard.name }}</option>
@@ -47,6 +53,7 @@
   </div>
 </template>
 <script>
+import Loading from 'vue-loading-overlay';
 import BASE_URL from '../../helpers/baseurl'
 import AuthFetch from '../../helpers/fetch'
 import get_publish_date from '../../helpers/publishedDate.js'
@@ -55,6 +62,9 @@ export default {
     if (!window.localStorage.getItem("token")) {
       redirect("/admin/login")
     }
+  },
+  components: {
+    Loading
   },
   data: () => ({
     input: '',
@@ -66,6 +76,13 @@ export default {
   async fetch() {
     await this.fetchBillboards()
     await this.fetchAlerts()
+  },
+  computed: {
+    isLoading() {
+      if (this.updating === true) return true
+      if (this.updateBillboard === true) return true
+      return false
+    }
   },
   methods: {
     async addAlert(input) {

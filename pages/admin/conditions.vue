@@ -13,7 +13,9 @@
           <h1 class="text-l font-bold">Historikk</h1>
           <div class="w-full max-w-screen-xl text-left">
             <div>
-              <div v-for="(item, index) in conditions" :class="`flex w-full justify-between py-3 px-2 rounded-2xl ${index % 2 && 'dark:bg-gray-800 bg-gray-200' }`">
+              <div v-for="(item, index) in conditions"
+                :key="item.id"
+                :class="`flex w-full justify-between py-3 px-2 rounded-2xl ${index % 2 && 'dark:bg-gray-800 bg-gray-200' }`">
                 <span class="w-48">{{get_publish_date(item.timestamp)}}</span>
                 <span class="flex-1 justify-start">{{item.message}}</span>
                 <div>

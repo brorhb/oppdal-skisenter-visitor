@@ -41,6 +41,7 @@ export default {
     this.fetchAvalancheWarnings();
   },
   mounted() {
+    document.body.className = "dark:bg-gray-800 bg-white"
     /*
     const client = new WebSocket(`wss://${BASE_URL}`)
     client.onopen = () => {

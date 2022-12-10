@@ -1,11 +1,15 @@
 <template>
   <div>
+    <div v-if="isLoading" class="absolute w-full h-full flex justify-center items-center">
+      <div class="w-full h-full absolute bg-gray-800 z-10 opacity-70" />
+      <loading class="z-20" :active="isLoading" is-full-page />
+    </div>
     <div class="dark:bg-gray-800 bg-white dart:text-white">
       <admin-navbar>
         <span>Heiser</span>
         <template v-slot:actions>
-          <button :disabled="updatingBillboard || updating"
-            :class="`py-2 px-4 mt-2 rounded-full text-white ${!updatingBillboard || !updating ? 'bg-yellow-600 dark:bg-yellow-700' : 'bg-gray-400 dark:bg-gray-300'}`"
+          <button :disabled="isLoading"
+            :class="`py-2 px-4 mt-2 rounded-full text-white ${!isLoading ? 'bg-yellow-600 dark:bg-yellow-700' : 'bg-gray-400 dark:bg-gray-300'}`"
             @click="updateBillboard">Oppdater tavle</button>
         </template>
       </admin-navbar>
@@ -19,6 +23,7 @@
   </div>
 </template>
 <script>
+import Loading from 'vue-loading-overlay';
 import AuthFetch from '../../helpers/fetch'
 import BASE_URL from '../../helpers/baseurl'
 export default {
@@ -26,6 +31,9 @@ export default {
     if (!window.localStorage.getItem("token")) {
       redirect("/admin/login")
     }
+  },
+  components: {
+    Loading
   },
   data: () => ({
     zones: [],
@@ -36,6 +44,13 @@ export default {
   async fetch() {
     this.fetchZones()
     this.fetchLifts()    
+  },
+  computed: {
+    isLoading() {
+      if (this.updating === true) return true
+      if (this.updateBillboard === true) return true
+      return false
+    }
   },
   methods: {
     fetchZones() {
@@ -58,6 +73,7 @@ export default {
         .then((res) => res.json())
         .then((res) => {
           this.lifts = res
+          this.updating = false
         })
     },
     async itemChanged(item, status) {
@@ -66,19 +82,19 @@ export default {
         `${BASE_URL}/admin/toggle-status/lifts/${item.id}/${status}`,
         'PATCH'
       )
-      this.updating = false
+      this.fetchLifts()
     },
     async updatedAllWithStatus(type, zone) {
       this.updating = true
       await AuthFetch(
-        `${BASE_URL}/admin/lifts/status-zone`,
+        `${BASE_URL}/admin/lift/status-zone`,
         'PATCH',
         {
           type,
           zone
         }
       )
-      this.updating = false
+      this.fetchLifts()
     },
     async updateBillboard() {
       this.updatingBillboard = true
