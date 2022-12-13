@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-row justify-center w-full bg-dark-accent dark:bg-gray-900 p-16"
+    class="flex flex-row justify-center w-full bg-dark-accent dark:bg-gray-900 p-16 text-white"
   >
     <div class="flex flex-col items-center">
       <h1 class="font-bold text-3xl">Kontakt oss</h1>

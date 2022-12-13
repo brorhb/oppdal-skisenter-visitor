@@ -55,6 +55,9 @@ export default {
   build: {},
 
   pwa: {
+    manifest: {
+      name: 'Oppdal Skisenter'
+    },
     icon: {
          fileName: 'icon.png',
     },
