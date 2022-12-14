@@ -10,7 +10,7 @@
         <template v-slot:actions>
           <button :disabled="isLoading"
             :class="`py-2 px-4 mt-2 rounded-full text-white ${!isLoading ? 'bg-yellow-600 dark:bg-yellow-700' : 'bg-gray-400 dark:bg-gray-300'}`"
-            @click="updateBillboard">Oppdater tavle</button>
+            @click="updateBillboard">Send til tavle</button>
         </template>
       </admin-navbar>
     </div>
@@ -54,23 +54,13 @@ export default {
   },
   methods: {
     fetchZones() {
-      fetch(BASE_URL + "/zones", {
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("token")}`
-        }
-      })
-        .then((res) => res.json())
+      AuthFetch(BASE_URL + "/zones")
         .then((res) => {
           this.zones = res
         })
     },
     fetchLifts() {
-      fetch(BASE_URL + "/lifts", {
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("token")}`
-        }
-      })
-        .then((res) => res.json())
+      AuthFetch(BASE_URL + "/lifts")
         .then((res) => {
           this.lifts = res
           this.updating = false

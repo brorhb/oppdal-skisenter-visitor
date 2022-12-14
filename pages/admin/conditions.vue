@@ -59,12 +59,7 @@ export default {
       this.fetchConditions()
     },
     fetchConditions() {
-      fetch(BASE_URL + "/admin/snow-conditions", {
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("token")}`
-        }
-      })
-        .then((res) => res.json())
+      AuthFetch(BASE_URL + "/admin/snow-conditions")
         .then((res) => {
           this.conditions = res;
         });

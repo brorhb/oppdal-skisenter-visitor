@@ -21,14 +21,12 @@ const AuthFetch = async (url, method = 'GET', body) => {
         options
       )
       if (response.status === 403) {
-        throw "unauthorized"
+        window.localStorage.removeItem('token')
+        window.location.reload()
       }
       response = await response.json()
       resolve(response)
     } catch (err) {
-      if (err === "unauthorized") {
-        navigateTo("/login")
-      }
       reject(err)
     }
   })

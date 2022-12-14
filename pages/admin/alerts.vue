@@ -10,21 +10,22 @@
         <template v-slot:actions>
           <button :disabled="isLoading"
             :class="`py-2 px-4 mt-2 rounded-full text-white ${!isLoading ? 'bg-yellow-600 dark:bg-yellow-700' : 'bg-gray-400 dark:bg-gray-300'}`"
-            @click="updateBillboard">Oppdater tavle</button>
+            @click="updateBillboard">Send til tavle</button>
         </template>
       </admin-navbar>
     </div>
     <div class="flex flex-col items-center font-sans dark:bg-gray-700 bg-white dark:text-white">
       <max-wrapper>
-        <h1 class="text-xl font-bold">Oppdater snøforhold</h1>
-        <p class="pb-2">Snøforhold publiseres på <a class="underline"
+        <h1 class="text-xl font-bold">Oppdater meldinger</h1>
+        <p class="pb-2">meldinger publiseres på <a class="underline"
             href="https://tavle.oppdalskisenter.no">tavle.oppdalskisenter.no</a></p>
         <textarea
           class="flex justify-between align-center px-4 w-full max-w-screen-xl dark:bg-gray-800 rounded-2xl bg-gray-200"
           v-model="input" placeholder="Skriv litt om snøforhold her (max 150 tegn)" maxlength="150"></textarea>
         <button :disabled="!input"
           :class="`py-2 px-4 mt-2 rounded-full ${!!input ? 'bg-yellow-600 dark:bg-yellow-700' : 'bg-gray-400 dark:bg-gray-300'} text-white`"
-          @click="() => addAlert(input)">Oppdater</button>
+          @click="() => addAlert(input)">Lagre</button>
+        <p class="py-2">Huk av meldinger som skal være aktive</p>
         <div class="py-4 w-full max-w-screen-xl">
           <h1 class="text-l font-bold">Historikk</h1>
           <div class="w-full max-w-screen-xl text-left">
@@ -105,12 +106,10 @@ export default {
       this.billboards = res
     },
     async fetchAlerts() {
-      let res = await fetch(BASE_URL + "/admin/alert", {
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("token")}`
-        }
-      })
-      res = await res.json()
+      let res = await AuthFetch(
+        BASE_URL + "/admin/alert",
+        'GET'
+      )
       this.alerts = res
       this.updating = false
     },
