@@ -3,6 +3,7 @@
     <Navbar></Navbar>
     <Banner></Banner>
     <Alerts :alerts="alerts" :billboards="billboards"></Alerts>
+    <Conditions :conditions={conditions} />
     <WeatherAndCameras
       :cameras="cameras"
       :weatherStations="weatherStations"
@@ -28,6 +29,7 @@ export default {
     zones: [],
     avalancheWarnings: [],
     billboards: [],
+    conditions: []
   }),
   async fetch() {
     await this.fetchBillboards()
@@ -39,6 +41,7 @@ export default {
     this.fetchLifts();
     this.fetchZones();
     this.fetchAvalancheWarnings();
+    this.fetchConditions()
   },
   mounted() {
     document.body.className = "dark:bg-gray-800 bg-white"
@@ -53,6 +56,12 @@ export default {
     */
   },
   methods: {
+    async fetchConditions() {
+      let res = await fetch(BASE_URL + '/snow-conditions')
+      res = await res.json()
+      console.log(res)
+      this.conditions = res
+    },
     async fetchAlerts() {
       let res = await fetch(BASE_URL + "/alert")
       res = await res.json()
