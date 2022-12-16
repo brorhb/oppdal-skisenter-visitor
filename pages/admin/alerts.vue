@@ -21,7 +21,7 @@
             href="https://tavle.oppdalskisenter.no">tavle.oppdalskisenter.no</a></p>
         <textarea
           class="flex justify-between align-center px-4 w-full max-w-screen-xl dark:bg-gray-800 rounded-2xl bg-gray-200"
-          v-model="input" placeholder="Skriv litt om snøforhold her (max 150 tegn)" maxlength="150"></textarea>
+          v-model="input" placeholder="Skriv inn viktig melding for tavle og/eller web (max 150 tegn)" maxlength="150"></textarea>
         <button :disabled="!input"
           :class="`py-2 px-4 mt-2 rounded-full ${!!input ? 'bg-yellow-600 dark:bg-yellow-700' : 'bg-gray-400 dark:bg-gray-300'} text-white`"
           @click="() => addAlert(input)">Lagre</button>
