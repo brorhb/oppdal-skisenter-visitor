@@ -146,7 +146,7 @@ export default {
       await this.fetchAlerts()
     },
     async updateBillboard() {
-      this.updateBillboard = true
+      this.updatingBillboard = true
       const activeAlerts = this.alerts.filter(item => item.is_live)
       const now = new Date()
       const hours = now.getHours()
@@ -190,7 +190,7 @@ export default {
           console.warn(error)
         }
       }
-      this.updateBillboard = false
+      this.updatingBillboard = false
     }
   }
 }
