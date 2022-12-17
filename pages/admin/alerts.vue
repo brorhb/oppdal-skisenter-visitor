@@ -163,7 +163,7 @@ export default {
               messages.push(activeAlert.message)
             }
           }
-          const message = messages.join(' ')
+          const message = messages.join('     ')
           const body = {
             message: message,
             time,
@@ -175,7 +175,7 @@ export default {
           )
         }
       } else {
-        let message = activeAlerts.map((alert) => alert.message).join(' ')
+        let message = activeAlerts.map((alert) => alert.message).join('     ')
         const body = {
           message: message,
           time,
