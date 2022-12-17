@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div v-if="turningOff" class="absolute w-full h-full flex justify-center items-center">
+      <div class="w-full h-full absolute bg-gray-800 z-10 opacity-70" />
+      <loading class="z-20" :active="turningOff" is-full-page />
+    </div>
     <div class="dark:bg-gray-800 bg-white dart:text-white">
       <admin-navbar></admin-navbar>
     </div>
@@ -23,12 +27,16 @@
 import MaxWrapper from '../../components/user/MaxWrapper.vue'
 import BASE_URL from '../../helpers/baseurl'
 import AuthFetch from '../../helpers/fetch'
+import Loading from 'vue-loading-overlay';
 export default {
   components: { MaxWrapper },
   middleware({ redirect }) {
     if (!window.localStorage.getItem("token")) {
       redirect("/admin/login");
     }
+  },
+  components: {
+    Loading
   },
   data: () => ({
     turningOff: false

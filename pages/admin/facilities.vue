@@ -49,7 +49,7 @@ export default {
   computed: {
     isLoading() {
       if (this.updating === true) return true
-      if (this.updateBillboard === true) return true
+      if (this.updatingBillboard === true) return true
       return false
     }
   },
