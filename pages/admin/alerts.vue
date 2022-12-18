@@ -152,7 +152,7 @@ export default {
       const hours = now.getHours()
       const minutes = now.getMinutes()
       const seconds = now.getSeconds()
-      const time = `${hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds}`
+      const time = `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`
       if (activeAlerts.some(item => item.billboard)) {
         for (var i = 0; i < this.billboards.length; i++) {
           const billboard = this.billboards[i]
