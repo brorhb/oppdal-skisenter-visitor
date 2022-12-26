@@ -33,13 +33,13 @@ export default {
   }),
   async fetch() {
     await this.fetchBillboards()
+		await this.fetchZones();
     this.fetchAlerts();
     this.fetchWeather();
     this.fetchCameras();
     this.fetchYR();
     this.fetchTracks();
     this.fetchLifts();
-    this.fetchZones();
     this.fetchAvalancheWarnings();
     this.fetchConditions()
   },
