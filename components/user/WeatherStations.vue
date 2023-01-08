@@ -22,6 +22,9 @@
           ></wind-direction>
         </div>
         <div class="text-sm text-gray-600">
+          {{ station.wind.gust }} m/s kast
+        </div>
+        <div class="text-sm text-gray-600">
           Målt {{ shortTime(station.dateTime) }}
         </div>
       </div>
