@@ -56,7 +56,6 @@ export default {
       return temp < 0;
     },
     cleanName(name) {
-      name = name.split(" ")[0];
       return name.replace("_", "");
     },
     shortTime(time) {
