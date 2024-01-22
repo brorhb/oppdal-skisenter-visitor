@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(item, index) in items" :key="index">
+    <div v-for="(item, index) in items" v-if="item.hidden !== 1" :key="index">
       <div
         :class="`flex flex-row justify-between items-center cursor-pointer py-1 ${
           isFocused(item) && 'bg-blue-300 dark:bg-blue-700 px-2 rounded-sm'
